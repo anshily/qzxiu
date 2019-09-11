@@ -22,7 +22,7 @@ public class CodeGenerator {
     private static final String JDBC_USERNAME = "hang";
     private static final String JDBC_PASSWORD = "hang!@#";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_PREFIX = "sw";
+    private static final String DB_PREFIX = "qzx";
 
     private static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
     private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resources/generator/template";//模板位置
@@ -39,7 +39,9 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 //        genCode("sw_permission", "sw_role_permission", "sw_role", "sw_user", "sw_user_role");
-//        genCode("sw");
+          genCode("qzx_permission", "qzx_role_permission", "qzx_role", "qzx_user_role","qzx_goods_message",
+                  "qzx_grading","qzx_order","qzx_order_message","qzx_point","qzx_roll_picture","qzx_shop_message",
+                  "qzx_shop_type","qzx_signup_message");
 //        genCode("qy_permissions","qy_permissions_init","qy_role","qy_role_permission","qy_user","qy_user_role");
 //        genCode("qy_level_score");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");

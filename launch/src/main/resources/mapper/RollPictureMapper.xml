@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.peach.launch.dao.RollPictureMapper">
+  <resultMap id="BaseResultMap" type="io.peach.launch.model.RollPicture">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="picture_address" jdbcType="VARCHAR" property="picture_address" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="isputon" jdbcType="INTEGER" property="isputon" />
+    <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
+  </resultMap>
+</mapper>

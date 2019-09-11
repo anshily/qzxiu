@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.peach.launch.dao.GoodsMessageMapper">
+  <resultMap id="BaseResultMap" type="io.peach.launch.model.GoodsMessage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsprice" jdbcType="REAL" property="goodsprice" />
+    <result column="goodspicture" jdbcType="VARCHAR" property="goodspicture" />
+    <result column="represent" jdbcType="VARCHAR" property="represent" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="statu" jdbcType="INTEGER" property="statu" />
+  </resultMap>
+</mapper>
