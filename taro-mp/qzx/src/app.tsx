@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import Index from './pages/index'
-
+import 'taro-ui/dist/style/index.scss'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -20,14 +20,28 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/mine/mine'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
-    }
+      navigationBarTextStyle: 'black',
+      navigationStyle: 'custom'
+    },
+    tabBar: {
+      color: "#000000",
+      selectedColor: "#000000",
+      backgroundColor: "#000000",
+      list: [{
+        pagePath: "pages/index/index",
+        text: "组件"
+      }, {
+        pagePath: "pages/mine/mine",
+        text: "接口"
+      }]
+    },
   }
 
   componentDidMount () {}

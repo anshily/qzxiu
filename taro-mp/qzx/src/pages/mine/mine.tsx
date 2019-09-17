@@ -1,10 +1,9 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import './index.scss'
+import './mine.scss'
 import SwNav from "../../componets/SwNav";
-import {AtNavBar} from "taro-ui";
 
-export default class Index extends Component {
+export default class Mine extends Component {
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -14,14 +13,7 @@ export default class Index extends Component {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
-  }
-
-  constructor () {
-    super(...arguments)
-    this.state = {
-      current: 0
-    }
+    navigationBarTitleText: '我的'
   }
 
   componentWillMount () { }
@@ -34,26 +26,11 @@ export default class Index extends Component {
 
   componentDidHide () { }
 
-  handleClick(e) {
-    console.log(e);
-  }
-
   render () {
     return (
       <View className='index'>
-        <AtNavBar
-          onClickRgIconSt={this.handleClick}
-          onClickRgIconNd={this.handleClick}
-          onClickLeftIcon={this.handleClick}
-          color='#000'
-          leftText='返回'
-          rightFirstIconType='bullet-list'
-          rightSecondIconType='user'
-        >
-          <View>Taro UI</View>
-        </AtNavBar>
         <View>
-          <Text>index</Text>
+          <Text>mine</Text>
         </View>
 
         <SwNav/>
