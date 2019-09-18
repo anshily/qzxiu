@@ -21,27 +21,44 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/index/index',
-      'pages/mine/mine'
+      'pages/mine/mine',
+      'pages/goods/goods'
     ],
+    // window: {
+    //   backgroundTextStyle: 'light',
+    //   navigationBarBackgroundColor: '#fff',
+    //   navigationBarTitleText: 'WeChat',
+    //   navigationBarTextStyle: 'black',
+    //   navigationStyle: 'custom'
+    // },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black',
-      navigationStyle: 'custom'
+      navigationBarTitleText: '纤尊秀',
+      navigationBarTextStyle: 'black'
     },
     tabBar: {
-      color: "#000000",
-      selectedColor: "#000000",
-      backgroundColor: "#000000",
+      color: "#666",
+      selectedColor: "#b4282d",
+      backgroundColor: "#fafafa",
+      borderStyle: 'black',
       list: [{
         pagePath: "pages/index/index",
-        text: "组件"
+        iconPath: "./assets/tab-bar/home.png",
+        selectedIconPath: "./assets/tab-bar/home-active.png",
+        text: "首页"
+      }, {
+        pagePath: "pages/goods/goods",
+        iconPath: "./assets/tab-bar/cate.png",
+        selectedIconPath: "./assets/tab-bar/cate-active.png",
+        text: "分类"
       }, {
         pagePath: "pages/mine/mine",
-        text: "接口"
+        iconPath: "./assets/tab-bar/user.png",
+        selectedIconPath: "./assets/tab-bar/user-active.png",
+        text: "个人"
       }]
-    },
+    }
   }
 
   componentDidMount () {}

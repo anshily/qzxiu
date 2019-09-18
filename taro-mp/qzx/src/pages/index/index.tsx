@@ -1,8 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.scss'
-import SwNav from "../../componets/SwNav";
-import {AtNavBar} from "taro-ui";
 
 export default class Index extends Component {
 
@@ -41,22 +39,22 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        <AtNavBar
-          onClickRgIconSt={this.handleClick}
-          onClickRgIconNd={this.handleClick}
-          onClickLeftIcon={this.handleClick}
-          color='#000'
-          leftText='返回'
-          rightFirstIconType='bullet-list'
-          rightSecondIconType='user'
-        >
-          <View>Taro UI</View>
-        </AtNavBar>
+        {/*<AtNavBar*/}
+          {/*onClickRgIconSt={this.handleClick}*/}
+          {/*onClickRgIconNd={this.handleClick}*/}
+          {/*onClickLeftIcon={this.handleClick}*/}
+          {/*color='#000'*/}
+          {/*leftText='返回'*/}
+          {/*rightFirstIconType='bullet-list'*/}
+          {/*rightSecondIconType='user'*/}
+        {/*>*/}
+          {/*<View>Taro UI</View>*/}
+        {/*</AtNavBar>*/}
         <View>
           <Text>index</Text>
         </View>
 
-        <SwNav/>
+        {/*<SwNav/>*/}
       </View>
     )
   }

@@ -1,7 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './mine.scss'
-import SwNav from "../../componets/SwNav";
 
 export default class Mine extends Component {
 
@@ -33,7 +32,7 @@ export default class Mine extends Component {
           <Text>mine</Text>
         </View>
 
-        <SwNav/>
+        {/*<SwNav/>*/}
       </View>
     )
   }
