@@ -1,8 +1,50 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './mine.scss'
+import {AtImagePicker} from "taro-ui";
 
 export default class Mine extends Component {
+
+  constructor () {
+    super(...arguments)
+    this.state = {
+      files: [{
+        url: 'https://jimczj.gitee.io/lazyrepay/aragaki1.jpeg',
+      },
+        {
+          url: 'https://jimczj.gitee.io/lazyrepay/aragaki2.jpeg',
+        },
+        {
+          url: 'https://jimczj.gitee.io/lazyrepay/aragaki3.png',
+        }]
+    }
+  }
+  onChange (files) {
+    console.log(files);
+    // console.log(FileSystemManager.readFileSync(files[3].url, 'base64').length)
+    FileSystemManager.readFile({
+      filePath: files[3].url,
+      encoding: 'base64',
+      success: (res) => {
+        console.log(res);
+      },
+      fail: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('end');
+      }
+    });
+    this.setState({
+      files
+    })
+  }
+  onFail (mes) {
+    console.log(mes)
+  }
+  onImageClick (index, file) {
+    console.log(index, file)
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -31,6 +73,11 @@ export default class Mine extends Component {
         <View>
           <Text>mine</Text>
         </View>
+
+        <AtImagePicker
+          files={this.state.files}
+          onChange={this.onChange.bind(this)}
+        />
 
         {/*<SwNav/>*/}
       </View>
