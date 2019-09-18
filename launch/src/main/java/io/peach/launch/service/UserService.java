@@ -7,5 +7,6 @@ import io.peach.launch.base.core.Service;
  * Created by anshi on 2019/09/11.
  */
 public interface UserService extends Service<User> {
-
+    User getUserInfoByToken(String token);
+    Integer nameExist(String name);
 }

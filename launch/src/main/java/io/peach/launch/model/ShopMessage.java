@@ -28,6 +28,10 @@ public class ShopMessage {
      * 店铺名称
      */
     private String shopname;
+    /**
+     * 店铺图片地址
+     */
+    private String shoppicture;
 
     /**
      * 店铺地址
@@ -160,6 +164,14 @@ public class ShopMessage {
      */
     public void setShopaddress(String shopaddress) {
         this.shopaddress = shopaddress;
+    }
+
+    public String getShoppicture() {
+        return shoppicture;
+    }
+
+    public void setShoppicture(String shoppicture) {
+        this.shoppicture = shoppicture;
     }
 
     /**

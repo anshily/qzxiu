@@ -1,16 +1,14 @@
 package io.peach.launch.controller;
-import io.peach.launch.base.core.Result;
-import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.*;
 import io.peach.launch.model.User;
 import io.peach.launch.service.UserService;
-import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.util.*;
 
 /**
 * Created by anshi on 2019/09/11.
@@ -63,5 +61,39 @@ public class UserController {
     List<User> list = userService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
+    }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody User user) {
+
+        //账号密码不能为空
+        if(user.getIdentify_card() == null || user.getIdentify_card().isEmpty())
+        {
+            throw new ServiceException(Constants.CODE_ERR_USER_NAME);
+        }
+        if( user.getPassword() == null || user.getPassword().isEmpty())
+        {
+            throw new ServiceException(Constants.CODE_ERR_USER_NAME);
+        }
+        List<User> users =  userService.selectByCSql("identify_card=" + user.getIdentify_card() + " and password=" + user.getPassword());
+        if (users.size() > 0){
+            String newToken = UUID.randomUUID().toString();
+
+            User user1 = users.get(0);
+            user1.setToken(newToken);
+            user1.setUpdate_time(new Date());
+            userService.update(user1);
+            Map<String,Object> map = new HashMap<String,Object>();
+            map.put("token",newToken);
+            return ResultGenerator.successResult(map);
+        }else {
+            return ResultGenerator.errResult(5001, "用户名密码错误");
+        }
+    }
+
+    @GetMapping("/nameExist")
+    public Result nameExist(@RequestParam String name) {
+        Integer code=userService.nameExist(name);
+        return ResultGenerator.successResult(code);
     }
 }

@@ -19,4 +19,17 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Resource
     private UserMapper qzxUserMapper;
 
+    @Override
+    public User getUserInfoByToken(String token) {
+        return qzxUserMapper.getUserInfoByToken(token);
+    }
+
+    @Override
+    public Integer nameExist(String name) {
+        User user=qzxUserMapper.nameExist(name);
+        if(null==user){
+            return 0;
+        }
+        return 1;
+    }
 }

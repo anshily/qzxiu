@@ -1,5 +1,6 @@
 package io.peach.launch.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -22,7 +23,7 @@ public class Order {
     /**
      * 商品的总价值
      */
-    private Float priceAll;
+    private BigDecimal priceAll;
 
     private Date createtime;
 
@@ -88,16 +89,11 @@ public class Order {
      *
      * @return priceAll - 商品的总价值
      */
-    public Float getPriceAll() {
+    public BigDecimal getPriceAll() {
         return priceAll;
     }
 
-    /**
-     * 设置商品的总价值
-     *
-     * @param priceAll 商品的总价值
-     */
-    public void setPriceAll(Float priceAll) {
+    public void setPriceAll(BigDecimal priceAll) {
         this.priceAll = priceAll;
     }
 
