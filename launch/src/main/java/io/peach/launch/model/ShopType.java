@@ -1,5 +1,6 @@
 package io.peach.launch.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class ShopType {
     /**
      * 代理费用
      */
-    private Float agencycost;
+    private BigDecimal agencycost;
 
     private Date createtime;
 
@@ -65,16 +66,11 @@ public class ShopType {
      *
      * @return agencycost - 代理费用
      */
-    public Float getAgencycost() {
+    public BigDecimal getAgencycost() {
         return agencycost;
     }
 
-    /**
-     * 设置代理费用
-     *
-     * @param agencycost 代理费用
-     */
-    public void setAgencycost(Float agencycost) {
+    public void setAgencycost(BigDecimal agencycost) {
         this.agencycost = agencycost;
     }
 

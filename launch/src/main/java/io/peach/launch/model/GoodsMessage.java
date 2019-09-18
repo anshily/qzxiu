@@ -1,5 +1,6 @@
 package io.peach.launch.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class GoodsMessage {
     /**
      * 商品价格
      */
-    private Float goodsprice;
+    private BigDecimal goodsprice;
 
     /**
      * 商品图片
@@ -75,16 +76,11 @@ public class GoodsMessage {
      *
      * @return goodsprice - 商品价格
      */
-    public Float getGoodsprice() {
+    public BigDecimal getGoodsprice() {
         return goodsprice;
     }
 
-    /**
-     * 设置商品价格
-     *
-     * @param goodsprice 商品价格
-     */
-    public void setGoodsprice(Float goodsprice) {
+    public void setGoodsprice(BigDecimal goodsprice) {
         this.goodsprice = goodsprice;
     }
 
