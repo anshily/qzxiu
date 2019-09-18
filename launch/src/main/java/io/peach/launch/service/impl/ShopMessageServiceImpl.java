@@ -19,4 +19,9 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     @Resource
     private ShopMessageMapper qzxShopMessageMapper;
 
+    @Override
+    public void addGrading(int shopid, int recommendid, int positionid) {
+        qzxShopMessageMapper.addGradingRecommend(shopid, recommendid);
+        qzxShopMessageMapper.addGradingPosition(shopid, positionid);
+    }
 }

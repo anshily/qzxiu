@@ -8,4 +8,5 @@ import io.peach.launch.base.core.Service;
  */
 public interface ShopMessageService extends Service<ShopMessage> {
 
+    void addGrading(int shopid,int recommendid,int positionid);
 }

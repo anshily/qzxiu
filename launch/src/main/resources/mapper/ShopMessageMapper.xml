@@ -18,4 +18,11 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <insert id="addGradingRecommend">
+    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{recommendid},'推荐人'，now(),now())
+  </insert>
+  <insert id="addGradingPosition">
+    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{positionid},'地区'，now(),now())
+  </insert>
 </mapper>

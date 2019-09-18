@@ -21,7 +21,7 @@
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
 
-  <select id="getUserInfoByToken" resultType="io.anshily.model.User" parameterType="String">
+  <select id="getUserInfoByToken" resultType="io.peach.launch.model.User" parameterType="String">
     select qzx_role.category as category_id,qzx_role.name as role_name, qzx_user.id,
     qzx_user.identify_card, qzx_user.username, qzx_user.update_time from sw_user
     join qzx_user_role on qzx_user.id = qzx_user_role.uid
@@ -29,7 +29,7 @@
     where token = #{token}
   </select>
 
-  <select id="nameExist" resultType="io.anshily.model.User">
+  <select id="nameExist" resultType="io.peach.launch.model.User">
     select id from qzx_user where identify_card =#{name}
   </select>
 </mapper>
