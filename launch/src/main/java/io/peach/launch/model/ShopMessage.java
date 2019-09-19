@@ -1,5 +1,6 @@
 package io.peach.launch.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -41,17 +42,17 @@ public class ShopMessage {
     /**
      * 总利润
      */
-    private Float profit;
+    private BigDecimal profit;
 
     /**
      * 已经提现的利润
      */
-    private Float cashout;
+    private BigDecimal cashout;
 
     /**
      * 未提现的金钱
      */
-    private Float cashin;
+    private BigDecimal cashin;
 
     private Date createtime;
 
@@ -174,57 +175,27 @@ public class ShopMessage {
         this.shoppicture = shoppicture;
     }
 
-    /**
-     * 获取总利润
-     *
-     * @return profit - 总利润
-     */
-    public Float getProfit() {
+    public BigDecimal getProfit() {
         return profit;
     }
 
-    /**
-     * 设置总利润
-     *
-     * @param profit 总利润
-     */
-    public void setProfit(Float profit) {
+    public void setProfit(BigDecimal profit) {
         this.profit = profit;
     }
 
-    /**
-     * 获取已经提现的利润
-     *
-     * @return cashout - 已经提现的利润
-     */
-    public Float getCashout() {
+    public BigDecimal getCashout() {
         return cashout;
     }
 
-    /**
-     * 设置已经提现的利润
-     *
-     * @param cashout 已经提现的利润
-     */
-    public void setCashout(Float cashout) {
+    public void setCashout(BigDecimal cashout) {
         this.cashout = cashout;
     }
 
-    /**
-     * 获取未提现的金钱
-     *
-     * @return cashin - 未提现的金钱
-     */
-    public Float getCashin() {
+    public BigDecimal getCashin() {
         return cashin;
     }
 
-    /**
-     * 设置未提现的金钱
-     *
-     * @param cashin 未提现的金钱
-     */
-    public void setCashin(Float cashin) {
+    public void setCashin(BigDecimal cashin) {
         this.cashin = cashin;
     }
 
