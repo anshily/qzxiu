@@ -2,8 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import {View, Text, Picker} from '@tarojs/components'
 import './mine.scss'
 import {AtButton, AtForm, AtImagePicker, AtInput} from "taro-ui";
-import {JSONSchema4} from "json-schema";
-import {CITY_DATA} from "../../constants/api";
+import {HOST} from "../../constants/api";
 
 export default class Mine extends Component {
 
@@ -11,23 +10,25 @@ export default class Mine extends Component {
     super(...arguments)
     this.state = {
       files: [],
-      selector: [['美国', '中国', '巴西', '日本'],['河南', '西藏', '北京'], ['郑州','拉萨','朝阳']],
-      selectorChecked: '美国'
+      selector: ['省代', '市代', '县代'],
+      selectorChecked: '省代',
+      province: '北京',
+      city: '朝阳',
+      area: '故宫'
     }
-    this.initData();
+    // this.initData();
   }
 
-  initData() {
-    Taro.request({
-      url: CITY_DATA
-    }).then(res => {
-      console.log(res);
+  onLevelChange = e => {
+    this.setState({
+      selectorChecked: this.state.selector[e.detail.value]
     })
   }
+
   onChange (files) {
     console.log(files);
     Taro.uploadFile({
-      url: 'http://localhost:8081/shop/message/uploadPicture',
+      url: HOST + 'shop/message/uploadPicture',
       filePath: files[0].url,
       name: 'image'
     }).then((res) => {
@@ -94,7 +95,7 @@ export default class Mine extends Component {
     console.log(this.state);
     console.log(event)
     Taro.request({
-      url: 'http://localhost:8081/shop/message/saveUserAndShopMessageAndGrading',
+      url: HOST + 'shop/message/saveUserAndShopMessageAndGrading',
       data: {
         user: {
           username: this.state.username,
@@ -123,12 +124,6 @@ export default class Mine extends Component {
     console.log(event)
   }
 
-  onAddressChange = e => {
-    this.setState({
-      selectorChecked: this.state.selector[e.detail.value]
-    })
-  }
-
   /**
    * 指定config的类型声明为: Taro.Config
    *
@@ -153,14 +148,6 @@ export default class Mine extends Component {
   render () {
     return (
       <View className='index'>
-        <View>
-          <Text>mine</Text>
-        </View>
-
-        <AtImagePicker
-          files={this.state.files}
-          onChange={this.onChange.bind(this)}
-        />
 
         <AtForm
           onSubmit={this.onSubmit.bind(this)}
@@ -203,16 +190,55 @@ export default class Mine extends Component {
             onChange={this.handleShopNameChange.bind(this)}
           />
 
-          <View className='page-section'>
-            <Text>地区选择器</Text>
-            <View>
-              <Picker mode='multiSelector' range={this.state.selector} onChange={this.onAddressChange}>
-                <View className='picker'>
+          <View className='at-row sw-input'>
+            <View className='at-col at-col-3'>
+              <Text>上级代理</Text>
+            </View>
+            <View className='at-col at-col-8'>
+              <Picker mode='selector' range={this.state.selector} onChange={this.onLevelChange}>
+                <View className='picker sw-picker'>
                   当前选择：{this.state.selectorChecked}
                 </View>
               </Picker>
             </View>
           </View>
+
+          <View className='at-row sw-input'>
+            <View className='at-col at-col-3'>
+              <Text>推荐人</Text>
+            </View>
+            <View className='at-col at-col-8'>
+              <Picker mode='selector' range={this.state.selector} onChange={this.onLevelChange}>
+                <View className='picker sw-picker'>
+                  当前选择：{this.state.selectorChecked}
+                </View>
+              </Picker>
+            </View>
+          </View>
+
+          <View className='at-row sw-input'>
+            <View className='at-col at-col-3'>
+              <Text>门面图</Text>
+            </View>
+            <View className='at-col at-col-8'>
+              <AtImagePicker
+                files={this.state.files}
+                onChange={this.onChange.bind(this)}
+              />
+            </View>
+          </View>
+
+          {/*<View className='page-section'>*/}
+            {/*<Text>地区选择器</Text>*/}
+            {/*<View>*/}
+              {/*<Picker mode='multiSelector' range={this.state.selector} onChange={this.onAddressChange}*/}
+                      {/*onColumnChange={this.onColumnChange}>*/}
+                {/*<View className='picker'>*/}
+                  {/*当前选择：{this.state.selectorChecked}*/}
+                {/*</View>*/}
+              {/*</Picker>*/}
+            {/*</View>*/}
+          {/*</View>*/}
 
           {/*<AtInput*/}
             {/*name='value2'*/}
@@ -242,7 +268,6 @@ export default class Mine extends Component {
 
 
           <AtButton formType='submit'>提交</AtButton>
-          <AtButton formType='reset'>重置</AtButton>
         </AtForm>
 
         {/*<SwNav/>*/}
