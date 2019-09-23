@@ -1,5 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import {View, Text, SwiperItem, Swiper} from '@tarojs/components'
 import './index.scss'
 
 export default class Index extends Component {
@@ -39,22 +39,26 @@ export default class Index extends Component {
   render () {
     return (
       <View className='index'>
-        {/*<AtNavBar*/}
-          {/*onClickRgIconSt={this.handleClick}*/}
-          {/*onClickRgIconNd={this.handleClick}*/}
-          {/*onClickLeftIcon={this.handleClick}*/}
-          {/*color='#000'*/}
-          {/*leftText='返回'*/}
-          {/*rightFirstIconType='bullet-list'*/}
-          {/*rightSecondIconType='user'*/}
-        {/*>*/}
-          {/*<View>Taro UI</View>*/}
-        {/*</AtNavBar>*/}
-        <View>
-          <Text>index</Text>
-        </View>
 
-        {/*<SwNav/>*/}
+        <Swiper
+          className='test-h'
+          indicatorColor='#999'
+          indicatorActiveColor='#333'
+          vertical={false}
+          circular
+          indicatorDots
+          autoplay>
+          <SwiperItem>
+            <View className='demo-text-1'>1</View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='demo-text-2'>2</View>
+          </SwiperItem>
+          <SwiperItem>
+            <View className='demo-text-3'>3</View>
+          </SwiperItem>
+        </Swiper>
+
       </View>
     )
   }
