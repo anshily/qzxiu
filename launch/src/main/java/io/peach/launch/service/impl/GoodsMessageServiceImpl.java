@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +20,9 @@ public class GoodsMessageServiceImpl extends AbstractService<GoodsMessage> imple
     @Resource
     private GoodsMessageMapper qzxGoodsMessageMapper;
 
+    @Override
+    public List<GoodsMessage> getGoodsList() {
+        List<GoodsMessage> list=qzxGoodsMessageMapper.getGoodsList();
+        return list;
+    }
 }

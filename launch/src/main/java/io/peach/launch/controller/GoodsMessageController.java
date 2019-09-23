@@ -10,7 +10,10 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by anshi on 2019/09/11.
@@ -64,4 +67,26 @@ public class GoodsMessageController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
+
+    @GetMapping("/getGoodsList")
+    public Result getGoodsList() {
+        List<GoodsMessage> l=goodsMessageService.getGoodsList();
+        Map<String,Object> map=new HashMap<>();
+        map.put("goodsList",l);
+        return ResultGenerator.successResult(map);
+    }
+
+    @PostMapping("/addGoods")
+    public Result addGoods(@RequestBody GoodsMessage goodsMessage) {
+       /* if(goodsMessage.getGoodsname()!=){}*/
+        goodsMessageService.save(goodsMessage);
+        return ResultGenerator.successResult();
+    }
+
+    @PostMapping("/test")
+    public Result test(@RequestParam BigDecimal bigDecimal) {
+        System.out.print(bigDecimal);
+        return ResultGenerator.successResult();
+    }
+
 }

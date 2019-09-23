@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.peach.launch.dao.RecordMapper">
+  <resultMap id="BaseResultMap" type="io.peach.launch.model.Record">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="shopid" jdbcType="INTEGER" property="shopid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="sourceid" jdbcType="INTEGER" property="sourceid" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="statu" jdbcType="INTEGER" property="statu" />
+    <result column="subscribe" jdbcType="LONGVARCHAR" property="subscribe" />
+  </resultMap>
+</mapper>

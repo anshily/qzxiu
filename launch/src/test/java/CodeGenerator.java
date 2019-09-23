@@ -38,10 +38,10 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-//        genCode("sw_permission", "sw_role_permission", "sw_role", "sw_user", "sw_user_role");
-          genCode("qzx_permission", "qzx_role_permission", "qzx_role", "qzx_user_role","qzx_goods_message",
+         genCode("qzx_record");
+         /* genCode("qzx_permission", "qzx_role_permission", "qzx_role", "qzx_user_role","qzx_goods_message",
                   "qzx_grading","qzx_order","qzx_order_message","qzx_point","qzx_roll_picture","qzx_shop_message",
-                  "qzx_shop_type","qzx_signup_message");
+                  "qzx_shop_type","qzx_signup_message");*/
 //        genCode("qy_permissions","qy_permissions_init","qy_role","qy_role_permission","qy_user","qy_user_role");
 //        genCode("qy_level_score");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");

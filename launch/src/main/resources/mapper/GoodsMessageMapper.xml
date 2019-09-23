@@ -14,4 +14,8 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <select id="getGoodsList" resultType="io.peach.launch.model.GoodsMessage">
+    select * from qzx_goods_message where statu=1
+  </select>
 </mapper>
