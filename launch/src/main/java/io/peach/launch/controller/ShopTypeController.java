@@ -10,7 +10,9 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by anshi on 2019/09/11.
@@ -63,5 +65,15 @@ public class ShopTypeController {
     List<ShopType> list = shopTypeService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
+    }
+
+    @GetMapping("/getTypeList")
+    public Result getTypeList(){
+        Map<String,Object> map=new HashMap<>();
+        Condition condition = new Condition(ShopType.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("statu=1");
+        List<ShopType> list=shopTypeService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
     }
 }
