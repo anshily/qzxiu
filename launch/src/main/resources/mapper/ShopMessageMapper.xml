@@ -20,9 +20,53 @@
   </resultMap>
 
   <insert id="addGradingRecommend">
-    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{recommendid},'推荐人', now(),now())
+    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{recommendid},'人员推荐', now(),now())
   </insert>
   <insert id="addGradingPosition">
-    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{positionid},'地区', now(),now())
+    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{positionid},'地区推荐', now(),now())
+  </insert>
+
+  <select id="getShopMoney" resultType="BigDecimal">
+    select agencycost from qzx_shop_type where id=
+    (select shoptype_id from qzx_shop_message where id=#{shopid})
+  </select>
+
+  <select id="getRecommendAndPosition" resultType="map">
+    select u.id as id,u.username as username,s.shopname as shopname from qzx_shop_message as s, qzx_user as u where u.id=s.userid
+  </select>
+
+  <select id="getPoint" resultType="map">
+    select percentage as person1 from qzx_point where type='人员推荐' and level=1
+       UNION ALL
+    select percentage as person2 from qzx_point where type='人员推荐' and level=2
+       UNION ALL
+    select percentage as position1 from qzx_point where type='地区推荐' and level=1
+       UNION ALL
+    select percentage as position2 from qzx_point where type='地区推荐' and level=2
+  </select>
+
+  <update id="changeMoneyByShopid">
+    update qzx_shop_message set profit=#{money},cashin=#{money} where id=#{shopid}
+  </update>
+
+  <select id="getShopMessageByid" resultType="io.peach.launch.model.ShopMessage">
+    select profit,cashin from qzx_shop_message where id=#{shopid}
+  </select>
+
+  <update id="updateShopMoney">
+    update qzx_shop_message set profit=#{profit},cashin=#{cashin} where id=#{shopid}
+  </update>
+
+  <select id="getTwoGradingPerson" resultType="io.peach.launch.model.ShopMessage">
+    select id,profit,cashin from qzx_shop_message where id=
+    (select f_shopid from qzx_grading where shopid=#{shopid} and point_type='人员推荐' and f_shopid!=0)
+  </select>
+  <select id="getTwoGradingPosition" resultType="io.peach.launch.model.ShopMessage">
+    select id,profit,cashin from qzx_shop_message where id=
+    (select f_shopid from qzx_grading where shopid=#{shopid} and point_type='地区推荐' and f_shopid!=0)
+  </select>
+
+  <insert id="insertRecord">
+    insert into qzx_record(shopid,type,sourceid,money,updatetime,createtime) values(#{record.shopid},#{record.type},#{record.sourceid},#{record.money},now(),now())
   </insert>
 </mapper>

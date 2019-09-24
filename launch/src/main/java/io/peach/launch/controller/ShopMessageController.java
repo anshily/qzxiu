@@ -20,6 +20,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -142,6 +143,15 @@ public class ShopMessageController {
         shopMessageService.save(submitAll.getShopMessage());
         /*将店铺id与两个推荐人的id一起传入service层进行分级处理*/
         shopMessageService.addGrading(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
+        /*分完级后结算酬金*/
+        shopMessageService.balanceMoney(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
         return ResultGenerator.successResult();
+    }
+
+    /*页面刷新出所有人员推荐以及地区推荐  格式是人名+店铺名+代理名称*/
+    @GetMapping("/getRecommendAndPosition")
+    public Result getRecommendAndPosition() {
+        List<Map<String,String>> list=shopMessageService.getRecommendAndPosition();
+        return ResultGenerator.successResult(list);
     }
 }
