@@ -15,7 +15,8 @@
 		"dev:alipay": "npm run build:alipay -- --watch",
 		"dev:tt": "npm run build:tt -- --watch",
 		"dev:h5": "cross-env CLIENT_ENV=h5 npm run build:h5 -- --watch",
-		"dev:rn": "cross-env CLIENT_ENV=rn npm run build:rn -- --watch"
+		"dev:rn": "cross-env CLIENT_ENV=rn npm run build:rn -- --watch",
+    "tep": "node scripts/pagetpl"
 	},
 	"author": "anshi",
 	"license": "MIT",

@@ -1,7 +1,10 @@
-import { createAction } from '@utils/redux';
 
-export const dispatchENTER = payload => createAction({
-  url: 'add',
-  type: 'SHOP_ENTER',
+import {createAction} from '@utils/redux';
+import {ROOT_URL} from '@constants/api';
+
+export const dispatchREFERRER = payload => createAction({
+  url: ROOT_URL + 'referrer',
+  type: 'REFERRER_ADD',
+  method: 'POST',
   payload
 })

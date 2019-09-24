@@ -23,7 +23,7 @@ class App extends Component {
       'pages/index/index',
       'pages/home/home',
       'pages/enter/enter',
-      'pages/my-referrer/my-referrer',
+      'pages/referrer/referrer',
       'pages/cate/cate',
       'pages/cate-sub/cate-sub',
       'pages/cart/cart',
