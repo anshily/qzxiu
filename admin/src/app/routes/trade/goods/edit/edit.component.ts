@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
-import { SFSchema, SFUISchema } from '@delon/form';
+import {SFSchema, SFUISchema, SFUploadWidgetSchema} from '@delon/form';
 
 @Component({
   selector: 'app-trade-goods-edit',
@@ -10,31 +10,43 @@ import { SFSchema, SFUISchema } from '@delon/form';
 export class TradeGoodsEditComponent implements OnInit {
   record: any = {};
   i: any;
+  receiveContent: 'aaaa';
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      name: { type: 'string', title: '姓名', maxLength: 15 },
+      price: { type: 'number', title: '价格' },
+    file: {
+      type: 'string',
+      title: '封面图',
+      ui: {
+        widget: 'upload',
+        action: ROOT_URL + 'shop/message/uploadPicture',
+        resReName: 'data',
+        urlReName: 'url',
+        fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+        name: 'image'
+      } as SFUploadWidgetSchema,
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    custom: {
+      type: 'string',
+      title: '描述',
+      ui: {
+        widget: 'custom',
+        grid: { span: 24 }
+      },
+      default: 'test',
+    }
+    },
+    required: ['name', 'price', 'file'],
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
       grid: { span: 12 },
     },
-    $no: {
-      widget: 'text'
-    },
-    $href: {
+    $name: {
       widget: 'string',
-    },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
-    },
+    }
   };
 
   constructor(
@@ -48,10 +60,27 @@ export class TradeGoodsEditComponent implements OnInit {
     this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
   }
 
+  updateContent(e){
+    console.log(e)
+    this.receiveContent = e;
+  }
+
   save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
-      this.modal.close(true);
+    console.log(value)
+    let params = {
+      goodsname: value.name,
+      goodsprice: value.price,
+      goodspicture: value.file,
+      represent: this.receiveContent
+    }
+    console.log(params);
+    this.http.post(ROOT_URL + `goods/message/addGoods`, params).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('保存成功');
+        this.modal.close(true);
+      }else {
+        this.msgSrv.success(res['data']);
+      }
     });
   }
 

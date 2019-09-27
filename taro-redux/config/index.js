@@ -56,6 +56,7 @@ const config = {
   },
   copy: {
     patterns: [
+      { from: 'src/components/ParserRichText/Parser/', to: 'dist/components/ParserRichText/Parser/' }
     ],
     options: {
     }
@@ -134,7 +135,8 @@ const config = {
     },
     sassLoaderOption: {
       importer: sassImporter
-    }
+    },
+    esnextModules: ['taro_rich_text']
   },
   rn: {
     appJson: {

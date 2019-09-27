@@ -23,7 +23,8 @@ export default class UserLogin extends Component {
     managerChecked: 1,
     referrer: [1,2,3],
     referrerChecked: 1,
-    imgList: []
+    imgList: [],
+    openModal: false
   }
 
   config = {
@@ -68,7 +69,7 @@ export default class UserLogin extends Component {
       },
       shopMessage: {
         owner_phone: this.state.phone,
-        shoptype_id: this.state.shopLevel,
+        shoptype_id: this.state.levelChecked,
         shopname: this.state.shopName,
         shoppicture: this.state.image,
         shopaddress: this.state.address
@@ -77,6 +78,9 @@ export default class UserLogin extends Component {
       positionID: this.state.managerChecked
     }).then( () => {
       console.log('test');
+      this.setState({
+        openModal: true
+      })
     })
   }
 
@@ -136,6 +140,13 @@ export default class UserLogin extends Component {
     this.setState({
       referrerChecked: referrerChecked.detail.value
     })
+  }
+
+  succeedCnfirm = () => {
+    this.setState({
+      openModal: false
+    })
+    Taro.navigateBack()
   }
 
   render () {
@@ -253,17 +264,17 @@ export default class UserLogin extends Component {
             {/*<AtModalAction> <Button>确定</Button> </AtModalAction>*/}
           {/*</AtModal>*/}
 
-          {/*<AtModal*/}
-            {/*isOpened*/}
-            {/*confirmText='确认'*/}
-            {/*onClose={this.handleClose}*/}
-            {/*onCancel={ this.handleCancel }*/}
-            {/*onConfirm={ this.handleConfirm }*/}
-            {/*content='店铺添加成功！'*/}
-          {/*/>*/}
-          {/*<AtButton formType='submit'>提交</AtButton>*/}
+          <AtModal isOpened={this.state.openModal}>
+            <AtModalHeader>添加成功！</AtModalHeader>
+            {/*<AtModalContent>*/}
+              {/*<text className='mo'></text>*/}
+            {/*</AtModalContent>*/}
+            <AtModalAction> <Button onClick={this.succeedCnfirm}>确定</Button> </AtModalAction>
+          </AtModal>
 
-          <ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>
+          <AtButton formType='submit'>提交</AtButton>
+
+          {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>
 
 

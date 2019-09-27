@@ -55,6 +55,11 @@ class App extends Component {
         selectedIconPath: "./assets/tab-bar/cate-active.png",
         text: "商品"
       }, {
+        pagePath: "pages/cart/cart",
+        iconPath: "./assets/tab-bar/cart.png",
+        selectedIconPath: "./assets/tab-bar/cart-active.png",
+        text: "购物车"
+      }, {
         pagePath: "pages/user/user",
         iconPath: "./assets/tab-bar/user.png",
         selectedIconPath: "./assets/tab-bar/user-active.png",

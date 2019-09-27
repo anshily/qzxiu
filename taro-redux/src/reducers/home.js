@@ -1,7 +1,7 @@
 import {
   HOME_INFO, HOME_SEARCH_COUNT, HOME_RECOMMEND, HOME_PIN
 } from '@constants/home'
-
+import {IMG_URL} from '@constants/api';
 const INITIAL_STATE = {
   homeInfo: {},
   searchCount: 0,
@@ -36,9 +36,19 @@ export default function home(state = INITIAL_STATE, action) {
       return { ...state, pin }
     }
     case HOME_RECOMMEND: {
+      console.log(action.payload);
+      let list = action.payload.list.map(item => {
+        item['type'] = 1;
+        item['categoryItem'] = {
+          listPicUrl: IMG_URL + item['goodspicture'],
+          name: item['goodsname'],
+          retailPrice: item['goodsprice']
+        }
+        return item;
+      })
       return {
         ...state,
-        recommend: state.recommend.concat(action.payload.rcmdItemList)
+        recommend: state.recommend.concat(list)
       }
     }
     default:

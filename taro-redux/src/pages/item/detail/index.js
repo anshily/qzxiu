@@ -1,5 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
+// import {TaroRichTextNoWxParse} from 'taro_rich_text';
+import ParserRichText from '@components/ParserRichText/parserRichText';
+
 import './index.scss'
 
 export default class Detail extends Component {
@@ -17,9 +20,14 @@ export default class Detail extends Component {
     while (res = reg.exec(html)) {
       imgList.push(res[1])
     }
-
     return (
       <View className='item-detail'>
+        {/*<TaroRichTextNoWxParse*/}
+          {/*raw={false}*/}
+          {/*type='markdown'*/}
+          {/*richText={richText}*/}
+        {/*/>*/}
+        <ParserRichText html={html} selectable></ParserRichText>
         {imgList.map((item, index) => (
           <Image
             key={index}

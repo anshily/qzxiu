@@ -6,3 +6,6 @@
 declare var G2: any;
 declare var DataSet: any;
 declare var Slider: any;
+
+declare var ROOT_URL: string;
+declare var IMG_URL: string;

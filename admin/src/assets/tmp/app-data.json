@@ -44,6 +44,11 @@
               "text": "分析页",
               "link": "/trade/orders",
               "i18n": "订单"
+            },
+            {
+              "text": "分析页",
+              "link": "/trade/goods",
+              "i18n": "商品"
             }
           ]
         },

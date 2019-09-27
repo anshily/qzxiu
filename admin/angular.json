@@ -27,7 +27,8 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": [
               "node_modules/@antv/g2/build/g2.js",
