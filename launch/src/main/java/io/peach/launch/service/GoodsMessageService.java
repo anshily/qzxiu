@@ -1,6 +1,7 @@
 package io.peach.launch.service;
 import io.peach.launch.model.GoodsMessage;
 import io.peach.launch.base.core.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ import java.util.List;
  */
 public interface GoodsMessageService extends Service<GoodsMessage> {
     List<GoodsMessage> getGoodsList();
+    void goodsUpOrDown( Integer id, String type);
 
 }

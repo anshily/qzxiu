@@ -14,6 +14,7 @@ public class Order {
      * 店铺id
      */
     private Integer shopid;
+    private String orderid;
 
     /**
      * 订单中商品的总数量
@@ -33,6 +34,14 @@ public class Order {
      * 订单状态（0：订单取消，1：订单审核中，2：订单已完成）
      */
     private Integer statu;
+
+    public String getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(String orderid) {
+        this.orderid = orderid;
+    }
 
     /**
      * @return id

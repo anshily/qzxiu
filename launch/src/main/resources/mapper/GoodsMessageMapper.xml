@@ -18,4 +18,17 @@
   <select id="getGoodsList" resultType="io.peach.launch.model.GoodsMessage">
     select * from qzx_goods_message where statu=1
   </select>
+
+  <update id="goodsUpOrDown">
+    update qzx_goods_message
+    <set>
+      <if test="type=='up'">
+        statu=2,
+      </if>
+      <if test="type=='down'">
+        statu=1,
+      </if>
+      where id=#{id}
+    </set>
+  </update>
 </mapper>

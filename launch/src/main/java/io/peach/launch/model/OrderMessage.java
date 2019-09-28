@@ -12,7 +12,7 @@ public class OrderMessage {
     /**
      * 对应的订单id
      */
-    private Integer orderid;
+    private String orderid;
 
     /**
      * 对应的商品id
@@ -52,16 +52,11 @@ public class OrderMessage {
      *
      * @return orderid - 对应的订单id
      */
-    public Integer getOrderid() {
+    public String getOrderid() {
         return orderid;
     }
 
-    /**
-     * 设置对应的订单id
-     *
-     * @param orderid 对应的订单id
-     */
-    public void setOrderid(Integer orderid) {
+    public void setOrderid(String orderid) {
         this.orderid = orderid;
     }
 

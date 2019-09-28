@@ -25,4 +25,9 @@ public class GoodsMessageServiceImpl extends AbstractService<GoodsMessage> imple
         List<GoodsMessage> list=qzxGoodsMessageMapper.getGoodsList();
         return list;
     }
+
+    @Override
+    public void goodsUpOrDown(Integer id, String type) {
+        qzxGoodsMessageMapper.goodsUpOrDown(id, type);
+    }
 }

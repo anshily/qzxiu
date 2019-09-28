@@ -36,13 +36,13 @@
   </select>
 
   <select id="getPoint" resultType="map">
-    select percentage as person1 from qzx_point where type='人员推荐' and level=1
+    select percentage  from qzx_point where type='人员推荐' and level=1
        UNION ALL
-    select percentage as person2 from qzx_point where type='人员推荐' and level=2
+    select percentage  from qzx_point where type='人员推荐' and level=2
        UNION ALL
-    select percentage as position1 from qzx_point where type='地区推荐' and level=1
+    select percentage  from qzx_point where type='地区推荐' and level=1
        UNION ALL
-    select percentage as position2 from qzx_point where type='地区推荐' and level=2
+    select percentage  from qzx_point where type='地区推荐' and level=2
   </select>
 
   <update id="changeMoneyByShopid">
@@ -69,4 +69,28 @@
   <insert id="insertRecord">
     insert into qzx_record(shopid,type,sourceid,money,updatetime,createtime) values(#{record.shopid},#{record.type},#{record.sourceid},#{record.money},now(),now())
   </insert>
+
+  <select id="getShopList" resultType="io.peach.launch.model.ShopMessage">
+    select userid,owner_phone,shoptype_id,shopname,shoppicture,shopaddress,profit,cashout,cashin,createtime,updatetime from qzx_shop_message,typename as shoptype_name
+    from qzx_shop_type where qzx_shop_message.shoptype_id=qzx_shop_type.id and qzx_shop_message.statu=1
+    </select>
+
+  <select id="getFShopPerson" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where id=(
+    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='人员推荐'
+    )
+  </select>
+  <select id="getFShopPosition" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where id=(
+    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='地区推荐'
+    )
+  </select>
+
+  <select id="getChildShopMessage" resultType="io.peach.launch.model.ShopMessage">
+     select userid,owner_phone,shoptype_id,shopname,shoppicture,shopaddress,profit,cashout,cashin,createtime,updatetime
+     from qzx_shop_message,
+     point_type as recommmend_type
+     from qzx_grading
+     where qzx_shop_message.id=qzx_grading.shopid and qzx_grading.f_shopid =#{shopid}
+  </select>
 </mapper>

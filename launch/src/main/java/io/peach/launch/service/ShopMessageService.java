@@ -14,4 +14,9 @@ public interface ShopMessageService extends Service<ShopMessage> {
     void addGrading(int shopid,int recommendid,int positionid);
     void balanceMoney(int shopid,int recommendid,int positionid);
     List<Map<String,String>> getRecommendAndPosition();
+    List<ShopMessage> getShopList();
+    ShopMessage getFShopPerson(int shopid);
+    ShopMessage getFShopPosition(int shopid);
+    List<ShopMessage> getChildShopMessage(int shopid);
+
 }
