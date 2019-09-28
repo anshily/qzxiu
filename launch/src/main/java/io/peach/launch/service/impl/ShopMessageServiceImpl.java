@@ -49,13 +49,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
             /*当前为一级推荐人 修改推荐人的佣金以及未体现的佣金数额*/
             /*先取出当前推荐人的佣金以及未体现的佣金*/
             ShopMessage s=qzxShopMessageMapper.getShopMessageByid(recommendid);
-             profit=s.getProfit().add(b.multiply(map.get(0).get("person1")));
-             cashin=s.getCashin().add(b.multiply(map.get(0).get("person1")));
+             profit=s.getProfit().add(b.multiply(map.get(0).get("percentage")));
+             cashin=s.getCashin().add(b.multiply(map.get(0).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(recommendid,profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(0).get("person1")));
+            r.setMoney(b.multiply(map.get(0).get("percentage")));
             r.setShopid(recommendid);
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -64,13 +64,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
              /*当前为一级地区推荐 修改推荐人的佣金以及未体现的佣金数额*/
             /*先取出当前推荐人的佣金以及未体现的佣金*/
             ShopMessage s=qzxShopMessageMapper.getShopMessageByid(positionid);
-             profit=s.getProfit().add(b.multiply(map.get(2).get("position1")));
-             cashin=s.getCashin().add(b.multiply(map.get(2).get("position1")));
+             profit=s.getProfit().add(b.multiply(map.get(2).get("percentage")));
+             cashin=s.getCashin().add(b.multiply(map.get(2).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(positionid,profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(2).get("position1")));
+            r.setMoney(b.multiply(map.get(2).get("percentage")));
             r.setShopid(positionid);
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -81,13 +81,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         /*先判断查询出的店铺不是总店  总店id为1*/
         if(shopRR.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-             profit=shopRR.getProfit().add(b.multiply(map.get(1).get("person2")));
-             cashin=shopRR.getCashin().add(b.multiply(map.get(1).get("person2")));
+             profit=shopRR.getProfit().add(b.multiply(map.get(1).get("percentage")));
+             cashin=shopRR.getCashin().add(b.multiply(map.get(1).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(shopRR.getId(),profit,cashin);
             /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(1).get("person2")));
+            r.setMoney(b.multiply(map.get(1).get("percentage")));
             r.setShopid(shopRR.getId());
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -98,13 +98,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         /*先判断查询出的店铺不是总店  总店id为1*/
         if(shopRP.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-             profit=shopRP.getProfit().add(b.multiply(map.get(3).get("position2")));
-             cashin=shopRP.getCashin().add(b.multiply(map.get(3).get("position2")));
+             profit=shopRP.getProfit().add(b.multiply(map.get(3).get("percentage")));
+             cashin=shopRP.getCashin().add(b.multiply(map.get(3).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(shopRP.getId(),profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(3).get("position2")));
+            r.setMoney(b.multiply(map.get(3).get("percentage")));
             r.setShopid(shopRP.getId());
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -115,13 +115,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         /*先判断查询出的店铺不是总店  总店id为1*/
         if(shopPR.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-            profit=shopPR.getProfit().add(b.multiply(map.get(1).get("person2")));
-            cashin=shopPR.getCashin().add(b.multiply(map.get(1).get("person2")));
+            profit=shopPR.getProfit().add(b.multiply(map.get(1).get("percentage")));
+            cashin=shopPR.getCashin().add(b.multiply(map.get(1).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(shopPR.getId(),profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(1).get("person2")));
+            r.setMoney(b.multiply(map.get(1).get("percentage")));
             r.setShopid(shopPR.getId());
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -132,13 +132,13 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         /*先判断查询出的店铺不是总店  总店id为1*/
         if(shopPP.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-            profit=shopPP.getProfit().add(b.multiply(map.get(3).get("position2")));
-            cashin=shopPP.getCashin().add(b.multiply(map.get(3).get("position2")));
+            profit=shopPP.getProfit().add(b.multiply(map.get(3).get("percentage")));
+            cashin=shopPP.getCashin().add(b.multiply(map.get(3).get("percentage")));
             qzxShopMessageMapper.updateShopMoney(shopPP.getId(),profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
             r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(3).get("position2")));
+            r.setMoney(b.multiply(map.get(3).get("percentage")));
             r.setShopid(shopPP.getId());
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
