@@ -30,6 +30,15 @@ public class ShopMessage {
     @Transient
     private String recommmend_type;
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getRecommmend_type() {
         return recommmend_type;
