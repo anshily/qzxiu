@@ -25,6 +25,20 @@ public class ShopMessage {
      */
     private Integer shoptype_id;
 
+    @Transient
+    private String shoptype_name;
+    @Transient
+    private String recommmend_type;
+
+
+    public String getRecommmend_type() {
+        return recommmend_type;
+    }
+
+    public void setRecommmend_type(String recommmend_type) {
+        this.recommmend_type = recommmend_type;
+    }
+
     /**
      * 店铺名称
      */
@@ -62,6 +76,15 @@ public class ShopMessage {
      * 店铺状态（1：可用，2：不可用）
      */
     private Integer statu;
+
+
+    public String getShoptype_name() {
+        return shoptype_name;
+    }
+
+    public void setShoptype_name(String shoptype_name) {
+        this.shoptype_name = shoptype_name;
+    }
 
     /**
      * @return id

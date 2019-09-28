@@ -13,4 +13,19 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <select id="selectOrderByShopid" resultType="io.peach.launch.model.Order">
+    select * from qzx_order where shopid=#{shopid} and statu=1
+  </select>
+
+  <select id="selectOrderMessageByOrderid" resultType="io.peach.launch.model.OrderMessage">
+    select * from qzx_order_message where orderid=#{orderid} and statu=1
+  </select>
+
+  <update id="cancelOrder">
+    update qzx_order set statu=0 where orderid=#{orderid}
+  </update>
+  <update id="finishOrder">
+    update qzx_order set statu=2 where orderid=#{orderid}
+  </update>
 </mapper>

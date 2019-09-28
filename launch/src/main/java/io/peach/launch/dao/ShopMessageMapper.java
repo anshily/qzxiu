@@ -14,11 +14,15 @@ public interface ShopMessageMapper extends Mapper<ShopMessage> {
     void addGradingPosition(@Param(value = "shopid") int shopid,@Param(value = "positionid") int positionid);
     BigDecimal getShopMoney(int shopid);
     List<Map<String,String>> getRecommendAndPosition();
-    Map<String,BigDecimal> getPoint();
+    List<Map<String,BigDecimal>> getPoint();
     void changeMoneyByShopid(@Param(value = "shopid") int shopid,@Param(value = "money") BigDecimal money);
     ShopMessage getShopMessageByid(int shopid);
     void updateShopMoney(@Param(value = "shopid") int shopid,@Param(value = "profit") BigDecimal profit,@Param(value = "cashin") BigDecimal cashin);
     ShopMessage getTwoGradingPerson(int shopid);
     ShopMessage getTwoGradingPosition(int shopid);
     void insertRecord(@Param(value = "record")Record record);
+    List<ShopMessage> getShopList();
+    ShopMessage getFShopPerson(int shopid);
+    ShopMessage getFShopPosition(int shopid);
+    List<ShopMessage> getChildShopMessage(int shopid);
 }

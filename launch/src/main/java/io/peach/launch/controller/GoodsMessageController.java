@@ -12,6 +12,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,8 @@ public class GoodsMessageController {
                 goodsMessage.setGoodspicture("../uploads/20190923/625e50dc-9ddf-4c83-86c1-e36049368275.jpg");
             }
         }
+        goodsMessage.setCreatetime(new Date());
+        goodsMessage.setUpdatetime(new Date());
         goodsMessageService.save(goodsMessage);
         return ResultGenerator.successResult();
     }
@@ -105,8 +108,21 @@ public class GoodsMessageController {
                 goodsMessage.setGoodspicture("../uploads/20190923/625e50dc-9ddf-4c83-86c1-e36049368275.jpg");
             }
         }
+        goodsMessage.setUpdatetime(new Date());
         goodsMessageService.update(goodsMessage);
         return ResultGenerator.successResult();
+    }
+
+    @GetMapping("/goodsUpOrDown")
+    public Result goodsUpOrDown(@RequestParam Integer id,@RequestParam String type) {
+        goodsMessageService.goodsUpOrDown(id, type);
+        return ResultGenerator.successResult();
+    }
+
+    @GetMapping("/getGoodsByid")
+    public Result getGoodsByid(@RequestParam Integer id) {
+        GoodsMessage goodsMessage=goodsMessageService.findById(id);
+        return ResultGenerator.successResult(goodsMessage);
     }
 
 

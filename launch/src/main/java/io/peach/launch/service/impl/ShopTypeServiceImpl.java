@@ -19,4 +19,8 @@ public class ShopTypeServiceImpl extends AbstractService<ShopType> implements Sh
     @Resource
     private ShopTypeMapper qzxShopTypeMapper;
 
+    @Override
+    public void shopTypeUpOrDown(int id, String type) {
+        qzxShopTypeMapper.shopTypeUpOrDown(id, type);
+    }
 }

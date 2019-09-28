@@ -1,6 +1,7 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.model.ShopType;
 import io.peach.launch.service.ShopTypeService;
 import io.peach.launch.base.core.PageBean;
@@ -10,6 +11,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,4 +78,35 @@ public class ShopTypeController {
         List<ShopType> list=shopTypeService.findByCondition(condition);
         return ResultGenerator.successResult(list);
     }
+
+    @PostMapping("/addShopType")
+    public Result addShopType(@RequestBody ShopType shopType) {
+        if(shopType.getTypename()!=null||!shopType.getTypename().equals("")||shopType.getAgencycost().compareTo(new BigDecimal(0))<1){
+            throw new ServiceException(5006,"新增的商店类型数据不符合要求");
+        }
+        Condition condition = new Condition(ShopType.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("typename="+shopType.getTypename());
+        criteria.andCondition("statu=1");
+        List<ShopType> list=shopTypeService.findByCondition(condition);
+        if(list.size()==0){
+            shopTypeService.save(shopType);
+        }else{
+            throw new ServiceException(5007,"商店类型名已经存在");
+        }
+        return ResultGenerator.successResult();
+    }
+
+    @PostMapping("/updateShopType")
+    public Result updateShopType(@RequestBody ShopType shopType) {
+        shopTypeService.update(shopType);
+        return ResultGenerator.successResult();
+    }
+    @PostMapping("/shopTypeUpOrDown")
+    public Result shopTypeUpOrDown(@RequestParam Integer id,@RequestParam String type) {
+        shopTypeService.shopTypeUpOrDown(id,type);
+        return ResultGenerator.successResult();
+    }
+
+
 }

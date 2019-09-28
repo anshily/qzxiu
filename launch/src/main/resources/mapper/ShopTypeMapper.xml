@@ -12,4 +12,17 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <update id="shopTypeUpOrDown">
+    update qzx_goods_message
+    <set>
+      <if test="type=='up'">
+        statu=1,
+      </if>
+      <if test="type=='down'">
+        statu=0,
+      </if>
+      where id=#{id}
+    </set>
+  </update>
 </mapper>

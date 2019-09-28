@@ -18,10 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
 * Created by anshi on 2019/09/11.
@@ -154,4 +151,32 @@ public class ShopMessageController {
         List<Map<String,String>> list=shopMessageService.getRecommendAndPosition();
         return ResultGenerator.successResult(list);
     }
+
+    @GetMapping("/getShopList")
+    public Result getShopList(PageBean<ShopMessage> page) {
+        PageHelper.startPage(page.getPageNum(),page.getSize());
+        List<ShopMessage> list=shopMessageService.getShopList();
+        page.setList(list);
+        /*Map<String,Object> map=new HashMap<>();
+        map.put("shopList",list);*/
+        return ResultGenerator.successResult(page);
+    }
+
+    @GetMapping("/getFShopMessage")
+    public Result getFShopMessage(@RequestParam Integer shopid) {
+        ShopMessage person=shopMessageService.getFShopPerson(shopid);
+        ShopMessage position=shopMessageService.getFShopPosition(shopid);
+        Map<String,Object> map=new HashMap<>();
+        map.put("person",person);
+        map.put("position",position);
+        return ResultGenerator.successResult(map);
+    }
+    @GetMapping("/getChildShopMessage")
+    public Result getChildShopMessage(@RequestParam Integer shopid) {
+        List<ShopMessage> list=shopMessageService.getChildShopMessage(shopid);
+        Map<String,Object> map=new HashMap<>();
+        map.put("child",list);
+        return ResultGenerator.successResult(map);
+    }
+
 }
