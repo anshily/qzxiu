@@ -50,7 +50,7 @@
   </update>
 
   <select id="getShopMessageByid" resultType="io.peach.launch.model.ShopMessage">
-    select profit,cashin from qzx_shop_message where id=#{shopid}
+    select * from qzx_shop_message where id=#{shopid}
   </select>
 
   <update id="updateShopMoney">
