@@ -77,72 +77,81 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         }
 
         /*查询出一级人员推荐的二级人员推荐的id*/
-        ShopMessage shopRR=qzxShopMessageMapper.getTwoGradingPerson(recommendid);
+        /*先判断一级推荐人的id是否为1  如果是就不需要查询二级推荐了*/
+        if(recommendid!=1){
+            ShopMessage shopRR=qzxShopMessageMapper.getTwoGradingPerson(recommendid);
         /*先判断查询出的店铺不是总店  总店id为1*/
-        if(shopRR.getId()!=1){
+            if(shopRR.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-             profit=shopRR.getProfit().add(b.multiply(map.get(1).get("percentage")));
-             cashin=shopRR.getCashin().add(b.multiply(map.get(1).get("percentage")));
-            qzxShopMessageMapper.updateShopMoney(shopRR.getId(),profit,cashin);
+                profit=shopRR.getProfit().add(b.multiply(map.get(1).get("percentage")));
+                cashin=shopRR.getCashin().add(b.multiply(map.get(1).get("percentage")));
+                qzxShopMessageMapper.updateShopMoney(shopRR.getId(),profit,cashin);
             /*记录表中插入一条记录*/
-            Record r=new Record();
-            r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(1).get("percentage")));
-            r.setShopid(shopRR.getId());
-            r.setSourceid(shopid);
-            qzxShopMessageMapper.insertRecord(r);
+                Record r=new Record();
+                r.setType("佣金消息");
+                r.setMoney(b.multiply(map.get(1).get("percentage")));
+                r.setShopid(shopRR.getId());
+                r.setSourceid(shopid);
+                qzxShopMessageMapper.insertRecord(r);
+            }
+
+            /*查询出一级人员推荐的二级地区推荐的id*/
+            ShopMessage shopRP=qzxShopMessageMapper.getTwoGradingPosition(recommendid);
+        /*先判断查询出的店铺不是总店  总店id为1*/
+            if(shopRP.getId()!=1){
+            /*取出佣金与未提现的佣金  算完后存入数据库*/
+                profit=shopRP.getProfit().add(b.multiply(map.get(3).get("percentage")));
+                cashin=shopRP.getCashin().add(b.multiply(map.get(3).get("percentage")));
+                qzxShopMessageMapper.updateShopMoney(shopRP.getId(),profit,cashin);
+              /*记录表中插入一条记录*/
+                Record r=new Record();
+                r.setType("佣金消息");
+                r.setMoney(b.multiply(map.get(3).get("percentage")));
+                r.setShopid(shopRP.getId());
+                r.setSourceid(shopid);
+                qzxShopMessageMapper.insertRecord(r);
+            }
         }
 
-        /*查询出一级人员推荐的二级地区推荐的id*/
-        ShopMessage shopRP=qzxShopMessageMapper.getTwoGradingPosition(recommendid);
-        /*先判断查询出的店铺不是总店  总店id为1*/
-        if(shopRP.getId()!=1){
-            /*取出佣金与未提现的佣金  算完后存入数据库*/
-             profit=shopRP.getProfit().add(b.multiply(map.get(3).get("percentage")));
-             cashin=shopRP.getCashin().add(b.multiply(map.get(3).get("percentage")));
-            qzxShopMessageMapper.updateShopMoney(shopRP.getId(),profit,cashin);
-              /*记录表中插入一条记录*/
-            Record r=new Record();
-            r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(3).get("percentage")));
-            r.setShopid(shopRP.getId());
-            r.setSourceid(shopid);
-            qzxShopMessageMapper.insertRecord(r);
-        }
 
-        /*查询出一级地区推荐的二级人员推荐的id*/
-        ShopMessage shopPR=qzxShopMessageMapper.getTwoGradingPerson(positionid);
+
+
+        if(positionid!=1){
+            /*查询出一级地区推荐的二级人员推荐的id*/
+            ShopMessage shopPR=qzxShopMessageMapper.getTwoGradingPerson(positionid);
         /*先判断查询出的店铺不是总店  总店id为1*/
-        if(shopPR.getId()!=1){
+            if(shopPR.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-            profit=shopPR.getProfit().add(b.multiply(map.get(1).get("percentage")));
-            cashin=shopPR.getCashin().add(b.multiply(map.get(1).get("percentage")));
-            qzxShopMessageMapper.updateShopMoney(shopPR.getId(),profit,cashin);
+                profit=shopPR.getProfit().add(b.multiply(map.get(1).get("percentage")));
+                cashin=shopPR.getCashin().add(b.multiply(map.get(1).get("percentage")));
+                qzxShopMessageMapper.updateShopMoney(shopPR.getId(),profit,cashin);
               /*记录表中插入一条记录*/
-            Record r=new Record();
-            r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(1).get("percentage")));
-            r.setShopid(shopPR.getId());
-            r.setSourceid(shopid);
-            qzxShopMessageMapper.insertRecord(r);
-        }
+                Record r=new Record();
+                r.setType("佣金消息");
+                r.setMoney(b.multiply(map.get(1).get("percentage")));
+                r.setShopid(shopPR.getId());
+                r.setSourceid(shopid);
+                qzxShopMessageMapper.insertRecord(r);
+            }
 
         /*查询出一级地区推荐的二级地区推荐的id*/
-        ShopMessage shopPP=qzxShopMessageMapper.getTwoGradingPerson(positionid);
+            ShopMessage shopPP=qzxShopMessageMapper.getTwoGradingPerson(positionid);
         /*先判断查询出的店铺不是总店  总店id为1*/
-        if(shopPP.getId()!=1){
+            if(shopPP.getId()!=1){
             /*取出佣金与未提现的佣金  算完后存入数据库*/
-            profit=shopPP.getProfit().add(b.multiply(map.get(3).get("percentage")));
-            cashin=shopPP.getCashin().add(b.multiply(map.get(3).get("percentage")));
-            qzxShopMessageMapper.updateShopMoney(shopPP.getId(),profit,cashin);
+                profit=shopPP.getProfit().add(b.multiply(map.get(3).get("percentage")));
+                cashin=shopPP.getCashin().add(b.multiply(map.get(3).get("percentage")));
+                qzxShopMessageMapper.updateShopMoney(shopPP.getId(),profit,cashin);
               /*记录表中插入一条记录*/
-            Record r=new Record();
-            r.setType("佣金消息");
-            r.setMoney(b.multiply(map.get(3).get("percentage")));
-            r.setShopid(shopPP.getId());
-            r.setSourceid(shopid);
-            qzxShopMessageMapper.insertRecord(r);
+                Record r=new Record();
+                r.setType("佣金消息");
+                r.setMoney(b.multiply(map.get(3).get("percentage")));
+                r.setShopid(shopPP.getId());
+                r.setSourceid(shopid);
+                qzxShopMessageMapper.insertRecord(r);
+            }
         }
+
     }
 
     @Override
