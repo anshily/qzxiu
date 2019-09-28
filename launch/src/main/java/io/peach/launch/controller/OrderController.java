@@ -133,7 +133,7 @@ public class OrderController {
     @GetMapping("/finishOrder")
     public Result finishOrder(@RequestParam Integer orderid){
         orderService.finishOrder(orderid);
-        shopMessageService.balanceMoney();
+        /*shopMessageService.balanceMoney();*/
         return ResultGenerator.successResult();
     }
 
