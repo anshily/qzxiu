@@ -106,7 +106,8 @@ export default class UserLogin extends Component {
   onSubmit = e => {
     console.log(e)
     this.setState({
-      loading: true
+      loading: true,
+      disabled: true
     })
     this.props.dispatchENTER({
       user: {
@@ -125,7 +126,8 @@ export default class UserLogin extends Component {
     }).then( () => {
       console.log('test');
       this.setState({
-        loading: false
+        loading: false,
+        disabled: false
       })
       this.setState({
         openModal: true

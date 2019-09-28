@@ -84,8 +84,14 @@ export class TradeShopsEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.i)
-    if (this.record.id > 0)
+    // console.log(this.i)
+    // if (this.record.id > 0)
+    // this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
+    //   if (res['code'] == 0) {
+    //     this.recommendList = res['data'];
+    //   }
+    // });
+
     this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
       if (res['code'] == 0) {
         this.recommendList = res['data'];
