@@ -29,7 +29,8 @@ class Item extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatchItem({ itemId: this.itemId }).then(() => {
+    console.log(this.itemId);
+    this.props.dispatchItem({ id: this.itemId }).then(() => {
       this.setState({ loaded: true })
     })
   }
@@ -91,7 +92,6 @@ class Item extends Component {
     const { itemDetail = {} } = itemInfo
     const gallery = [
       itemInfo.listPicUrl,
-      itemDetail.picUrl1, itemDetail.picUrl2, itemDetail.picUrl3, itemDetail.picUrl4
     ].filter(i => i)
     const height = getWindowHeight(false)
     // XXX RN 的 transform 写法不同，这块可以统一放到 @utils/style 的 postcss() 中处理
@@ -112,7 +112,7 @@ class Item extends Component {
         >
           <Gallery list={gallery} />
           <InfoBase data={itemInfo} />
-          <InfoParam list={itemInfo.attrList} />
+          {/*<InfoParam list={itemInfo.attrList} />*/}
           <Detail html={itemDetail.detailHtml} />
         </ScrollView>
 

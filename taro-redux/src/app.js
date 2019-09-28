@@ -23,7 +23,7 @@ class App extends Component {
       'pages/index/index',
       'pages/home/home',
       'pages/enter/enter',
-      'pages/my-referrer/my-referrer',
+      'pages/referrer/referrer',
       'pages/cate/cate',
       'pages/cate-sub/cate-sub',
       'pages/cart/cart',
@@ -54,6 +54,11 @@ class App extends Component {
         iconPath: "./assets/tab-bar/cate.png",
         selectedIconPath: "./assets/tab-bar/cate-active.png",
         text: "商品"
+      }, {
+        pagePath: "pages/cart/cart",
+        iconPath: "./assets/tab-bar/cart.png",
+        selectedIconPath: "./assets/tab-bar/cart-active.png",
+        text: "购物车"
       }, {
         pagePath: "pages/user/user",
         iconPath: "./assets/tab-bar/user.png",

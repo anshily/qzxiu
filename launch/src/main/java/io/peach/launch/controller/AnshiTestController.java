@@ -3,6 +3,7 @@ package io.peach.launch.controller;
 import io.peach.launch.base.core.Constants;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.utils.UploadFile;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,5 +51,13 @@ public class AnshiTestController {
         out.close();
 
         return ResultGenerator.successResult(fileName);
+    }
+
+    @RequestMapping("/anshi/upload/base")
+    public Result uploadBase64(String flie) throws Exception {
+
+        String img = UploadFile.uploadSingleBase64(flie);
+
+        return ResultGenerator.successResult(img);
     }
 }

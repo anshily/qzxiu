@@ -1,8 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import {AtButton, AtForm, AtInput} from "taro-ui";
-import {ClImagePicker} from 'mp-colorui';
+import {AtButton, AtForm, AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction} from "taro-ui";
+import {ClImagePicker, ClModal, ClButton} from 'mp-colorui';
 import './enter.scss'
 import * as actions from '@actions/enter';
 import { ROOT_URL } from '../../constants/api';
@@ -16,13 +16,15 @@ export default class UserLogin extends Component {
     phone: '',
     shopName: '',
     image: '',
+    address: '',
     shopLevel: [1,2,3,4],
     levelChecked: 1,
     manager: [1,2,3],
     managerChecked: 1,
     referrer: [1,2,3],
     referrerChecked: 1,
-    imgList: []
+    imgList: [],
+    openModal: false
   }
 
   config = {
@@ -61,7 +63,24 @@ export default class UserLogin extends Component {
   onSubmit = e => {
     console.log(e)
     this.props.dispatchENTER({
-
+      user: {
+        username: this.state.username,
+        password: this.state.password
+      },
+      shopMessage: {
+        owner_phone: this.state.phone,
+        shoptype_id: this.state.levelChecked,
+        shopname: this.state.shopName,
+        shoppicture: this.state.image,
+        shopaddress: this.state.address
+      },
+      recommendID: this.state.referrerChecked,
+      positionID: this.state.managerChecked
+    }).then( () => {
+      console.log('test');
+      this.setState({
+        openModal: true
+      })
     })
   }
 
@@ -92,6 +111,16 @@ export default class UserLogin extends Component {
 
   handleShopNameChange = e => {
     console.log(e)
+    this.setState({
+      shopName: e
+    })
+  }
+
+  handleAddressChange = e => {
+    console.log(e)
+    this.setState({
+      address: e
+    })
   }
 
   onLevelChange = e => {
@@ -111,6 +140,13 @@ export default class UserLogin extends Component {
     this.setState({
       referrerChecked: referrerChecked.detail.value
     })
+  }
+
+  succeedCnfirm = () => {
+    this.setState({
+      openModal: false
+    })
+    Taro.navigateBack()
   }
 
   render () {
@@ -156,6 +192,15 @@ export default class UserLogin extends Component {
             placeholder='单行文本'
             value={this.state.shopName}
             onChange={this.handleShopNameChange}
+          />
+
+          <AtInput
+            name='value'
+            title='地址'
+            type='text'
+            placeholder='输入地址'
+            value={this.state.address}
+            onChange={this.handleAddressChange}
           />
 
           <View className='at-row sw-input'>
@@ -212,10 +257,27 @@ export default class UserLogin extends Component {
               />
             </View>
           </View>
+          {/*<AtModal isOpened>*/}
+            {/*<AtModalContent>*/}
+              {/*店铺添加成功！*/}
+            {/*</AtModalContent>*/}
+            {/*<AtModalAction> <Button>确定</Button> </AtModalAction>*/}
+          {/*</AtModal>*/}
 
+          <AtModal isOpened={this.state.openModal}>
+            <AtModalHeader>添加成功！</AtModalHeader>
+            {/*<AtModalContent>*/}
+              {/*<text className='mo'></text>*/}
+            {/*</AtModalContent>*/}
+            <AtModalAction> <Button onClick={this.succeedCnfirm}>确定</Button> </AtModalAction>
+          </AtModal>
 
           <AtButton formType='submit'>提交</AtButton>
+
+          {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>
+
+
 
         {/*<SwNav/>*/}
       </View>

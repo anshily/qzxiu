@@ -29,11 +29,11 @@ class Home extends Component {
 
   componentDidMount() {
     // NOTE 暂时去掉不适配的内容
-    Taro.showToast({
-      title: '注意，由于严选小程序首页界面、接口大幅变动，暂时去掉不相符的部分，后续再跟进改动',
-      icon: 'none',
-      duration: 6000
-    })
+    // Taro.showToast({
+    //   title: '注意，由于严选小程序首页界面、接口大幅变动，暂时去掉不相符的部分，后续再跟进改动',
+    //   icon: 'none',
+    //   duration: 6000
+    // })
 
     this.props.dispatchHome().then(() => {
       this.setState({ loaded: true })
@@ -80,6 +80,7 @@ class Home extends Component {
     }
 
     const { homeInfo, searchCount, recommend, pin } = this.props
+    console.log(recommend)
     return (
       <View className='home'>
         {/*<View className='home__search'>*/}

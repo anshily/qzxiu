@@ -6,6 +6,7 @@
 export const host = HOST
 export const hostM = HOST_M
 export const ROOT_URL = 'http://localhost:8081/'
+export const IMG_URL = 'http://localhost:8081/'
 /* eslint-enable */
 
 // pic

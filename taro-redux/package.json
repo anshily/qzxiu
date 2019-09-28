@@ -15,7 +15,8 @@
 		"dev:alipay": "npm run build:alipay -- --watch",
 		"dev:tt": "npm run build:tt -- --watch",
 		"dev:h5": "cross-env CLIENT_ENV=h5 npm run build:h5 -- --watch",
-		"dev:rn": "cross-env CLIENT_ENV=rn npm run build:rn -- --watch"
+		"dev:rn": "cross-env CLIENT_ENV=rn npm run build:rn -- --watch",
+		"tep": "node scripts/pagetpl"
 	},
 	"author": "anshi",
 	"license": "MIT",
@@ -46,6 +47,7 @@
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.3.0",
 		"taro-ui": "^2.2.2",
+		"taro_rich_text": "^1.1.3",
 		"tslib": "^1.8.0"
 	},
 	"devDependencies": {

@@ -1,0 +1,81 @@
+<quill-editor #quill [modules]="config" [style]="{minHeight: '300px',maxWidth:'600px'}" [(ngModel)]="data.content" (onSelectionChanged)="setSelection($event)" placeholder="请输入" (onContentChanged)="contentChange()">
+  <div quill-editor-toolbar style="max-width: 600px">
+    <span class="ql-formats">
+      <button type="button" class="ql-header" value="1"></button>
+      <button type="button" class="ql-header" value="2"></button>
+      <button type="button" class="ql-blockquote"></button>
+      <button type="button" class="ql-code-block ql-active"></button>
+      <button type="button" class="ql-list" value="ordered"></button>
+      <button class="ql-bold" [title]="'Bold'"></button>
+      <button type="button" class="ql-italic"><svg viewBox="0 0 18 18"> <line class="ql-stroke" x1="7" x2="13" y1="4" y2="4"></line> <line class="ql-stroke" x1="5" x2="11" y1="14" y2="14"></line> <line class="ql-stroke" x1="8" x2="10" y1="14" y2="4"></line> </svg></button>
+      <button type="button" class="ql-underline"><svg viewBox="0 0 18 18"> <path class="ql-stroke" d="M5,3V9a4.012,4.012,0,0,0,4,4H9a4.012,4.012,0,0,0,4-4V3"></path> <rect class="ql-fill" height="1" rx="0.5" ry="0.5" width="12" x="3" y="15"></rect> </svg></button>
+      <button type="button" class="ql-strike"><svg viewBox="0 0 18 18"> <line class="ql-stroke ql-thin" x1="15.5" x2="2.5" y1="8.5" y2="9.5"></line> <path class="ql-fill" d="M9.007,8C6.542,7.791,6,7.519,6,6.5,6,5.792,7.283,5,9,5c1.571,0,2.765.679,2.969,1.309a1,1,0,0,0,1.9-.617C13.356,4.106,11.354,3,9,3,6.2,3,4,4.538,4,6.5a3.2,3.2,0,0,0,.5,1.843Z"></path> <path class="ql-fill" d="M8.984,10C11.457,10.208,12,10.479,12,11.5c0,0.708-1.283,1.5-3,1.5-1.571,0-2.765-.679-2.969-1.309a1,1,0,1,0-1.9.617C4.644,13.894,6.646,15,9,15c2.8,0,5-1.538,5-3.5a3.2,3.2,0,0,0-.5-1.843Z"></path> </svg></button>
+
+    </span>
+    <span class="ql-formats">
+      <select class="ql-align" [title]="'Aligment'">
+        <option selected></option>
+        <option value="center"></option>
+        <option value="right"></option>
+        <option value="justify"></option>
+      </select>
+      <select class="ql-size" style="width: 53px">
+        <option value="small">小</option>
+        <option selected>中</option>
+        <option value="large">大</option>
+        <option value="huge">超大</option>
+      </select>
+      <select class="ql-color ql-picker ql-color-picker">
+      </select>
+      <select class="ql-background ql-picker ql-color-picker">
+      </select>
+      <select class="ql-header ql-picker"></select>
+      <button type="button" class="ql-link"></button>
+      <button type="button" style="outline:none" (click)="openUploadFileInput()">
+        <div class="upload_img">
+          <svg class="camera" viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg>
+          <!--<input type="file" style="display: none" id="uploadFileInput" accept="image/*" (change)="fileChange($event)"/>-->
+        </div>
+      </button>
+
+    </span>
+  </div>
+</quill-editor>
+<nz-modal #cropperModal [(nzVisible)]="isShowModal" [nzStyle]="{ top: '20px' }" [nzWidth]="700" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="onModalHide()">
+  <ng-template #modalTitle>
+    请选择图片
+  </ng-template>
+
+  <ng-template #modalContent>
+
+    <div id="cropperDiv" style="width: 100%;height:400px;background-color: #B3B3B3">
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="false"
+        [resizeToWidth]="500"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+    </div>
+  </ng-template>
+
+  <ng-template #modalFooter>
+    <div [style.textAlign]="'center'" [style.position]="'absolute'" [style.left]="'24px'"  [style.height]="previewHeight + 'px'" [style.backgroundColor]="'#B3B3B3'">
+      <img *ngIf="previewImage" [src]="previewImage" [style.height]="previewHeight + 'px'" >
+    </div>
+
+    <div style="height: 100px;line-height: 150px">
+      <button nz-button nzType="primary" style="width: 90px;margin-bottom: 0;margin-left: 10px" (click)="openSelectImg()">
+        <input (change)="updateImgFile($event)" id="filebutton" type="file" accept="image/png,image/jpg, image/jpeg" class="custom-file-input" style="display: none">
+        选择图片
+      </button>
+      <button nz-button nzType="primary" (click)="setImgAndCloseModal()">确定</button>
+    </div>
+
+  </ng-template>
+</nz-modal>
+<!--<app-cropper></app-cropper>-->
+
+<!--<quill-editor [modules]="config" [style]="{minHeight: '300px',maxWidth:'600px'}" [(ngModel)]="data.content" placeholder="请输入" (onContentChanged)="contentChange()"></quill-editor>-->
