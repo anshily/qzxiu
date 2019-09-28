@@ -46,19 +46,21 @@ export default class Spec extends Component {
   }
 
   handleUpdate = (cnt) => {
+    const { data } = this.props
     this.setState({ cnt })
+    this.props.onSelect({ id: data.id, cnt: this.state.cnt })
   }
 
   render () {
     const { data } = this.props
-    const { skuSpecList = [] } = data
+    // const { skuSpecList = [] } = data
 
     return (
       <View className='item-spec'>
         <View className='item-spec__info'>
           <Image
             className='item-spec__info-img'
-            src={this.state.img || data.primaryPicUrl}
+            src={this.state.img || data.listPicUrl}
           />
           <View className='item-spec__info-wrap'>
             <View className='item-spec__info-price'>
@@ -73,25 +75,25 @@ export default class Spec extends Component {
           </View>
         </View>
 
-        {skuSpecList.map(group => (
-          <View key={group.id} className='item-spec__group'>
-            <Text className='item-spec__group-title'>{group.name}</Text>
-            <View className='item-spec__group-list'>
-              {group.skuSpecValueList.map(item => (
-                <Text
-                  key={item.id}
-                  className={classNames('item-spec__group-list-item', {
-                    'item-spec__group-list-item--active': this.isSelected(item, group.id),
-                    'item-spec__group-list-item--disabled': !this.isValid(item)
-                  })}
-                  onClick={this.handleSelect.bind(this, item, group.id)}
-                >
-                  {item.value}
-                </Text>
-              ))}
-            </View>
-          </View>
-        ))}
+        {/*{skuSpecList.map(group => (*/}
+          {/*<View key={group.id} className='item-spec__group'>*/}
+            {/*<Text className='item-spec__group-title'>{group.name}</Text>*/}
+            {/*<View className='item-spec__group-list'>*/}
+              {/*{group.skuSpecValueList.map(item => (*/}
+                {/*<Text*/}
+                  {/*key={item.id}*/}
+                  {/*className={classNames('item-spec__group-list-item', {*/}
+                    {/*'item-spec__group-list-item--active': this.isSelected(item, group.id),*/}
+                    {/*'item-spec__group-list-item--disabled': !this.isValid(item)*/}
+                  {/*})}*/}
+                  {/*onClick={this.handleSelect.bind(this, item, group.id)}*/}
+                {/*>*/}
+                  {/*{item.value}*/}
+                {/*</Text>*/}
+              {/*))}*/}
+            {/*</View>*/}
+          {/*</View>*/}
+        {/*))}*/}
 
         <View className='item-spec__group'>
           <Text className='item-spec__group-title'>数量</Text>

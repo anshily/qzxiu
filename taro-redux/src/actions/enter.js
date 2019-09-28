@@ -7,3 +7,12 @@ export const dispatchENTER = payload => createAction({
   method: 'POST',
   payload
 })
+export const dispatchRecommend = payload => createAction({
+  url: ROOT_URL + `shop/message/getRecommendAndPosition`,
+  type: 'ENTER_RECOMMEND',
+  method: 'GET',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

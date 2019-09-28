@@ -22,7 +22,8 @@ const NAV_LIST = [{
 
 export default class Footer extends Component {
   static defaultProps = {
-    onAdd: () => {}
+    onAdd: () => {},
+    onBuy: () => {}
   }
 
   handleNav = (item) => {
@@ -37,10 +38,11 @@ export default class Footer extends Component {
   }
 
   handleBuy = () => {
-    Taro.showToast({
-      title: '暂时只支持加入购物车',
-      icon: 'none'
-    })
+    this.props.onBuy()
+    // Taro.showToast({
+    //   title: '暂时只支持加入购物车',
+    //   icon: 'none'
+    // })
   }
 
   render () {

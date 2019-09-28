@@ -9,6 +9,7 @@ import {SFSchema, SFSelectWidgetSchema, SFUISchema, SFUploadWidgetSchema} from '
 })
 export class TradeShopsEditComponent implements OnInit {
   record: any = {};
+  recommendList = [];
   i: any;
   schema: SFSchema = {
     properties: {
@@ -85,7 +86,11 @@ export class TradeShopsEditComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.i)
     if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+    this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
+      if (res['code'] == 0) {
+        this.recommendList = res['data'];
+      }
+    });
   }
 
   save(value: any) {

@@ -9,8 +9,27 @@ import Banner from './banner'
 import Policy from './policy'
 import Pin from './pin'
 import './index.scss'
+import {IMG_URL} from "../../constants/api";
+
+//引入图片预加载组件
+import ImgLoader from '@utils/img-loader/img-loader'
 
 const RECOMMEND_SIZE = 20
+
+function genImgListData() {
+  let images = [
+    IMG_URL + '../uploads/assets/index1.jpg',
+    IMG_URL + '../uploads/assets/index2.jpg',
+    IMG_URL + '../uploads/assets/index3.jpg',
+    IMG_URL + '../uploads/assets/index4.jpg'
+  ]
+  return images.map(item => {
+    return {
+      url: item,
+      loaded: false
+    }
+  })
+}
 
 @connect(state => state.home, { ...actions, dispatchCartNum })
 class Index extends Component {
@@ -22,7 +41,10 @@ class Index extends Component {
     loaded: false,
     loading: false,
     lastItemId: 0,
-    hasMore: true
+    hasMore: true,
+
+    imgList: genImgListData(),
+    imgLoadList: []
   }
 
   componentDidMount() {
@@ -33,7 +55,32 @@ class Index extends Component {
     this.props.dispatchCartNum()
     // this.props.dispatchSearchCount()
     this.props.dispatchPin({ orderType: 4, size: 12 })
+    this.loadImages();
     // this.loadRecommend()
+  }
+
+  componentWillMount() {
+    //初始化图片预加载组件，并指定统一的加载完成回调
+    this.imgLoader = new ImgLoader(this, this.imageOnLoad.bind(this))
+  }
+
+  loadImages = () => {
+    //同时发起全部图片的加载
+    this.state.imgList.forEach(item => {
+      this.imgLoader.load(item.url)
+    })
+  }
+
+  imageOnLoad = (err, data) => {
+    console.log('图片加载完成', err, data.src)
+
+    const imgList = this.state.imgList.map(item => {
+      if (item.url == data.src) item.loaded = true
+      return item
+    })
+    this.setState({
+      imgList
+    })
   }
 
   // loadRecommend = () => {
@@ -67,6 +114,9 @@ class Index extends Component {
   }
 
   render () {
+
+    const { imgList, imgLoadList } = this.state
+
     if (!this.state.loaded) {
       return <Loading />
     }
@@ -111,6 +161,32 @@ class Index extends Component {
             {/* 类目热销榜 */}
             {/* <Category data={homeInfo.hotCategory} /> */}
           </View>
+
+          <View className='img_list'>
+            {imgList.map((item, index) => {
+              return (
+                <View className='img_wrap' key={index}>
+                  {item.loaded && <Image src={item.url} className='fade_in' />}
+                </View>
+              )
+            })}
+          </View>
+          {/*<Button onClick={this.loadImages}>Click To Load Images</Button>*/}
+          {/*  引入图片预加载组件  */}
+          <Block>
+            {imgLoadList.map((item, index) => {
+              return (
+                <Image
+                  key={index}
+                  src={item}
+                  data-src={item}
+                  onLoad={this.imgLoader._imgOnLoad.bind(this.imgLoader)}
+                  onError={this.imgLoader._imgOnLoadError.bind(this.imgLoader)}
+                  style='width:0;height:0;opacity:0'
+                />
+              )
+            })}
+          </Block>
 
           {/* 为你推荐 */}
           {/*<Recommend list={recommend} />*/}
