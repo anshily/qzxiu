@@ -4,6 +4,7 @@ import { Popup, Loading } from '@components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/item'
 import { dispatchAdd } from '@actions/cart'
+import { dispatchORDER } from '@actions/order'
 import { getWindowHeight } from '@utils/style'
 import Gallery from './gallery'
 import InfoBase from './info-base'
@@ -13,7 +14,7 @@ import Footer from './footer'
 import Spec from './spec'
 import './item.scss'
 
-@connect(state => state.item, { ...actions, dispatchAdd })
+@connect(state => state.item, { ...actions, dispatchAdd, dispatchORDER })
 class Item extends Component {
   config = {
     navigationBarTitleText: '商品详情'
@@ -39,22 +40,60 @@ class Item extends Component {
     this.setState({ selected })
   }
 
+  handleBuy = () => {
+    const { itemInfo } = this.props
+    const { visible, selected } = this.state
+    const isSelected = visible && !!itemInfo.id
+
+    // if (isSelected || isSingleSpec) {
+    if (isSelected ) {
+      const selectedItem = isSelected && !!isSelected.id && !!isSelected.cnt ? selected : {
+        id: itemInfo.id,
+        cnt: 1
+      }
+      // const skuItem = itemInfo.skuMap[selectedItem.id] || {}
+      const payload = {
+        skuId: selectedItem.id,
+        cnt: selectedItem.cnt
+      }
+      this.props.dispatchORDER(payload).then(() => {
+        Taro.showToast({
+          title: '下单成功',
+          icon: 'none'
+        })
+      })
+      if (isSelected) {
+        this.toggleVisible()
+      }
+      return
+    }
+
+    if (!visible) {
+      this.setState({ visible: true })
+    } else {
+      // XXX 加购物车逻辑不一定准确
+      Taro.showToast({
+        title: '请选择规格（或换个商品测试）',
+        icon: 'none'
+      })
+    }
+  }
+
   handleAdd = () => {
     // 添加购物车是先从 skuSpecValueList 中选择规格，再去 skuMap 中找 skuId，多个规格时用 ; 组合
     const { itemInfo } = this.props
-    const { skuSpecList = [] } = itemInfo
     const { visible, selected } = this.state
-    const isSelected = visible && !!selected.id && itemInfo.skuMap[selected.id]
-    const isSingleSpec = skuSpecList.every(spec => spec.skuSpecValueList.length === 1)
+    const isSelected = visible && !!itemInfo.id
 
-    if (isSelected || isSingleSpec) {
-      const selectedItem = isSelected ? selected : {
-        id: skuSpecList.map(spec => spec.skuSpecValueList[0].id).join(';'),
+    // if (isSelected || isSingleSpec) {
+    if (isSelected ) {
+      const selectedItem = isSelected && !!isSelected.id && !!isSelected.cnt ? selected : {
+        id: itemInfo.id,
         cnt: 1
       }
-      const skuItem = itemInfo.skuMap[selectedItem.id] || {}
+      // const skuItem = itemInfo.skuMap[selectedItem.id] || {}
       const payload = {
-        skuId: skuItem.id,
+        skuId: selectedItem.id,
         cnt: selectedItem.cnt
       }
       this.props.dispatchAdd(payload).then(() => {
@@ -130,7 +169,7 @@ class Item extends Component {
         </Popup>
 
         <View className='item__footer'>
-          <Footer onAdd={this.handleAdd} />
+          <Footer onAdd={this.handleAdd} onBuy={this.handleBuy} />
         </View>
       </View>
     )

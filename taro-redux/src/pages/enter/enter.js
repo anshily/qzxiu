@@ -17,18 +17,52 @@ export default class UserLogin extends Component {
     shopName: '',
     image: '',
     address: '',
-    shopLevel: [1,2,3,4],
-    levelChecked: 1,
-    manager: [1,2,3],
-    managerChecked: 1,
-    referrer: [1,2,3],
-    referrerChecked: 1,
+    shopLevel: [{
+      key: 1,
+      value: '省代理'
+    }, {
+      key: 2,
+      value: '市代理'
+    },{
+      key: 3,
+      value: '县代理'
+    },{
+      key: 4,
+      value: '加盟店'
+    }],
+    levelChecked: {
+      key: 1,
+      value: '省代理'
+    },
+    manager: [],
+    managerChecked: {},
+    referrer: [],
+    referrerChecked: {},
     imgList: [],
-    openModal: false
+    openModal: false,
+    loading: false,
+    disabled: true
   }
 
   config = {
     navigationBarTitleText: '添加商铺'
+  }
+
+  componentWillMount() {
+    this.props.dispatchRecommend({}).then(res => {
+      console.log(res)
+      if (res && res.length > 0){
+        this.setState({
+          managerChecked: res[0],
+          referrerChecked: res[0],
+          referrer: res,
+          manager: res
+        })
+      }
+      // this.setState({
+      //   referrer: res
+      // })
+    })
   }
 
   imgSelected  = e => {
@@ -57,11 +91,23 @@ export default class UserLogin extends Component {
           return item
         })
       })
+      this.setState({
+        disabled: !this.testRequire()
+      })
     });
+  }
+
+  testRequire(){
+    return !!this.state.username && !!this.state.password && !!this.state.phone && !!this.state.levelChecked
+    && !!this.state.levelChecked.key && !!this.state.shopName && !!this.state.image && !!this.state.address
+    && !!this.state.referrerChecked.id && !!this.state.managerChecked.id
   }
 
   onSubmit = e => {
     console.log(e)
+    this.setState({
+      loading: true
+    })
     this.props.dispatchENTER({
       user: {
         username: this.state.username,
@@ -69,15 +115,18 @@ export default class UserLogin extends Component {
       },
       shopMessage: {
         owner_phone: this.state.phone,
-        shoptype_id: this.state.levelChecked,
+        shoptype_id: this.state.levelChecked.key,
         shopname: this.state.shopName,
         shoppicture: this.state.image,
         shopaddress: this.state.address
       },
-      recommendID: this.state.referrerChecked,
-      positionID: this.state.managerChecked
+      recommendID: this.state.referrerChecked.id,
+      positionID: this.state.managerChecked.id
     }).then( () => {
       console.log('test');
+      this.setState({
+        loading: false
+      })
       this.setState({
         openModal: true
       })
@@ -92,6 +141,9 @@ export default class UserLogin extends Component {
     console.log(e)
     this.setState({
       username: e
+    });
+    this.setState({
+      disabled: !this.testRequire()
     })
   }
 
@@ -131,14 +183,16 @@ export default class UserLogin extends Component {
 
   onManagerChange = managerChecked => {
     console.log(managerChecked)
+    const { recommendList } = this.props
     this.setState({
-      managerChecked: managerChecked.detail.value
+      managerChecked: recommendList[managerChecked.detail.value]
     })
   }
 
   onReferrerChange = referrerChecked => {
+    const { recommendList } = this.props
     this.setState({
-      referrerChecked: referrerChecked.detail.value
+      referrerChecked: recommendList[referrerChecked.detail.value]
     })
   }
 
@@ -150,6 +204,8 @@ export default class UserLogin extends Component {
   }
 
   render () {
+    const { recommendList } = this.props;
+    const { loading, disabled } = this.state;
     return (
       <View className='index'>
 
@@ -208,9 +264,9 @@ export default class UserLogin extends Component {
               <Text>店铺类型</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={this.state.shopLevel} onChange={this.onLevelChange}>
+              <Picker mode='selector' range={this.state.shopLevel}  rangeKey='value'  onChange={this.onLevelChange}>
                 <View className='picker sw-picker'>
-                  当前选择：{this.state.levelChecked}
+                  当前选择：{this.state.levelChecked.value}
                 </View>
               </Picker>
             </View>
@@ -221,9 +277,9 @@ export default class UserLogin extends Component {
               <Text>上级代理</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={this.state.manager} onChange={this.onManagerChange}>
+              <Picker mode='selector' range={recommendList} rangeKey='shopname' onChange={this.onManagerChange}>
                 <View className='picker sw-picker'>
-                  当前选择：{this.state.managerChecked}
+                  当前选择：{this.state.managerChecked.shopname}
                 </View>
               </Picker>
             </View>
@@ -234,9 +290,9 @@ export default class UserLogin extends Component {
               <Text>推荐人</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={this.state.referrer} onChange={this.onReferrerChange}>
+              <Picker mode='selector' range={this.state.referrer} rangeKey='shopname' onChange={this.onReferrerChange}>
                 <View className='picker sw-picker'>
-                  当前选择：{this.state.referrerChecked}
+                  当前选择：{this.state.referrerChecked.shopname}
                 </View>
               </Picker>
             </View>
@@ -272,7 +328,7 @@ export default class UserLogin extends Component {
             <AtModalAction> <Button onClick={this.succeedCnfirm}>确定</Button> </AtModalAction>
           </AtModal>
 
-          <AtButton formType='submit'>提交</AtButton>
+          <AtButton formType='submit' disabled={!this.testRequire()} loading={loading} type='primary'>提交</AtButton>
 
           {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>

@@ -13,12 +13,12 @@ export default function enter(state = {}, action) {
       const menu = categoryList.map(({ id, name }) => ({ id, name }))
       return { ...state, menu, category: categoryList }
     }
-    // case CATE_SUB: {
-    //   return {
-    //     ...state,
-    //     subMenu: action.payload.category.subCategoryList
-    //   }
-    // }
+    case 'ENTER_RECOMMEND': {
+      return {
+        ...state,
+        recommendList: action.payload
+      }
+    }
     // case CATE_SUB_LIST: {
     //   const { id, itemList } = action.payload
     //   return {

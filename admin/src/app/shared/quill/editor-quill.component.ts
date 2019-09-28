@@ -80,7 +80,7 @@ export class EditorQuillComponent implements OnInit {
 
     this.croData = {};
 
-    this.cropperModal.afterOpen.subscribe(() => {
+    this.cropperModal && this.cropperModal.afterOpen.subscribe(() => {
       this.isShowImgCropper = true;
       // this.cropperSettings = new CropperSettings();
       // this.cropperSettings.noFileInput = true;
@@ -117,7 +117,7 @@ export class EditorQuillComponent implements OnInit {
   // 上传完成
   uploadComplete(evt) {
     console.log(evt.target.responseText)
-    let img = '<img class="camera" src="'+IMG_URL+ JSON.parse(evt.target.responseText)['data'] +'" alt=""><br/><br/>';
+    let img = '<img class="camera" src="'+IMG_URL+ JSON.parse(evt.target.responseText)['data'] +'" alt=""><<br/>';
 
     // if (this.selectionRange.isMod){
     //   this.data.content = this.insertContent(img);

@@ -13,6 +13,7 @@ export default function item(state = INITIAL_STATE, action) {
       return {
         ...state,
         itemInfo: {
+          id: tmp['id'],
           listPicUrl: IMG_URL + tmp['goodspicture'],
           name: tmp['goodsname'],
           activityPrice: tmp['goodsprice'],
