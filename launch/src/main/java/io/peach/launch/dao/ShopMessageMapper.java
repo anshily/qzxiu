@@ -16,7 +16,7 @@ public interface ShopMessageMapper extends Mapper<ShopMessage> {
     List<Map<String,String>> getRecommendAndPosition();
     List<Map<String,BigDecimal>> getPoint();
     void changeMoneyByShopid(@Param(value = "shopid") int shopid,@Param(value = "money") BigDecimal money);
-    ShopMessage getShopMessageByid(int shopid);
+    ShopMessage getShopMessageByid(int recommendid);
     void updateShopMoney(@Param(value = "shopid") int shopid,@Param(value = "profit") BigDecimal profit,@Param(value = "cashin") BigDecimal cashin);
     ShopMessage getTwoGradingPerson(int shopid);
     ShopMessage getTwoGradingPosition(int shopid);
