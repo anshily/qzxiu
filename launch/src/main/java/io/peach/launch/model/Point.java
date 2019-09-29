@@ -1,5 +1,6 @@
 package io.peach.launch.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -19,7 +20,7 @@ public class Point {
      */
     private Integer level;
 
-    private Float percentage;
+    private BigDecimal percentage;
 
     private Date createtime;
 
@@ -83,14 +84,11 @@ public class Point {
     /**
      * @return percentage
      */
-    public Float getPercentage() {
+    public BigDecimal getPercentage() {
         return percentage;
     }
 
-    /**
-     * @param percentage
-     */
-    public void setPercentage(Float percentage) {
+    public void setPercentage(BigDecimal percentage) {
         this.percentage = percentage;
     }
 
