@@ -1,13 +1,15 @@
 package io.peach.launch.controller;
-import io.peach.launch.base.core.Constants;
-import io.peach.launch.base.core.Result;
-import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.*;
+import io.peach.launch.dto.CashOutDTO;
 import io.peach.launch.dto.SubmitAll;
+import io.peach.launch.model.Record;
 import io.peach.launch.model.ShopMessage;
+import io.peach.launch.service.RecordService;
 import io.peach.launch.service.ShopMessageService;
-import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
 import io.peach.launch.service.UserService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -17,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,6 +33,8 @@ public class ShopMessageController {
     private ShopMessageService shopMessageService;
     @Resource
     private UserService userService;
+    @Resource
+    private RecordService recordService;
 
     @PostMapping("/add")
     public Result add(@RequestBody ShopMessage shopMessage) {
@@ -130,6 +135,7 @@ public class ShopMessageController {
 //        return ResultGenerator.successResult(path);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @PostMapping("/saveUserAndShopMessageAndGrading")
     public Result saveUserAndShopMessageAndGrading(@RequestBody SubmitAll submitAll) {
         /*先存储用户信息  返回用户id*/
@@ -141,7 +147,7 @@ public class ShopMessageController {
         /*将店铺id与两个推荐人的id一起传入service层进行分级处理*/
         shopMessageService.addGrading(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
         /*分完级后结算酬金*/
-        shopMessageService.balanceMoney(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
+        shopMessageService.balanceMoney(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID(),new BigDecimal(0));
         return ResultGenerator.successResult();
     }
 
@@ -178,5 +184,44 @@ public class ShopMessageController {
         map.put("child",list);
         return ResultGenerator.successResult(map);
     }
+
+    @GetMapping("/getGoodShopMessage")
+    public Result getGoodShopMessage() {
+        List<ShopMessage> list = shopMessageService.getGoodShopList();
+        Map<String,Object> map=new HashMap<>();
+        map.put("goodShopList",list);
+        return ResultGenerator.successResult(map);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    @GetMapping("/getCashOut")
+    public Result getCashOut(@RequestBody CashOutDTO cashOutDTO) {
+         /*先查询出当前店铺信息*/
+        ShopMessage shopMessage=shopMessageService.findById(cashOutDTO.getShopid());
+        if(cashOutDTO.getMoney().compareTo(shopMessage.getCashin())>0){
+            throw new ServiceException(5007,"超出最大可体现金额！");
+        }else{
+            /*先更新店铺的佣金信息*/
+            shopMessage.setUpdatetime(new Date());
+            shopMessage.setCashout(shopMessage.getCashout().add(cashOutDTO.getMoney()));
+            shopMessage.setCashin(shopMessage.getCashin().subtract(cashOutDTO.getMoney()));
+            shopMessageService.update(shopMessage);
+            /*再将提现记录插入到记录表中*/
+            Record record=new Record();
+            record.setMoney(cashOutDTO.getMoney());
+            record.setShopid(cashOutDTO.getShopid());
+            record.setSourceid(1);
+            record.setType("佣金消息");
+            record.setUpdatetime(new Date());
+            record.setCreatetime(new Date());
+            record.setImage(cashOutDTO.getImage());
+            record.setSubscribe("您有一笔佣金已到账！请注意查收");
+            recordService.save(record);
+
+        }
+        return ResultGenerator.successResult();
+    }
+
+
 
 }

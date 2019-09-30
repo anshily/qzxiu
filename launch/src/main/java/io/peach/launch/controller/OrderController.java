@@ -5,11 +5,14 @@ import io.peach.launch.dto.GoodsMessageDTO;
 import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.Order;
 import io.peach.launch.model.OrderMessage;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.service.OrderMessageService;
 import io.peach.launch.service.OrderService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
 import io.peach.launch.service.ShopMessageService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -78,6 +81,7 @@ public class OrderController {
         return ResultGenerator.successResult(page);
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @PostMapping("/shopCar")
     public Result shopCar(@RequestBody ShopCar shopCar){
          /*先创建一个订单对象  shopid   goodsnum   priceAll*/
@@ -130,10 +134,14 @@ public class OrderController {
         return ResultGenerator.successResult();
     }
 
+    @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/finishOrder")
     public Result finishOrder(@RequestParam Integer orderid){
         orderService.finishOrder(orderid);
-        /*shopMessageService.balanceMoney();*/
+        Order order=orderService.findById(orderid);
+        ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
+        ShopMessage shopMessagePosition=shopMessageService.getFShopPosition(order.getShopid());
+        shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId(),order.getPriceAll());
         return ResultGenerator.successResult();
     }
 
