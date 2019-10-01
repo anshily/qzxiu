@@ -13,4 +13,8 @@
     <result column="isputon" jdbcType="INTEGER" property="isputon" />
     <result column="isdelete" jdbcType="INTEGER" property="isdelete" />
   </resultMap>
+
+  <update id="deletePicture">
+
+  </update>
 </mapper>

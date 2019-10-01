@@ -26,11 +26,11 @@ public class RollPictureServiceImpl extends AbstractService<RollPicture> impleme
 
     @Override
     public void putDownPicture(Integer id) {
-
+        qzxRollPictureMapper.putDownPicture(id);
     }
 
     @Override
     public void putOnPicture(Integer id) {
-
+        qzxRollPictureMapper.putOnPicture(id);
     }
 }

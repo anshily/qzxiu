@@ -24,7 +24,7 @@ public class Order {
     /**
      * 商品的总价值
      */
-    private BigDecimal priceAll;
+    private BigDecimal priceall;
 
     private Date createtime;
 
@@ -98,12 +98,12 @@ public class Order {
      *
      * @return priceAll - 商品的总价值
      */
-    public BigDecimal getPriceAll() {
-        return priceAll;
+    public BigDecimal getPriceall() {
+        return priceall;
     }
 
-    public void setPriceAll(BigDecimal priceAll) {
-        this.priceAll = priceAll;
+    public void setPriceall(BigDecimal priceall) {
+        this.priceall = priceall;
     }
 
     /**
