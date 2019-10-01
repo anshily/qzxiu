@@ -22,6 +22,6 @@ public interface ShopMessageService extends Service<ShopMessage> {
     ShopMessage getFShopPosition(int shopid);
     List<ShopMessage> getChildShopMessage(int shopid);
     List<ShopMessage> getGoodShopList();
-    void getCashOut(CashOutDTO cashOutDTO);
+    /*void getCashOut(CashOutDTO cashOutDTO);*/
 
 }

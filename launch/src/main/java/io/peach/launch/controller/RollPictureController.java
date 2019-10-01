@@ -10,7 +10,9 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by anshi on 2019/09/11.
@@ -64,4 +66,37 @@ public class RollPictureController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
+
+    /*获取已经上架的轮播图片*/
+    @GetMapping("/rollPictureList")
+    public Result rollPictureList() {
+        Condition condition = new Condition(RollPicture.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("isputon=1");
+        criteria.andCondition("isdelete=0");
+        List<RollPicture> list = rollPictureService.findByCondition(condition);
+        Map<String,Object> map=new HashMap<>();
+        map.put("rollPictureList",list);
+        return ResultGenerator.successResult(map);
+    }
+    /*将当前轮播图删除*/
+    @GetMapping("/deletePicture")
+    public Result deletePicture(@RequestParam Integer id) {
+
+        return ResultGenerator.successResult();
+    }
+
+    /*将当前轮播图下架*/
+    @GetMapping("/putDownPicture")
+    public Result putDownPicture(@RequestParam Integer id) {
+
+        return ResultGenerator.successResult();
+    }
+    /*将当前轮播图上架*/
+    @GetMapping("/putOnPicture")
+    public Result putOnPicture(@RequestParam Integer id) {
+
+        return ResultGenerator.successResult();
+    }
+
 }

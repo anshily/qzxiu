@@ -211,8 +211,8 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
         return list;
     }
 
-    @Override
+    /*@Override
     public void getCashOut(CashOutDTO cashOutDTO) {
 
-    }
+    }*/
 }
