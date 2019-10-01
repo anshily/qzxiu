@@ -4,7 +4,7 @@ import { Popup, Loading } from '@components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/item'
 import { dispatchAdd } from '@actions/cart'
-import { dispatchORDER } from '@actions/order'
+import { dispatchOrder } from '@actions/order'
 import { getWindowHeight } from '@utils/style'
 import * as cartUtil from '@utils/cart'
 import Gallery from './gallery'
@@ -15,7 +15,7 @@ import Footer from './footer'
 import Spec from './spec'
 import './item.scss'
 
-@connect(state => state.item, { ...actions, dispatchAdd, dispatchORDER })
+@connect(state => state.item, { ...actions, dispatchAdd, dispatchOrder })
 class Item extends Component {
   config = {
     navigationBarTitleText: '商品详情'
@@ -54,10 +54,14 @@ class Item extends Component {
       }
       // const skuItem = itemInfo.skuMap[selectedItem.id] || {}
       const payload = {
-        skuId: selectedItem.id,
-        cnt: selectedItem.cnt
+        shopId: 1,
+        list: [{
+          goodsId: selectedItem.id,
+          goodsNum: selectedItem.cnt,
+          goodsPrice: itemInfo.activityPrice * selectedItem.cnt
+        }]
       }
-      this.props.dispatchORDER(payload).then(() => {
+      this.props.dispatchOrder(payload).then(() => {
         Taro.showToast({
           title: '下单成功',
           icon: 'none'

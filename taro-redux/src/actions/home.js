@@ -31,8 +31,11 @@ export const dispatchSearchCount = payload => createAction({
  * @param {*} payload
  */
 export const dispatchPin = payload => createAction({
-  url: API_HOME_PIN,
+  url: ROOT_URL + 'shop/message/getGoodShopMessage',
   type: HOME_PIN,
+  fetchOptions: {
+    anshiModify: true
+  },
   payload
 })
 
