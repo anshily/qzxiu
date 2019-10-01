@@ -43,10 +43,21 @@ public class Record {
      * 信息描述
      */
     private String subscribe;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     /**
      * @return id
      */
+
+
     public Integer getId() {
         return id;
     }

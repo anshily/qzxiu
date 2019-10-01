@@ -25,4 +25,5 @@ public interface ShopMessageMapper extends Mapper<ShopMessage> {
     ShopMessage getFShopPerson(int shopid);
     ShopMessage getFShopPosition(int shopid);
     List<ShopMessage> getChildShopMessage(int shopid);
+    List<ShopMessage> getGoodShopList();
 }

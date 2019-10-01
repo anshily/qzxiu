@@ -93,4 +93,8 @@
      from qzx_grading
      where qzx_shop_message.id=qzx_grading.shopid and qzx_grading.f_shopid =#{shopid}
   </select>
+
+  <select id="getGoodShopList" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message order by rand() limit 3
+  </select>
 </mapper>

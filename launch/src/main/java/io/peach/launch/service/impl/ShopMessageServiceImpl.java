@@ -1,6 +1,8 @@
 package io.peach.launch.service.impl;
 
+import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.dao.ShopMessageMapper;
+import io.peach.launch.dto.CashOutDTO;
 import io.peach.launch.model.Record;
 import io.peach.launch.model.ShopMessage;
 import io.peach.launch.service.ShopMessageService;
@@ -32,9 +34,17 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     }
 
     @Override
-    public void balanceMoney(int shopid, int recommendid, int positionid) {
-        /*先查出当前店铺的金额*/
-        BigDecimal b=qzxShopMessageMapper.getShopMoney(shopid);
+    public void balanceMoney(int shopid, int recommendid, int positionid,BigDecimal money) {
+        /*先查出当前店铺的金额*//*
+        判断传进来的Bigdecimal是否为0
+        如果为0表示添加店铺时候算酬金
+        如果不为0表示确认订单时候算酬金*/
+        BigDecimal b=new BigDecimal(0);
+        if(money.compareTo(b)==0){
+            b=qzxShopMessageMapper.getShopMoney(shopid);
+        }else{
+            b=money;
+        }
         BigDecimal profit=new BigDecimal(0);
         BigDecimal cashin=new BigDecimal(0);
         /*再查询出不同金额对应的比例
@@ -193,5 +203,16 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     public List<ShopMessage> getChildShopMessage(int shopid) {
         List<ShopMessage> list=qzxShopMessageMapper.getChildShopMessage(shopid);
         return list;
+    }
+
+    @Override
+    public List<ShopMessage> getGoodShopList() {
+        List<ShopMessage> list=qzxShopMessageMapper.getGoodShopList();
+        return list;
+    }
+
+    @Override
+    public void getCashOut(CashOutDTO cashOutDTO) {
+
     }
 }
