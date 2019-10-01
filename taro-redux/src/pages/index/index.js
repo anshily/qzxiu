@@ -9,6 +9,8 @@ import Banner from './banner'
 import Policy from './policy'
 import Pin from './pin'
 import './index.scss'
+import { AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import { ClFloatButton } from 'mp-colorui'
 import {IMG_URL} from "../../constants/api";
 
 //引入图片预加载组件
@@ -42,9 +44,15 @@ class Index extends Component {
     loading: false,
     lastItemId: 0,
     hasMore: true,
-
+    isOpen: false,
     imgList: genImgListData(),
     imgLoadList: []
+  }
+
+  onButtonClick() {
+    this.setState({
+      isOpen: true
+    })
   }
 
   componentDidMount() {
@@ -127,7 +135,6 @@ class Index extends Component {
         <ScrollView
           scrollY
           className='home__wrap'
-          onScrollToLower={this.loadRecommend}
           style={{ height: getWindowHeight() }}
         >
           <View onClick={this.handlePrevent}>
@@ -201,6 +208,23 @@ class Index extends Component {
             <Text className='home__loading-txt'>更多内容，敬请期待</Text>
           </View>
           }
+
+          <View className='fab-fixed'>
+            <AtFab>
+              <Text onClick={this.onButtonClick} className='at-fab__icon at-icon at-icon-add'></Text>
+            </AtFab>
+
+          </View>
+
+          <AtActionSheet cancelText='我再看看吧' title='对我们感兴趣？' isOpened={this.state.isOpen}>
+            <AtActionSheetItem>
+              咨询
+            </AtActionSheetItem>
+            <AtActionSheetItem>
+              加盟
+            </AtActionSheetItem>
+          </AtActionSheet>
+
         </ScrollView>
       </View>
     )

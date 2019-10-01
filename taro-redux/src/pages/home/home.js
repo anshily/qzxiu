@@ -5,11 +5,7 @@ import { connect } from '@tarojs/redux'
 import * as actions from '@actions/home'
 import { dispatchCartNum } from '@actions/cart'
 import { getWindowHeight } from '@utils/style'
-import Banner from './banner'
-import Policy from './policy'
-import Pin from './pin'
 import Recommend from './recommend'
-import searchIcon from './assets/search.png'
 import './home.scss'
 
 const RECOMMEND_SIZE = 20
@@ -94,7 +90,6 @@ class Home extends Component {
         <ScrollView
           scrollY
           className='home__wrap'
-          onScrollToLower={this.loadRecommend}
           style={{ height: getWindowHeight() }}
         >
 

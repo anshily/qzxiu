@@ -9,35 +9,53 @@ export default class Footer extends Component {
     onToggle: () => {}
   }
 
-  handleUpdateCheck = () => {
-    const { cartInfo } = this.props
-    const { cartGroupList = [], countCornerMark, selectedCount } = cartInfo
-    const cartList = cartGroupList.slice(1)
-    const payload = { skuList: [] }
-    const isAllChecked = !!selectedCount && parseInt(countCornerMark) === selectedCount
-    const nextChecked = !isAllChecked
-    cartList.forEach((group) => {
-      group.cartItemList.forEach((item) => {
-        payload.skuList.push({
-          skuId: item.skuId,
-          type: item.type,
-          extId: item.extId,
-          cnt: item.cnt,
-          checked: nextChecked,
-          canCheck: true,
-          promId: group.promId,
-          promType: group.promType
-        })
-      })
-    })
-    this.props.onUpdateCheck(payload)
+  state = {
+    actualPrice: 0
   }
 
-  handleOrder = () => {
-    Taro.showToast({
-      title: '敬请期待',
-      icon: 'none'
+  componentDidShow(){
+    this.updatePrice()
+  }
+
+  updatePrice() {
+    const { list } = this.props;
+    let price = this.state.actualPrice;
+    list.forEach(item => {
+      if (item.check){
+        price += item.actualPrice
+      }
     })
+    this.setState({
+      actualPrice: price
+    })
+  }
+
+  handleUpdateCheck = () => {
+    const { list, cartInfo } = this.props;
+    let flag = cartInfo.selectedCount && cartInfo.selectedCount > 0
+    let order = list.map(item => {
+      if (flag) {
+        item.checked = false;
+        return item;
+      }else {
+        item.checked = true;
+        return item;
+      }
+    });
+    this.props.onUpdateCheck(order)
+  }
+
+  handleOrder = (item) => {
+    const { list } = this.props;
+
+    console.log(item, list);
+    let orders = [];
+    list.forEach(order => {
+      if (order.check) {
+        orders.push(order)
+      }
+    });
+    this.props.onAddOrder(orders);
   }
 
   render () {

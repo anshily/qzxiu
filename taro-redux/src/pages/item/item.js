@@ -6,6 +6,7 @@ import * as actions from '@actions/item'
 import { dispatchAdd } from '@actions/cart'
 import { dispatchORDER } from '@actions/order'
 import { getWindowHeight } from '@utils/style'
+import * as cartUtil from '@utils/cart'
 import Gallery from './gallery'
 import InfoBase from './info-base'
 import InfoParam from './info-param'
@@ -93,15 +94,20 @@ class Item extends Component {
       }
       // const skuItem = itemInfo.skuMap[selectedItem.id] || {}
       const payload = {
-        skuId: selectedItem.id,
-        cnt: selectedItem.cnt
-      }
-      this.props.dispatchAdd(payload).then(() => {
-        Taro.showToast({
-          title: '加入购物车成功',
-          icon: 'none'
-        })
-      })
+        id: selectedItem.id,
+        cnt: selectedItem.cnt,
+        itemName: itemInfo.name,
+        pic: itemInfo.listPicUrl,
+        actualPrice: itemInfo.activityPrice
+      };
+
+      cartUtil.setCart(payload);
+      // this.props.dispatchAdd(payload).then(() => {
+      //   Taro.showToast({
+      //     title: '加入购物车成功',
+      //     icon: 'none'
+      //   })
+      // })
       if (isSelected) {
         this.toggleVisible()
       }
