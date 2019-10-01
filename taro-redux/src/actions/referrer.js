@@ -8,3 +8,12 @@ export const dispatchREFERRER = payload => createAction({
   method: 'POST',
   payload
 })
+
+export const dispatchChild = payload => createAction({
+  url: ROOT_URL + 'shop/message/getChildShopMessage',
+  type: 'REFERRER_CHILD',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

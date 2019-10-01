@@ -6,14 +6,14 @@ import * as actions from '@actions/cart'
 import { API_CHECK_LOGIN } from '@constants/api'
 import fetch from '@utils/request'
 import { getWindowHeight } from '@utils/style'
-import Tip from './tip'
-import Gift from './gift'
+import * as cartUtil from '@utils/cart'
+import { dispatchOrder } from '@actions/order'
 import Empty from './empty'
 import List from './list'
 import Footer from './footer'
 import './cart.scss'
 
-@connect(state => state.cart, actions)
+@connect(state => state.cart, {actions, dispatchOrder})
 class Index extends Component {
   config = {
     navigationBarTitleText: '购物车'
@@ -21,10 +21,12 @@ class Index extends Component {
 
   state = {
     loaded: false,
-    login: false
+    login: false,
+    cartInfo: {}
   }
 
   componentDidShow() {
+
     fetch({ url: API_CHECK_LOGIN, showToast: false, autoLogin: false }).then((res) => {
       if (res) {
         this.setState({ loaded: true, login: true })
@@ -35,7 +37,78 @@ class Index extends Component {
         this.setState({ loaded: true, login: false })
       }
     })
+    let carts = cartUtil.getCart();
+
+    let price = 0;
+    carts.forEach(item => {
+      if (item.check){
+        price += item.actualPrice
+      }
+    })
+
+    this.setState({
+      cartList: carts,
+      cartInfo: {
+        actualPrice: price
+      }
+    })
   }
+
+  updatePrice(list) {
+    let price = this.state.actualPrice;
+    list.forEach(item => {
+      if (item.check){
+        price += item.actualPrice
+      }
+    })
+
+    return price
+  }
+
+  updateCart = (item) => {
+    cartUtil.updateCart(item);
+    this.setState({
+      cartList: cartUtil.getCart()
+    })
+  }
+
+  allChecked = (order) => {
+    console.log(order)
+
+    let price = 0;
+    let cnt = 0;
+    order.forEach(item => {
+      if (item.checked){
+        price += item.actualPrice;
+        cnt++;
+      }
+    })
+
+    cartUtil.setCart(order)
+
+    let payload = {
+      cartList: order,
+      cartInfo: {
+        actualPrice: price,
+        selectedCount: cnt
+      }
+    }
+    this.setState(payload);
+
+    console.log(this.state)
+  }
+
+  addOrder = (item) => {
+    console.log(item);
+    this.props.dispatchOrder(item)
+  }
+
+  // updateCheck = (item) => {
+  //   cartUtil.updateCart(item);
+  //   this.setState({
+  //     cartList: cartUtil.getCart()
+  //   })
+  // }
 
   toLogin = () => {
     Taro.navigateTo({
@@ -44,10 +117,7 @@ class Index extends Component {
   }
 
   render () {
-    const { cartInfo, recommend } = this.props
-    const { cartGroupList = [] } = cartInfo
-    const cartList = cartGroupList.filter(i => !i.promType)
-    const extList = recommend.extList || []
+    const cartList = this.state.cartList;
     const isEmpty = !cartList.length
     const isShowFooter = !isEmpty
 
@@ -55,24 +125,24 @@ class Index extends Component {
       return <Loading />
     }
 
-    if (!this.state.login) {
-      return (
-        <View className='cart cart--not-login'>
-          <Empty text='未登陆' />
-          <View className='cart__login'>
-            <ButtonItem
-              type='primary'
-              text='登录'
-              onClick={this.toLogin}
-              compStyle={{
-                background: '#b59f7b',
-                borderRadius: Taro.pxTransform(4)
-              }}
-            />
-          </View>
-        </View>
-      )
-    }
+    // if (!this.state.login) {
+    //   return (
+    //     <View className='cart cart--not-login'>
+    //       <Empty text='未登陆' />
+    //       <View className='cart__login'>
+    //         <ButtonItem
+    //           type='primary'
+    //           text='登录'
+    //           onClick={this.toLogin}
+    //           compStyle={{
+    //             background: '#b59f7b',
+    //             borderRadius: Taro.pxTransform(4)
+    //           }}
+    //         />
+    //       </View>
+    //     </View>
+    //   )
+    // }
 
     return (
       <View className='cart'>
@@ -81,38 +151,37 @@ class Index extends Component {
           className='cart__wrap'
           style={{ height: getWindowHeight() }}
         >
-          <Tip list={cartInfo.policyDescList} />
+          {/*<Tip list={cartInfo.policyDescList} />*/}
           {isEmpty && <Empty />}
 
-          {!isEmpty && <Gift data={cartGroupList[0]} />}
+          {/*{!isEmpty && <Gift data={cartGroupList[0]} />}*/}
 
-          {!isEmpty && cartList.map((group, index) => (
-            <List
-              key={`${group.promId}_${index}`}
-              promId={group.promId}
-              promType={group.promType}
-              list={group.cartItemList}
-              onUpdate={this.props.dispatchUpdate}
-              onUpdateCheck={this.props.dispatchUpdateCheck}
-            />
-          ))}
+          {!isEmpty &&
+          <List
+            key={`1`}
+            promId={'2'}
+            promType={'2'}
+            list={cartList}
+            onUpdate={this.updateCart}
+            onUpdateCheck={this.updateCart}
+          />}
 
           {/* 相关推荐 */}
-          {extList.map((ext, index) => (
-            <ItemList key={`${ext.id}_${index}`} list={ext.itemList}>
-              <View className='cart__ext'>
-                {!!ext.picUrl && <Image className='cart__ext-img' src={ext.picUrl} />}
-                <Text className='cart__ext-txt'>{ext.desc}</Text>
-              </View>
-            </ItemList>
-          ))}
+          {/*{extList.map((ext, index) => (*/}
+            {/*<ItemList key={`${ext.id}_${index}`} list={ext.itemList}>*/}
+              {/*<View className='cart__ext'>*/}
+                {/*{!!ext.picUrl && <Image className='cart__ext-img' src={ext.picUrl} />}*/}
+                {/*<Text className='cart__ext-txt'>{ext.desc}</Text>*/}
+              {/*</View>*/}
+            {/*</ItemList>*/}
+          {/*))}*/}
 
           {/* 猜你喜欢 */}
-          <ItemList list={recommend.itemList}>
-            <View className='cart__recommend'>
-              <Text className='cart__recommend-txt'>{recommend.desc}</Text>
-            </View>
-          </ItemList>
+          {/*<ItemList list={recommend.itemList}>*/}
+            {/*<View className='cart__recommend'>*/}
+              {/*<Text className='cart__recommend-txt'>{recommend.desc}</Text>*/}
+            {/*</View>*/}
+          {/*</ItemList>*/}
 
           {isShowFooter &&
             <View className='cart__footer--placeholder' />
@@ -122,8 +191,10 @@ class Index extends Component {
         {isShowFooter &&
           <View className='cart__footer'>
             <Footer
-              cartInfo={cartInfo}
-              onUpdateCheck={this.props.dispatchUpdateCheck}
+              list={cartList}
+              cartInfo={this.state.cartInfo}
+              onUpdateCheck={this.allChecked}
+              onAddOrder={this.addOrder}
             />
           </View>
         }

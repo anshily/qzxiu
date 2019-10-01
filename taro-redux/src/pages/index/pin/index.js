@@ -26,7 +26,7 @@ export default class Pin extends Component {
         </View>
 
         <HomeTitle
-          title='免邮拼团'
+          title='优秀店铺'
           link='#'
         />
         <View className='home-pin__wrap'>

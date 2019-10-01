@@ -22,17 +22,15 @@ export default class List extends Component {
   })
 
   handleUpdate = (item, cnt) => {
-    const payload = {
-      skuList: [{ ...this.getBaseItem(item), cnt }]
-    }
-    this.props.onUpdate(payload)
+    item.checked = true;
+    item.cnt = cnt
+    this.props.onUpdate(item)
   }
 
   handleUpdateCheck = (item) => {
-    const payload = {
-      skuList: [{ ...this.getBaseItem(item), checked: !item.checked }]
-    }
-    this.props.onUpdateCheck(payload)
+    item.checked = !item.checked
+    console.log(item)
+    this.props.onUpdate(item)
   }
 
   handleRemove = () => {
@@ -41,6 +39,7 @@ export default class List extends Component {
 
   render () {
     const { list } = this.props
+    console.log(list)
     return (
       <View className='cart-list'>
         {list.map(item => (
@@ -66,11 +65,11 @@ export default class List extends Component {
                 </Text>
               </View>
 
-              <View className='cart-list__item-spec'>
-                <Text className='cart-list__item-spec-txt'>
-                  {item.specList.map(sepc => sepc.specValue).join(' ')}
-                </Text>
-              </View>
+              {/*<View className='cart-list__item-spec'>*/}
+                {/*<Text className='cart-list__item-spec-txt'>*/}
+                  {/*{item.specList.map(sepc => sepc.specValue).join(' ')}*/}
+                {/*</Text>*/}
+              {/*</View>*/}
 
               <View className='cart-list__item-wrap'>
                 <Text className='cart-list__item-price'>

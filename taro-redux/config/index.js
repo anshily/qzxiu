@@ -15,8 +15,8 @@ const sassImporter = function(url) {
 }
 
 const config = {
-  projectName: 'taro-yanxuan',
-  date: '2019-2-1',
+  projectName: 'taro-qzx',
+  date: '2019-10-1',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,

@@ -9,9 +9,21 @@ import * as actions from '@actions/referrer';
 @connect(state => state.referrerItem, actions)
 export default class Referrer extends Component {
 
-  state = {
-    current: 0,
-    open: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      current: 0,
+      open: false
+    }
+    // this.itemId = parseInt(this.$router.params.itemId)
+  }
+
+  componentDidMount() {
+    console.log(actions)
+    actions.dispatchChild({ shopid: 1 }).then((res) => {
+      console.log(res)
+      // this.setState({ loaded: true })
+    })
   }
 
   onChange (current) {
@@ -32,11 +44,11 @@ export default class Referrer extends Component {
   render() {
     const items = [
       { 'title': '步骤一', 'desc': '这里是额外的信息，最多两行' },
-      { 'title': '步骤二', 'desc': '这里是额外的信息，最多两行' },
+      { 'title': '一级店铺', 'desc': '这里是额外的信息，最多两行' },
       { 'title': '步骤三', 'desc': '这里是额外的信息，最多两行' }
     ]
     return (
-      <View>
+      <View className='home__wrap'>
 
 
         <View className='at-row at-row__justify--center'>

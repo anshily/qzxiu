@@ -9,6 +9,10 @@ export default function referrer(state = {}, action) {
       const { referrerItem } = action.payload
       return { ...state, referrerItem: referrerItem }
     }
+    case 'REFERRER_CHILD': {
+      console.log(action.payload)
+      return { ...state }
+    }
     default:
       return state
   }
