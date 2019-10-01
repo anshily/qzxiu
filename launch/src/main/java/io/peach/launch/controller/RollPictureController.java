@@ -82,20 +82,20 @@ public class RollPictureController {
     /*将当前轮播图删除*/
     @GetMapping("/deletePicture")
     public Result deletePicture(@RequestParam Integer id) {
-
+        rollPictureService.deletePicture(id);
         return ResultGenerator.successResult();
     }
 
     /*将当前轮播图下架*/
     @GetMapping("/putDownPicture")
     public Result putDownPicture(@RequestParam Integer id) {
-
+        rollPictureService.putDownPicture(id);
         return ResultGenerator.successResult();
     }
     /*将当前轮播图上架*/
     @GetMapping("/putOnPicture")
     public Result putOnPicture(@RequestParam Integer id) {
-
+        rollPictureService.putOnPicture(id);
         return ResultGenerator.successResult();
     }
 

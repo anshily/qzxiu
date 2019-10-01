@@ -15,6 +15,12 @@
   </resultMap>
 
   <update id="deletePicture">
-
+     update qzx_roll_picture set isdelete=1 where id=#{id}
+  </update>
+  <update id="putDownPicture">
+    update qzx_roll_picture set isputon=0 where id=#{id}
+  </update>
+  <update id="putOnPicture">
+    update qzx_roll_picture set isputon=1 where id=#{id}
   </update>
 </mapper>

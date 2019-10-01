@@ -132,6 +132,15 @@ public class OrderController {
         orderService.cancelOrder(orderid);
         return ResultGenerator.successResult();
     }
+    @GetMapping("/getOrderByStatu")
+    public Result getOrderByStatu(@RequestParam Integer shopid,@RequestParam Integer statu){
+        Condition condition = new Condition(Order.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("id="+shopid);
+        criteria.andCondition("statu="+statu);
+        List<Order> list = orderService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/finishOrder")
