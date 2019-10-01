@@ -79,6 +79,10 @@ export default class Menu extends Component {
       Taro.navigateTo({
         url: '/pages/referrer/referrer'
       })
+    }else if (menu.key === 'order') {
+      Taro.navigateTo({
+        url: '/pages/order/order'
+      })
     } else {
       Taro.showToast({
         title: '目前只实现了帮助中心~',
