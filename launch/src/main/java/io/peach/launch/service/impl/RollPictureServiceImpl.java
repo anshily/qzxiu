@@ -19,4 +19,18 @@ public class RollPictureServiceImpl extends AbstractService<RollPicture> impleme
     @Resource
     private RollPictureMapper qzxRollPictureMapper;
 
+    @Override
+    public void deletePicture(Integer id) {
+        
+    }
+
+    @Override
+    public void putDownPicture(Integer id) {
+
+    }
+
+    @Override
+    public void putOnPicture(Integer id) {
+
+    }
 }
