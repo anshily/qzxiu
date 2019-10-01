@@ -81,7 +81,7 @@ public class OrderController {
         return ResultGenerator.successResult(page);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+
     @PostMapping("/shopCar")
     public Result shopCar(@RequestBody ShopCar shopCar){
          /*先创建一个订单对象  shopid   goodsnum   priceAll*/
@@ -91,7 +91,6 @@ public class OrderController {
         OrderMessage orderMessage=new OrderMessage();
         int goodsnum=0;
         for (GoodsMessageDTO g:shopCar.getList()) {
-            orderMessage=null;
             goodsnum+=g.getGoodsNum();
             priceAll=priceAll.add(new BigDecimal(g.getGoodsNum()).multiply(g.getGoodsPrice()));
             orderMessage.setOrderid(orderid);

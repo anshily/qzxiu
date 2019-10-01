@@ -1,6 +1,7 @@
 package io.peach.launch.service;
 import io.peach.launch.model.RollPicture;
 import io.peach.launch.base.core.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 /**
@@ -8,4 +9,8 @@ import io.peach.launch.base.core.Service;
  */
 public interface RollPictureService extends Service<RollPicture> {
 
+
+    void deletePicture(Integer id);
+    void putDownPicture(Integer id);
+    void putOnPicture(Integer id);
 }
