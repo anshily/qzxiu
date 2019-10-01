@@ -104,7 +104,7 @@ public class OrderController {
         Order order=new Order();
         order.setShopid(shopCar.getShopId());
         order.setGoodsnum(goodsnum);
-        order.setPriceAll(priceAll);
+        order.setPriceall(priceAll);
         order.setUpdatetime(new Date());
         order.setCreatetime(new Date());
         order.setOrderid(orderid);
@@ -140,7 +140,7 @@ public class OrderController {
         Order order=orderService.findById(orderid);
         ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
         ShopMessage shopMessagePosition=shopMessageService.getFShopPosition(order.getShopid());
-        shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId(),order.getPriceAll());
+        shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId(),order.getPriceall());
         return ResultGenerator.successResult();
     }
 
