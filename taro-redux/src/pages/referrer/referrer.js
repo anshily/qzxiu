@@ -6,7 +6,7 @@ import { AtSteps, AtAccordion, AtList, AtListItem } from 'taro-ui'
 import './referrer.scss'
 import * as actions from '@actions/referrer';
 
-@connect(state => state.referrerItem, actions)
+@connect(state => state.referrer, actions)
 export default class Referrer extends Component {
 
   constructor(props) {
@@ -19,8 +19,7 @@ export default class Referrer extends Component {
   }
 
   componentDidMount() {
-    console.log(actions)
-    actions.dispatchChild({ shopid: 1 }).then((res) => {
+    this.props.dispatchChild({ shopid: 1 }).then((res) => {
       console.log(res)
       // this.setState({ loaded: true })
     })

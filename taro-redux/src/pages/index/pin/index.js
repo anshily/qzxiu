@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 import { HomeTitle } from '@components'
+import {IMG_URL} from '@constants/api';
 import './index.scss'
 
 export default class Pin extends Component {
@@ -13,17 +14,17 @@ export default class Pin extends Component {
     const { banner: { picUrls = [] }, list } = this.props
     return (
       <View className='home-pin'>
-        <View className='home-pin__banner'>
-          {picUrls.map((item, index) => (
-            <View key={index} className='home-pin__banner-item'>
-              <Image
-                className='home-pin__banner-item-img'
-                src={item}
-                mode='widthFix'
-              />
-            </View>
-          ))}
-        </View>
+        {/*<View className='home-pin__banner'>*/}
+          {/*{picUrls.map((item, index) => (*/}
+            {/*<View key={index} className='home-pin__banner-item'>*/}
+              {/*<Image*/}
+                {/*className='home-pin__banner-item-img'*/}
+                {/*src={item}*/}
+                {/*mode='widthFix'*/}
+              {/*/>*/}
+            {/*</View>*/}
+          {/*))}*/}
+        {/*</View>*/}
 
         <HomeTitle
           title='优秀店铺'
@@ -45,15 +46,15 @@ export default class Pin extends Component {
                   <View key={item.id} className='home-pin__item'>
                     <Image
                       className='home-pin__item-img'
-                      src={item.picUrl}
+                      src={IMG_URL + item.shoppicture}
                     />
                     <View className='home-pin__item-info'>
-                      <Text className='home-pin__item-price'>{`拼团价¥${item.price}`}</Text>
-                      <Text className='home-pin__item-origin'>¥{item.originPrice}</Text>
+                      <Text className='home-pin__item-price'>{`已提现¥${item.profit}`}</Text>
+                      <Text className='home-pin__item-origin'>¥{item.cashin}</Text>
                     </View>
-                    <View className='home-pin__item-num'>
-                      <Text className='home-pin__item-num-txt'>{item.userNum}人团</Text>
-                    </View>
+                    {/*<View className='home-pin__item-num'>*/}
+                      {/*<Text className='home-pin__item-num-txt'>{item.userNum}人团</Text>*/}
+                    {/*</View>*/}
                   </View>
                 ))}
               </SwiperItem>

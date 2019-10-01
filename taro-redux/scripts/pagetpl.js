@@ -25,7 +25,7 @@ import { connect } from '@tarojs/redux'
 import './${dirName}.scss'
 import * as actions from '@actions/${dirName}';
 
-@connect(state => state.${dirName}Item, actions)
+@connect(state => state.${dirName}, actions)
 export default class ${capPirName} extends Component {
   config = {
     navigationBarTitleText: '${dirName}'

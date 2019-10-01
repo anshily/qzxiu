@@ -26,7 +26,8 @@ export default function home(state = INITIAL_STATE, action) {
     case HOME_PIN: {
       // 每3个分成一组
       const pin = []
-      action.payload.forEach((item, index) => {
+      console.log(action.payload.goodShopList)
+      action.payload.goodShopList.forEach((item, index) => {
         const groupIndex = parseInt(index / 3)
         if (!pin[groupIndex]) {
           pin[groupIndex] = []
