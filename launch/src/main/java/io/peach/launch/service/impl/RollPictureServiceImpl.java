@@ -21,7 +21,7 @@ public class RollPictureServiceImpl extends AbstractService<RollPicture> impleme
 
     @Override
     public void deletePicture(Integer id) {
-        
+        qzxRollPictureMapper.deletePicture(id);
     }
 
     @Override
