@@ -75,9 +75,9 @@ public class RollPictureController {
         criteria.andCondition("isputon=1");
         criteria.andCondition("isdelete=0");
         List<RollPicture> list = rollPictureService.findByCondition(condition);
-        Map<String,Object> map=new HashMap<>();
-        map.put("rollPictureList",list);
-        return ResultGenerator.successResult(map);
+        /*Map<String,Object> map=new HashMap<>();
+        map.put("rollPictureList",list);*/
+        return ResultGenerator.successResult(list);
     }
     /*将当前轮播图删除*/
     @GetMapping("/deletePicture")

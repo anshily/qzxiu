@@ -38,7 +38,7 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-         genCode("qzx_record");
+        /* genCode("qzx_activity");*/
          /* genCode("qzx_permission", "qzx_role_permission", "qzx_role", "qzx_user_role","qzx_goods_message",
                   "qzx_grading","qzx_order","qzx_order_message","qzx_point","qzx_roll_picture","qzx_shop_message",
                   "qzx_shop_type","qzx_signup_message");*/
