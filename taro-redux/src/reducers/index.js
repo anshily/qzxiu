@@ -6,6 +6,7 @@ import item from './item'
 import user from './user'
 import enter from './enter'
 import referrer from './referrer'
+import order from './order'
 
 export default combineReducers({
   home,
@@ -14,5 +15,6 @@ export default combineReducers({
   item,
   user,
   enter,
-  referrer
+  referrer,
+  order
 })

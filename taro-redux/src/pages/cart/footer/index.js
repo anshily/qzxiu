@@ -45,18 +45,6 @@ export default class Footer extends Component {
     this.props.onUpdateCheck(order)
   }
 
-  handleOrder = (item) => {
-    const { list } = this.props;
-
-    console.log(item, list);
-    let orders = [];
-    list.forEach(order => {
-      if (order.check) {
-        orders.push(order)
-      }
-    });
-    this.props.onAddOrder(orders);
-  }
 
   render () {
     const { cartInfo } = this.props
@@ -81,7 +69,7 @@ export default class Footer extends Component {
           <ButtonItem
             type='primary'
             text='下单'
-            onClick={this.handleOrder}
+            onClick={this.props.onAddOrder}
           />
         </View>
       </View>

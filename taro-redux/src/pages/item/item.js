@@ -61,9 +61,16 @@ class Item extends Component {
           goodsPrice: itemInfo.activityPrice * selectedItem.cnt
         }]
       }
-      this.props.dispatchOrder(payload).then(() => {
+      this.props.dispatchOrder(payload).then(res => {
+        console.log(res)
         Taro.showToast({
-          title: '下单成功',
+          title: '加入购物车成功',
+          icon: 'none'
+        })
+      }).catch(err => {
+        console.log(err);
+        Taro.showToast({
+          title: '网络错误',
           icon: 'none'
         })
       })
@@ -105,12 +112,12 @@ class Item extends Component {
         actualPrice: itemInfo.activityPrice
       };
 
-      cartUtil.setCart(payload);
+      cartUtil.putCart(payload);
       // this.props.dispatchAdd(payload).then(() => {
-      //   Taro.showToast({
-      //     title: '加入购物车成功',
-      //     icon: 'none'
-      //   })
+        Taro.showToast({
+          title: '加入购物车成功',
+          icon: 'none'
+        })
       // })
       if (isSelected) {
         this.toggleVisible()

@@ -10,3 +10,12 @@ export const dispatchOrder = payload => createAction({
   },
   payload
 })
+
+export const dispatchOrderSet = payload => createAction({
+  url: ROOT_URL + 'order/getOrderByStatu',
+  type: 'ORDER_SET',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

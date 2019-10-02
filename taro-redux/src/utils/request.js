@@ -12,7 +12,7 @@ function updateStorage(data = {}) {
   return Promise.all([
     Taro.setStorage({ key: 'token', data: data['3rdSession'] || '' }),
     Taro.setStorage({ key: 'uid', data: data['uid'] || ''}),
-    Taro.setStorage({ key: 'cart', data: data['cart'] || JSON.stringify({})})
+    // Taro.setStorage({ key: 'cart', data: data['cart'] || JSON.stringify({})})
   ])
 }
 
