@@ -22,7 +22,8 @@ class Index extends Component {
   state = {
     loaded: false,
     login: false,
-    cartInfo: {}
+    cartInfo: {},
+    cartList: []
   }
 
   componentDidShow() {
@@ -54,15 +55,24 @@ class Index extends Component {
     })
   }
 
-  updatePrice(list) {
-    let price = this.state.actualPrice;
+  updateCartInfo() {
+    let list = cartUtil.getCart();
+    let price = 0;
+    let cnt = 0;
     list.forEach(item => {
-      if (item.check){
-        price += item.actualPrice
+      if (item.checked){
+        price += item.actualPrice * item.cnt;
+        cnt++;
       }
     })
 
-    return price
+    let payload = {
+      cartInfo: {
+        actualPrice: price,
+        selectedCount: cnt
+      }
+    }
+    this.setState(payload);
   }
 
   updateCart = (item) => {
@@ -70,37 +80,71 @@ class Index extends Component {
     this.setState({
       cartList: cartUtil.getCart()
     })
+    this.updateCartInfo();
   }
 
   allChecked = (order) => {
-    console.log(order)
-
-    let price = 0;
-    let cnt = 0;
-    order.forEach(item => {
-      if (item.checked){
-        price += item.actualPrice;
-        cnt++;
-      }
-    })
+    // console.log(order)
+    //
+    // let price = 0;
+    // let cnt = 0;
+    // order.forEach(item => {
+    //   if (item.checked){
+    //     price += item.actualPrice;
+    //     cnt++;
+    //   }
+    // })
 
     cartUtil.setCart(order)
 
     let payload = {
-      cartList: order,
-      cartInfo: {
-        actualPrice: price,
-        selectedCount: cnt
-      }
+      cartList: order
     }
     this.setState(payload);
+
+    this.updateCartInfo();
 
     console.log(this.state)
   }
 
   addOrder = (item) => {
     console.log(item);
-    this.props.dispatchOrder(item)
+
+    let list = cartUtil.getCart();
+
+    let orders = [];
+
+    list.forEach( o => {
+      if (o.checked){
+        orders.push({
+          goodsId: o.id,
+          goodsNum: o.cnt,
+          goodsPrice: o.actualPrice
+        })
+      }
+    })
+
+    const payload = {
+      shopId: 1,
+      list: orders
+    }
+    this.props.dispatchOrder(payload).then(res => {
+      console.log(res)
+      Taro.showToast({
+        title: '加入下单成功',
+        icon: 'none'
+      })
+      cartUtil.setCart([]);
+      this.setState({
+        cartList: cartUtil.getCart()
+      })
+    }).catch(err => {
+      console.log(err);
+      Taro.showToast({
+        title: '网络错误',
+        icon: 'none'
+      })
+    })
   }
 
   // updateCheck = (item) => {

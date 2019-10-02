@@ -2,13 +2,30 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import {TradeBannerEditComponent} from "./edit/edit.component";
+import {NzMessageService} from "ng-zorro-antd";
 
 @Component({
   selector: 'app-trade-banner',
   templateUrl: './banner.component.html',
 })
 export class TradeBannerComponent implements OnInit {
-  url = `/user`;
+  url = ROOT_URL + `roll/picture/list`;
+
+  resObj = {
+    reName: {
+      total: 'data.total',
+      list: 'data.list'
+    },
+    process: (res) => {
+      console.log(res);
+      return res.map(item => {
+        item['picture_address'] = IMG_URL + item['picture_address'];
+        return item;
+      });
+    }
+  }
+
   searchSchema: SFSchema = {
     properties: {
       no: {
@@ -19,27 +36,41 @@ export class TradeBannerComponent implements OnInit {
   };
   @ViewChild('st', { static: false }) st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '编号', index: 'id' },
+    { title: '备注', index: 'note' },
+    { title: '活动id', type: 'number', index: 'activityid' },
+    { title: '缩略图', type: 'img', width: '50px', index: 'picture_address' },
+    { title: '时间', type: 'date', index: 'updatetime' },
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        { text: '编辑', click: (item: any) => {
+          this.delete(item.id)
+          }, pop: '确认删除？' },
+        { text: '编辑', type: 'static', component: TradeBannerEditComponent, click: 'reload' },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService,) { }
 
   ngOnInit() { }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(TradeBannerEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
+  }
+
+  delete(id) {
+    this.http.get(ROOT_URL + 'roll/picture/deletePicture',{id: id}).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('删除成功');
+        this.st.reload()
+      } else {
+        this.msgSrv.error('网络错误');
+      }
+    })
   }
 
 }

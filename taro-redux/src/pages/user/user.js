@@ -7,6 +7,7 @@ import { getWindowHeight } from '@utils/style'
 import Profile from './profile'
 import Menu from './menu'
 import Activity from './activity'
+import * as cartUtil from '@utils/cart'
 import './user.scss'
 
 @connect(state => state.user, { ...actions, dispatchCartNum })
@@ -18,6 +19,7 @@ class User extends Component {
   componentDidShow() {
     this.props.dispatchUser()
     this.props.dispatchCartNum()
+    console.log(cartUtil.getCart())
   }
 
   handleLogin = () => {

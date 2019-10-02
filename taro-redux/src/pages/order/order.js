@@ -16,6 +16,14 @@ export default class Order extends Component {
     }
   }
 
+  componentDidMount() {
+    console.log(this.props);
+    this.props.dispatchOrderSet({ shopid: 1, statu: 1 }).then((res) => {
+      console.log(res)
+      this.setState({ loaded: true })
+    })
+  }
+
   config = {
     navigationBarTitleText: 'order'
   }
@@ -43,6 +51,22 @@ export default class Order extends Component {
               onChange={this.onChange.bind(this)}
             />
           </View>
+        </View>
+
+        <View>
+          <AtList>
+            {
+              this.props.orderList.map(item => (
+                <AtListItem
+                  key={String(item.id)}
+                  arrow='right'
+                  note={'总价：' + item.priceall}
+                  title={'订单编号：'  + item.orderid}
+                  extraText='详细信息'
+                />
+              ))
+            }
+          </AtList>
         </View>
       </View>
     )

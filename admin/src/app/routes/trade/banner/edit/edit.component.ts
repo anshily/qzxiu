@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
-import { SFSchema, SFUISchema } from '@delon/form';
+import {SFSchema, SFSelectWidgetSchema, SFUISchema, SFUploadWidgetSchema} from '@delon/form';
 
 @Component({
   selector: 'app-trade-banner-edit',
@@ -12,13 +12,30 @@ export class TradeBannerEditComponent implements OnInit {
   i: any;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      picture: {
+        type: 'string',
+        title: '封面图',
+        ui: {
+          widget: 'upload',
+          action: ROOT_URL + 'shop/message/uploadPicture',
+          resReName: 'data',
+          urlReName: 'url',
+          fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+          name: 'image'
+        } as SFUploadWidgetSchema,
+      },
+      note: { type: 'string', title: '备注' },
+      activity: { type: 'number', title: '活动编号',enum: [
+          { label: '省代理', value: 1 },
+          { label: '市代理', value: 2 },
+          { label: '县代理', value: 3 },
+        ],
+        default: 1,
+        ui: {
+          widget: 'select',
+        } as SFSelectWidgetSchema }
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    required: ['picture', 'note', 'activity'],
   };
   ui: SFUISchema = {
     '*': {
@@ -49,9 +66,19 @@ export class TradeBannerEditComponent implements OnInit {
   }
 
   save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
-      this.modal.close(true);
+    let params = {
+      activityid: value.activity,
+      picture_address: value.picture,
+      note: value.note
+    };
+    console.log(params)
+    this.http.post(`${ROOT_URL}roll/picture/add`, params).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('保存成功');
+        this.modal.close(true);
+      }else {
+        this.msgSrv.success(res['message']);
+      }
     });
   }
 
