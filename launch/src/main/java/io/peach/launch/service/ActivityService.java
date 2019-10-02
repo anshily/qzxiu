@@ -7,5 +7,6 @@ import io.peach.launch.base.core.Service;
  * Created by anshi on 2019/10/02.
  */
 public interface ActivityService extends Service<Activity> {
+    void deleteActivity(int id,String type);
 
 }

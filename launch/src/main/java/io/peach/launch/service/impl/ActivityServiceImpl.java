@@ -19,4 +19,8 @@ public class ActivityServiceImpl extends AbstractService<Activity> implements Ac
     @Resource
     private ActivityMapper qzxActivityMapper;
 
+    @Override
+    public void deleteActivity(int id,String type) {
+        qzxActivityMapper.deleteActivity(id, type);
+    }
 }
