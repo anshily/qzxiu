@@ -58,6 +58,7 @@ export default class Order extends Component {
             {
               this.props.orderList.map(item => (
                 <AtListItem
+                  key={String(item.id)}
                   arrow='right'
                   note={'总价：' + item.priceall}
                   title={'订单编号：'  + item.orderid}

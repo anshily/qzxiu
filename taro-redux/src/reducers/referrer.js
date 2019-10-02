@@ -1,6 +1,8 @@
 
 const INITIAL_STATE = {
   referrerItem: {},
+  referrerLevelOne: [],
+  referrerLevelTwo: []
 }
 
 export default function referrer(state = {}, action) {
@@ -10,8 +12,19 @@ export default function referrer(state = {}, action) {
       return { ...state, referrerItem: referrerItem }
     }
     case 'REFERRER_CHILD': {
-      console.log(action.payload)
-      return { ...state }
+      console.log(action.payload.child)
+      let list = action.payload.child;
+      let levelList1 = [];
+      let levelList2 = [];
+      list.forEach(item => {
+        // recommmend_type: "地区推荐"
+        if (item.recommmend_type == '地区推荐'){
+          levelList1.push(item)
+        }else {
+          levelList2.push(item)
+        }
+      })
+      return { ...state,  referrerLevelOne: levelList1, referrerLevelTwo: levelList2}
     }
     default:
       return state

@@ -1,51 +1,65 @@
-
-import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { connect } from '@tarojs/redux'
-import { AtSteps, AtAccordion, AtList, AtListItem } from 'taro-ui'
+import Taro, {Component} from '@tarojs/taro'
+import {View, Text} from '@tarojs/components'
+import {connect} from '@tarojs/redux'
+import {AtSteps, AtAccordion, AtList, AtListItem} from 'taro-ui'
 import './referrer.scss'
 import * as actions from '@actions/referrer';
 
 @connect(state => state.referrer, actions)
 export default class Referrer extends Component {
 
+  static defaultProps = {
+    referrerLevelOne: []
+  }
+
   constructor(props) {
     super(props)
     this.state = {
       current: 0,
-      open: false
+      open1: false,
+      open2: false
     }
     // this.itemId = parseInt(this.$router.params.itemId)
   }
 
   componentDidMount() {
-    this.props.dispatchChild({ shopid: 1 }).then((res) => {
+    this.props.dispatchChild({shopid: 1}).then((res) => {
       console.log(res)
       // this.setState({ loaded: true })
     })
   }
 
-  onChange (current) {
+  onChange(current) {
     console.log(current)
     this.setState({
       current
     })
   }
-  handleClick (value) {
+
+  handleClick1(value) {
     this.setState({
-      open: value
+      open1: value
+    })
+  }
+
+  handleClick2(value) {
+    this.setState({
+      open2: value
     })
   }
 
   config = {
     navigationBarTitleText: 'referrer'
   }
+
   render() {
     const items = [
-      { 'title': '步骤一', 'desc': '这里是额外的信息，最多两行' },
-      { 'title': '一级店铺', 'desc': '这里是额外的信息，最多两行' },
-      { 'title': '步骤三', 'desc': '这里是额外的信息，最多两行' }
+      {'title': '步骤一', 'desc': '这里是额外的信息，最多两行'},
+      {'title': '一级店铺', 'desc': '这里是额外的信息，最多两行'},
+      {'title': '步骤三', 'desc': '这里是额外的信息，最多两行'}
     ]
+
+    const {referrerLevelOne, referrerLevelTwo} = this.props
     return (
       <View className='home__wrap'>
 
@@ -68,29 +82,44 @@ export default class Referrer extends Component {
 
 
         <AtAccordion
-          open={this.state.open}
-          onClick={this.handleClick.bind(this)}
-          title='标题一'
+          open={this.state.open1}
+          onClick={this.handleClick1.bind(this)}
+          title='地区推荐'
         >
           <AtList hasBorder={false}>
-            <AtListItem
-              title='标题文字'
-              arrow='right'
-              thumb='https://img12.360buyimg.com/jdphoto/s72x72_jfs/t6160/14/2008729947/2754/7d512a86/595c3aeeNa89ddf71.png'
-            />
-            <AtListItem
-              title='标题文字'
-              note='描述信息'
-              arrow='right'
-              thumb='http://img10.360buyimg.com/jdphoto/s72x72_jfs/t5872/209/5240187906/2872/8fa98cd/595c3b2aN4155b931.png'
-            />
-            <AtListItem
-              title='标题文字'
-              note='描述信息'
-              extraText='详细信息'
-              arrow='right'
-              thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-            />
+            {
+              referrerLevelOne.map(item => (
+                <AtListItem
+                  key={String(item.id)}
+                  title={item.shopname}
+                  note='描述信息'
+                  extraText='详细信息'
+                  arrow='right'
+                  thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+                />
+              ))
+            }
+
+          </AtList>
+        </AtAccordion><AtAccordion
+          open={this.state.open2}
+          onClick={this.handleClick2.bind(this)}
+          title='人员推荐'
+        >
+          <AtList hasBorder={false}>
+            {
+              referrerLevelTwo.map(item => (
+                <AtListItem
+                  key={String(item.id)}
+                  title={item.shopname}
+                  note='描述信息'
+                  extraText='详细信息'
+                  arrow='right'
+                  thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+                />
+              ))
+            }
+
           </AtList>
         </AtAccordion>
       </View>
