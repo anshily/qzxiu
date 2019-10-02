@@ -18,6 +18,7 @@ public class RollPicture {
      * 图片备注
      */
     private String note;
+    private Integer activityid;
 
     private Date createtime;
 
@@ -33,9 +34,19 @@ public class RollPicture {
      */
     private Integer isdelete;
 
+    public Integer getActivityid() {
+        return activityid;
+    }
+
+    public void setActivityid(Integer activityid) {
+        this.activityid = activityid;
+    }
+
     /**
      * @return id
      */
+
+
     public Integer getId() {
         return id;
     }
