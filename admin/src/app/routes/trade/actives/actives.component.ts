@@ -8,7 +8,22 @@ import { SFSchema } from '@delon/form';
   templateUrl: './actives.component.html',
 })
 export class TradeActivesComponent implements OnInit {
-  url = `/user`;
+  url = ROOT_URL + `roll/picture/list`;
+
+  resObj = {
+    reName: {
+      total: 'data.total',
+      list: 'data.list'
+    },
+    process: (res) => {
+      console.log(res);
+      return res.map(item => {
+        item['picture_address'] = IMG_URL + item['picture_address'];
+        return item;
+      });
+    }
+  }
+
   searchSchema: SFSchema = {
     properties: {
       no: {
