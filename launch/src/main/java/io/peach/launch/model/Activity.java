@@ -21,7 +21,7 @@ public class Activity {
     /**
      * 状态（1：可用，0：不可用）
      */
-    private String statu;
+    private Integer statu;
 
     /**
      * 活动
@@ -93,16 +93,11 @@ public class Activity {
      *
      * @return statu - 状态（1：可用，0：不可用）
      */
-    public String getStatu() {
+    public Integer getStatu() {
         return statu;
     }
 
-    /**
-     * 设置状态（1：可用，0：不可用）
-     *
-     * @param statu 状态（1：可用，0：不可用）
-     */
-    public void setStatu(String statu) {
+    public void setStatu(Integer statu) {
         this.statu = statu;
     }
 

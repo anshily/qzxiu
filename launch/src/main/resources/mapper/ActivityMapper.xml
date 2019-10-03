@@ -12,4 +12,17 @@
     <result column="statu" jdbcType="VARCHAR" property="statu" />
     <result column="note" jdbcType="LONGVARCHAR" property="note" />
   </resultMap>
+
+  <update id="deleteActivity">
+    update qzx_activity
+    <set>
+      <if test="type=='up'">
+        statu=1,
+      </if>
+      <if test="type=='down'">
+        statu=0,
+      </if>
+    </set>
+    where id=#{id}
+  </update>
 </mapper>

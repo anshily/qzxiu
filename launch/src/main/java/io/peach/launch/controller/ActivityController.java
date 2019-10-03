@@ -27,9 +27,9 @@ public class ActivityController {
         return ResultGenerator.successResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestBody Integer id) {
-        activityService.deleteById(id);
+    @PostMapping("/changeStatu")
+    public Result delete(@RequestParam Integer id,@RequestParam String type) {
+        activityService.deleteActivity(id,type);
         return ResultGenerator.successResult();
     }
 
@@ -63,5 +63,14 @@ public class ActivityController {
     List<Activity> list = activityService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
+    }
+
+    @GetMapping("/getActivityListByStatu")
+    public Result getActivityListByStatu(@RequestParam Integer statu) {
+        Condition condition = new Condition(Activity.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("statu="+statu);
+        List<Activity> list = activityService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
     }
 }
