@@ -35,7 +35,7 @@ export class TradeBannerEditComponent implements OnInit {
           widget: 'select',
         } as SFSelectWidgetSchema }
     },
-    required: ['picture', 'note', 'activity'],
+    required: ['picture', 'note'],
   };
   ui: SFUISchema = {
     '*': {
@@ -63,6 +63,44 @@ export class TradeBannerEditComponent implements OnInit {
   ngOnInit(): void {
     if (this.record.id > 0)
     this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+
+    this.http.get(ROOT_URL + 'activity/getActivityListByStatu',{statu: 1}).subscribe(res => {
+      console.log(res)
+      if (res['code'] == 0){
+
+        let list = [];
+
+        res['data'].forEach(item => {
+          list.push({
+            label: item['activityname'],
+            value: item['id']
+          })
+        })
+        this.schema = {
+          properties: {
+            picture: {
+              type: 'string',
+              title: '封面图',
+              ui: {
+                widget: 'upload',
+                action: ROOT_URL + 'shop/message/uploadPicture',
+                resReName: 'data',
+                urlReName: 'url',
+                fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+                name: 'image'
+              } as SFUploadWidgetSchema,
+            },
+            note: { type: 'string', title: '备注' },
+            activity: { type: 'number', title: '活动编号',enum: list,
+              default: 1,
+              ui: {
+                widget: 'select',
+              } as SFSelectWidgetSchema }
+          },
+          required: ['picture', 'note', 'activity'],
+        };
+      }
+    })
   }
 
   save(value: any) {

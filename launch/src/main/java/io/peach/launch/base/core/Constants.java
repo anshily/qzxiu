@@ -18,6 +18,13 @@ public final class Constants {
     public static final String PATH_IMAGE_PATH = "../uploads/";
     public static final String PATH_IMAGE_PATH_DB = "uploads/";
 
+    public final static String APPID = "wx65a71e541362e0a6";//微信公众号id
+
+    public final static String APP_SECRECT = "f45cf8e5b323c14fba971e4e98fe0054";//服务号的应用密码
+
+    public static final String WECHAT_CODE_SESSION = "https://api.weixin.qq.com/sns/jscode2session?appid=" + APPID
+            +"&secret="+ APP_SECRECT +"&grant_type=authorization_code&js_code=";//微信获取session地址
+
 
     /* ~~~~~~~~~~~~~~~~~~~~~返回数据状态 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
     /*

@@ -56,3 +56,13 @@ export const dispatchRecommend = payload => createAction({
   },
   payload
 })
+
+
+export const dispatchBanner = payload => createAction({
+  url: ROOT_URL + 'roll/picture/rollPictureList',
+  type: 'HOME_BANNER',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

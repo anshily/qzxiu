@@ -2,13 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import {TradeActivesEditComponent} from "./edit/edit.component";
 
 @Component({
   selector: 'app-trade-actives',
   templateUrl: './actives.component.html',
 })
 export class TradeActivesComponent implements OnInit {
-  url = ROOT_URL + `roll/picture/list`;
+  url = ROOT_URL + `activity/list`;
 
   resObj = {
     reName: {
@@ -18,7 +19,7 @@ export class TradeActivesComponent implements OnInit {
     process: (res) => {
       console.log(res);
       return res.map(item => {
-        item['picture_address'] = IMG_URL + item['picture_address'];
+        // item['picture_address'] = IMG_URL + item['picture_address'];
         return item;
       });
     }
@@ -34,15 +35,14 @@ export class TradeActivesComponent implements OnInit {
   };
   @ViewChild('st', { static: false }) st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '编号', index: 'id' },
+    { title: '活动名称', type: 'number', index: 'activityname' },
+    { title: '活动状态', type: 'date', index: 'updatedAt' },
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        { text: '编辑', type: 'static', component: TradeActivesEditComponent, click: 'reload' },
+        { text: '删除', click: (item: any) => `/form/${item.id}` },
       ]
     }
   ];
@@ -52,9 +52,9 @@ export class TradeActivesComponent implements OnInit {
   ngOnInit() { }
 
   add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+    this.modal
+      .createStatic(TradeActivesEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
   }
 
 }

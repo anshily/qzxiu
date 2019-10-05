@@ -2,9 +2,11 @@ import {
   HOME_INFO, HOME_SEARCH_COUNT, HOME_RECOMMEND, HOME_PIN
 } from '@constants/home'
 import {IMG_URL} from '@constants/api';
+import {ROOT_URL} from "../constants/api";
 const INITIAL_STATE = {
   homeInfo: {},
   searchCount: 0,
+  banner: [],
   pin: [],
   recommend: []
 }
@@ -50,6 +52,18 @@ export default function home(state = INITIAL_STATE, action) {
       return {
         ...state,
         recommend: state.recommend.concat(list)
+      }
+    }
+    case 'HOME_BANNER': {
+      console.log(action.payload)
+      let list = action.payload.map((item, index) => {
+          item['img'] = ROOT_URL + item['picture_address'],
+          item['rank'] = index
+        return item;
+      })
+      return {
+        ...state,
+        banner: list
       }
     }
     default:
