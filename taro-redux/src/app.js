@@ -4,6 +4,7 @@ import { Provider } from '@tarojs/redux'
 
 import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
+import {ROOT_URL} from '@constants/api';
 
 import configStore from './store'
 
@@ -69,7 +70,21 @@ class App extends Component {
     }
   }
 
-  componentDidMount () {}
+  componentDidMount () {
+    Taro.login().then(res => {
+      console.log(res)
+      Taro.request({
+        url: ROOT_URL + 'anshi/mplogin',
+        method: 'GET',
+        data: {
+          code: res['code']
+        }
+      }).then( res => {
+        console.log(res)
+        }
+      )
+    })
+  }
 
   componentDidShow () {}
 

@@ -31,12 +31,12 @@ class Home extends Component {
     //   duration: 6000
     // })
 
-    this.props.dispatchHome().then(() => {
-      this.setState({ loaded: true })
-    })
-    this.props.dispatchCartNum()
-    this.props.dispatchSearchCount()
-    this.props.dispatchPin({ orderType: 4, size: 12 })
+    // this.props.dispatchHome().then(() => {
+    //   this.setState({ loaded: true })
+    // })
+    // this.props.dispatchCartNum()
+    // this.props.dispatchSearchCount()
+    // this.props.dispatchPin({ orderType: 4, size: 12 })
     this.loadRecommend()
   }
 
@@ -53,6 +53,7 @@ class Home extends Component {
     this.props.dispatchRecommend(payload).then((res) => {
       const lastItem = res.rcmdItemList[res.rcmdItemList.length - 1]
       this.setState({
+        // loaded: true,
         loading: false,
         hasMore: res.hasMore,
         lastItemId: lastItem && lastItem.id
@@ -71,11 +72,11 @@ class Home extends Component {
   }
 
   render () {
-    if (!this.state.loaded) {
-      return <Loading />
-    }
+    // if (!this.state.loaded) {
+    //   return <Loading />
+    // }
 
-    const { homeInfo, searchCount, recommend, pin } = this.props
+    const { recommend } = this.props
     console.log(recommend)
     return (
       <View className='home'>

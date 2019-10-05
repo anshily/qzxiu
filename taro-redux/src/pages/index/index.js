@@ -57,10 +57,14 @@ class Index extends Component {
 
   componentDidMount() {
 
-    this.props.dispatchHome().then(() => {
+    // this.props.dispatchHome().then(() => {
+    //   this.setState({ loaded: true })
+    // })
+    this.props.dispatchBanner().then((res) => {
+      console.log(res)
       this.setState({ loaded: true })
     })
-    this.props.dispatchCartNum()
+    // this.props.dispatchCartNum()
     // this.props.dispatchSearchCount()
     this.props.dispatchPin({ orderType: 4, size: 12 })
     this.loadImages();
@@ -129,7 +133,7 @@ class Index extends Component {
       return <Loading />
     }
 
-    const { homeInfo, pin } = this.props
+    const { homeInfo, pin, banner } = this.props
     return (
       <View className='home'>
         <ScrollView
@@ -138,7 +142,7 @@ class Index extends Component {
           style={{ height: getWindowHeight() }}
         >
           <View onClick={this.handlePrevent}>
-            <Banner list={homeInfo.focus} />
+            <Banner list={banner} />
             <Policy list={homeInfo.policyDesc} />
 
             {/* 免费拼团 */}

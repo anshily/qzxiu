@@ -44,10 +44,20 @@ export class TradeBannerComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '编辑', click: (item: any) => {
-          this.delete(item.id)
-          }, pop: '确认删除？' },
+        { text: '上架', click: (item) => {
+          this.putUp(item.id)
+          }, iif: (item) => {
+            return item.isputon == 0
+          } },
+        { text: '下架', click: (item) => {
+            this.putDown(item.id)
+          }, iif: (item) => {
+          return item.isputon == 1
+          }  },
         { text: '编辑', type: 'static', component: TradeBannerEditComponent, click: 'reload' },
+        { text: '删除', click: (item: any) => {
+            this.delete(item.id)
+          }, pop: '确认删除？' }
       ]
     }
   ];
@@ -66,6 +76,28 @@ export class TradeBannerComponent implements OnInit {
     this.http.get(ROOT_URL + 'roll/picture/deletePicture',{id: id}).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('删除成功');
+        this.st.reload()
+      } else {
+        this.msgSrv.error('网络错误');
+      }
+    })
+  }
+
+  putUp(id) {
+    this.http.get(ROOT_URL + 'roll/picture/putOnPicture',{id: id}).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('上架成功');
+        this.st.reload()
+      } else {
+        this.msgSrv.error('网络错误');
+      }
+    })
+  }
+
+  putDown(id) {
+    this.http.get(ROOT_URL + 'roll/picture/putDownPicture',{id: id}).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('下架成功');
         this.st.reload()
       } else {
         this.msgSrv.error('网络错误');

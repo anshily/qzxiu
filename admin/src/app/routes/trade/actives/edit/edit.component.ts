@@ -9,32 +9,28 @@ import { SFSchema, SFUISchema } from '@delon/form';
 })
 export class TradeActivesEditComponent implements OnInit {
   record: any = {};
+  receiveContent: '';
   i: any;
   schema: SFSchema = {
     properties: {
-      no: { type: 'string', title: '编号' },
-      owner: { type: 'string', title: '姓名', maxLength: 15 },
-      callNo: { type: 'number', title: '调用次数' },
-      href: { type: 'string', title: '链接', format: 'uri' },
-      description: { type: 'string', title: '描述', maxLength: 140 },
+      name: { type: 'string', title: '活动名称', maxLength: 15 },
+      custom: {
+        type: 'string',
+        title: '描述',
+        ui: {
+          widget: 'custom',
+          grid: { span: 24 }
+        },
+        default: 'test',
+      }
     },
-    required: ['owner', 'callNo', 'href', 'description'],
+    required: ['name', 'custom'],
   };
   ui: SFUISchema = {
     '*': {
       spanLabelFixed: 100,
       grid: { span: 12 },
-    },
-    $no: {
-      widget: 'text'
-    },
-    $href: {
-      widget: 'string',
-    },
-    $description: {
-      widget: 'textarea',
-      grid: { span: 24 },
-    },
+    }
   };
 
   constructor(
@@ -48,10 +44,23 @@ export class TradeActivesEditComponent implements OnInit {
     this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
   }
 
+  updateContent(e){
+    console.log(e)
+    this.receiveContent = e;
+  }
+
   save(value: any) {
-    this.http.post(`/user/${this.record.id}`, value).subscribe(res => {
-      this.msgSrv.success('保存成功');
-      this.modal.close(true);
+    let params = {
+      note: this.receiveContent,
+      activityname: value.name
+    }
+    this.http.post(`${ROOT_URL}activity/add`, params).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('保存成功');
+        this.modal.close(true);
+      }else {
+        this.msgSrv.success(res['data']);
+      }
     });
   }
 
