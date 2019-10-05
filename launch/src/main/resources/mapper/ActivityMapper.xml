@@ -25,4 +25,8 @@
     </set>
     where id=#{id}
   </update>
+
+  <select id="getActivityNameAndId" resultType="map">
+    select id,activityname as name from qzx_activity where statu=1
+  </select>
 </mapper>

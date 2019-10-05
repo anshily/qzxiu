@@ -11,6 +11,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
 * Created by anshi on 2019/10/02.
@@ -73,4 +74,11 @@ public class ActivityController {
         List<Activity> list = activityService.findByCondition(condition);
         return ResultGenerator.successResult(list);
     }
+    /*获取活动名称以及id*/
+    @GetMapping("/getActivityNameAndId")
+    public Result getActivityNameAndId() {
+        List<Map<String,String>> map = activityService.getActivityNameAndId();
+        return ResultGenerator.successResult(map);
+    }
+
 }
