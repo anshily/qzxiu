@@ -73,7 +73,7 @@ public class UserController {
     public Result login(@RequestBody User user) {
 
         //账号密码不能为空
-        if(user.getIdentify_card() == null || user.getIdentify_card().isEmpty())
+        if(user.getUsername() == null || user.getUsername().isEmpty())
         {
             throw new ServiceException(Constants.CODE_ERR_USER_NAME);
         }

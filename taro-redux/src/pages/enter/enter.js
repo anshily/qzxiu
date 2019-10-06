@@ -109,31 +109,46 @@ export default class UserLogin extends Component {
       loading: true,
       disabled: true
     })
-    this.props.dispatchENTER({
-      user: {
-        username: this.state.username,
-        password: this.state.password
-      },
-      shopMessage: {
-        owner_phone: this.state.phone,
-        shoptype_id: this.state.levelChecked.key,
-        shopname: this.state.shopName,
-        shoppicture: this.state.image,
-        shopaddress: this.state.address
-      },
-      recommendID: this.state.referrerChecked.id,
-      positionID: this.state.managerChecked.id
-    }).then( () => {
-      console.log('test');
-      this.setState({
-        loading: false,
-        disabled: false
-      })
-      this.setState({
-        openModal: true
-      })
+    Taro.request({
+      url: ROOT_URL + 'user/nameExist',
+      data: {
+        name: this.state.username
+      }
+    }).then(res => {
+      console.log(res);
+
+      if (res['code'] == 0) {
+        if (true){
+          this.props.dispatchENTER({
+            user: {
+              username: this.state.username,
+              password: this.state.password
+            },
+            shopMessage: {
+              owner_phone: this.state.phone,
+              shoptype_id: this.state.levelChecked.key,
+              shopname: this.state.shopName,
+              shoppicture: this.state.image,
+              shopaddress: this.state.address
+            },
+            recommendID: this.state.referrerChecked.id,
+            positionID: this.state.managerChecked.id
+          }).then( () => {
+            console.log('test');
+            this.setState({
+              loading: false,
+              disabled: false
+            })
+            this.setState({
+              openModal: true
+            })
+          })
+        }
+      }
     })
   }
+
+
 
   onReset = e => {
     console.log(e)

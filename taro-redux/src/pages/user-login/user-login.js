@@ -82,7 +82,7 @@ class UserLogin extends Component {
         <View className='user-login-email__wrap'>
           <InputItem
             value={username}
-            placeholder='邮箱账号'
+            placeholder='账号'
             onInput={this.handleInput.bind(this, 'username')}
           />
           <InputItem
