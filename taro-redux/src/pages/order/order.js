@@ -24,6 +24,13 @@ export default class Order extends Component {
     })
   }
 
+  handleClick(item){
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/order-detail/order-detail?orderId=${item.id}`
+    })
+  }
+
   config = {
     navigationBarTitleText: 'order'
   }
@@ -58,6 +65,7 @@ export default class Order extends Component {
             {
               this.props.orderList.map(item => (
                 <AtListItem
+                  onClick={this.handleClick.bind(this, item)}
                   key={String(item.id)}
                   arrow='right'
                   note={'总价：' + item.priceall}

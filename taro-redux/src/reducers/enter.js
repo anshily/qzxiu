@@ -9,9 +9,7 @@ export default function enter(state = {}, action) {
   switch(action.type) {
     case 'SHOP_ENTER': {
       console.log('reducer',action)
-      const { categoryList } = action.payload
-      const menu = categoryList.map(({ id, name }) => ({ id, name }))
-      return { ...state, menu, category: categoryList }
+      return { ...state, res: action.payload }
     }
     case 'ENTER_RECOMMEND': {
       return {

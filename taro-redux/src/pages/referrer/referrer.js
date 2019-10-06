@@ -9,7 +9,8 @@ import * as actions from '@actions/referrer';
 export default class Referrer extends Component {
 
   static defaultProps = {
-    referrerLevelOne: []
+    referrerLevelOne: [],
+    referrerLevelTwo: []
   }
 
   constructor(props) {

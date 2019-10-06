@@ -7,6 +7,8 @@ import user from './user'
 import enter from './enter'
 import referrer from './referrer'
 import order from './order'
+import shop from './shop'
+import orderDetail from './order-detail'
 
 export default combineReducers({
   home,
@@ -16,5 +18,7 @@ export default combineReducers({
   user,
   enter,
   referrer,
-  order
+  order,
+  shop,
+  orderDetail
 })

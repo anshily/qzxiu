@@ -23,7 +23,7 @@ function updateStorage(data = {}) {
  */
 export default async function fetch(options) {
   console.log(options)
-  const { url, payload, method = 'GET', showToast = true, autoLogin = true, anshiModify = false } = options
+  const { url, payload, method = 'GET', showToast = true, autoLogin = true, anshiModify = true } = options
   const token = await getStorage('token')
   const header = token ? { 'WX-PIN-SESSION': token, 'X-WX-3RD-Session': token } : {}
   if (method === 'POST') {
@@ -38,6 +38,9 @@ export default async function fetch(options) {
   }).then(async (res) => {
     const { code, data } = res.data
     console.log(res);
+    console.log(code);
+    console.log(data);
+    console.log(anshiModify);
 
     if (anshiModify) {
       if (code == 0){
