@@ -4,6 +4,7 @@ import io.peach.launch.dto.CashOutDTO;
 import io.peach.launch.dto.SubmitAll;
 import io.peach.launch.model.Record;
 import io.peach.launch.model.ShopMessage;
+import io.peach.launch.model.User;
 import io.peach.launch.service.RecordService;
 import io.peach.launch.service.ShopMessageService;
 import com.github.pagehelper.PageHelper;
@@ -138,6 +139,11 @@ public class ShopMessageController {
     @Transactional(propagation = Propagation.REQUIRED)
     @PostMapping("/saveUserAndShopMessageAndGrading")
     public Result saveUserAndShopMessageAndGrading(@RequestBody SubmitAll submitAll) {
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(submitAll.getToken());
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
         /*先存储用户信息  返回用户id*/
         userService.save(submitAll.getUser());
         /*将返回的用户id存入店铺信息中*/

@@ -19,6 +19,12 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @GetMapping("/userInfo")
+    public Result userInfo(@RequestParam String token){
+        User user = userService.getUserInfoByToken(token);
+        return ResultGenerator.successResult(user);
+    }
+
     @PostMapping("/add")
     public Result add(@RequestBody User user) {
         userService.save(user);
@@ -75,7 +81,7 @@ public class UserController {
         {
             throw new ServiceException(Constants.CODE_ERR_USER_NAME);
         }
-        List<User> users =  userService.selectByCSql("identify_card=" + user.getIdentify_card() + " and password=" + user.getPassword());
+        List<User> users =  userService.selectByCSql("username=" + user.getUsername() + " and password=" + user.getPassword());
         if (users.size() > 0){
             String newToken = UUID.randomUUID().toString();
 

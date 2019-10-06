@@ -10,6 +10,15 @@ import java.util.List;
 public class ShopCar {
     private List<GoodsMessageDTO> list;
     private Integer shopId;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public Integer getShopId() {
         return shopId;

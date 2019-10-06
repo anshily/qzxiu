@@ -1,10 +1,14 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.ServiceException;
+import io.peach.launch.dto.ActivityDTO;
 import io.peach.launch.model.Activity;
+import io.peach.launch.model.User;
 import io.peach.launch.service.ActivityService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
+import io.peach.launch.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -21,10 +25,17 @@ import java.util.Map;
 public class ActivityController {
     @Resource
     private ActivityService activityService;
+    @Resource
+    private UserService userService;
 
     @PostMapping("/add")
-    public Result add(@RequestBody Activity activity) {
-        activityService.save(activity);
+    public Result add(@RequestBody ActivityDTO activityDTO) {
+         /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(activityDTO.getToken());
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
+        activityService.save(activityDTO.getActivity());
         return ResultGenerator.successResult();
     }
 
