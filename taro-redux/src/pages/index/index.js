@@ -6,12 +6,10 @@ import * as actions from '@actions/home'
 import { dispatchCartNum } from '@actions/cart'
 import { getWindowHeight } from '@utils/style'
 import Banner from './banner'
-import Policy from './policy'
 import Pin from './pin'
 import './index.scss'
 import { AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
-import { ClFloatButton } from 'mp-colorui'
-import {IMG_URL} from "../../constants/api";
+import {IMG_URL} from "@constants/api";
 
 //引入图片预加载组件
 import ImgLoader from '@utils/img-loader/img-loader'
@@ -125,6 +123,7 @@ class Index extends Component {
     })
   }
 
+
   render () {
 
     const { imgList, imgLoadList } = this.state
@@ -141,11 +140,11 @@ class Index extends Component {
           className='home__wrap'
           style={{ height: getWindowHeight() }}
         >
-          <View onClick={this.handlePrevent}>
+          <View>
             <Banner list={banner} />
-            <Policy list={homeInfo.policyDesc} />
+            {/*<Policy list={homeInfo.policyDesc} />*/}
 
-            {/* 免费拼团 */}
+            {/* 优秀店铺 */}
             <Pin
               banner={homeInfo.newUserExclusive}
               list={pin}

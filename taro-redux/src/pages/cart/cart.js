@@ -165,9 +165,9 @@ class Index extends Component {
     const isEmpty = !cartList.length
     const isShowFooter = !isEmpty
 
-    if (!this.state.loaded) {
-      return <Loading />
-    }
+    // if (!this.state.loaded) {
+    //   return <Loading />
+    // }
 
     // if (!this.state.login) {
     //   return (

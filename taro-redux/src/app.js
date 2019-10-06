@@ -33,7 +33,9 @@ class App extends Component {
       'pages/user-login-email/user-login-email',
       'pages/item/item',
       'pages/order/order',
-      'pages/webview/webview'
+      'pages/webview/webview',
+      'pages/shop/shop',
+      'pages/order-detail/order-detail'
     ],
     window: {
       backgroundTextStyle: 'light',

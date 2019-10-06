@@ -60,7 +60,7 @@ const actionTpl =`
 import {createAction} from '@utils/redux';
 import {ROOT_URL} from '@constants/api';
 
-export const dispatch${constName} = payload => createAction({
+export const dispatch${capPirName} = payload => createAction({
   url: ROOT_URL + '${dirName}',
   type: '${constName}_ADD',
   method: 'POST',

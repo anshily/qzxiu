@@ -10,6 +10,13 @@ export default class Pin extends Component {
     list: []
   }
 
+  handleClick = (item) => {
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/shop/shop?shopId=${item.id}`
+    })
+  }
+
   render () {
     const { banner: { picUrls = [] }, list } = this.props
     return (
@@ -43,7 +50,7 @@ export default class Pin extends Component {
                 className='home-pin__swiper-item'
               >
                 {group.map(item => (
-                  <View key={item.id} className='home-pin__item'>
+                  <View key={item.id} className='home-pin__item' onClick={this.handleClick.bind(this, item)}>
                     <Image
                       className='home-pin__item-img'
                       src={IMG_URL + item.shoppicture}
