@@ -27,7 +27,7 @@ export default class Order extends Component {
   handleClick(item){
     console.log(item)
     Taro.navigateTo({
-      url: `/pages/order-detail/order-detail?orderId=${item.id}`
+      url: `/pages/order-detail/order-detail?orderId=${item.orderid}`
     })
   }
 

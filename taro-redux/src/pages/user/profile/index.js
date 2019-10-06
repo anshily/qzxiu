@@ -76,7 +76,7 @@ export default class Profile extends Component {
             </View>
           </View>
 
-          <Vip />
+          {/*<Vip />*/}
         </View>
       </View>
     )

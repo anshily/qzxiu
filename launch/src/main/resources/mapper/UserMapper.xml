@@ -23,7 +23,7 @@
 
   <select id="getUserInfoByToken" resultType="io.peach.launch.model.User" parameterType="String">
     select qzx_role.category as category_id,qzx_role.name as role_name, qzx_user.id,
-    qzx_user.identify_card, qzx_user.username, qzx_user.update_time from sw_user
+    qzx_user.identify_card, qzx_user.username, qzx_user.update_time from qzx_user
     join qzx_user_role on qzx_user.id = qzx_user_role.uid
     join qzx_role on qzx_user_role.rid = qzx_role.id
     where token = #{token}

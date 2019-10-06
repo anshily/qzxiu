@@ -1,6 +1,7 @@
 import { USER_INFO, USER_LOGIN, USER_LOGOUT } from '@constants/user'
 import { API_USER, API_USER_LOGIN } from '@constants/api'
 import { createAction } from '@utils/redux'
+import {ROOT_URL} from '@constants/api';
 
 /**
  * 获取用户信息
@@ -21,8 +22,9 @@ export const dispatchUser = payload => createAction({
  * @param {*} payload
  */
 export const dispatchLogin = payload => createAction({
-  url: API_USER_LOGIN,
+  url: ROOT_URL + 'user/login',
   type: USER_LOGIN,
+  method: 'POST',
   payload
 })
 
