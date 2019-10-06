@@ -2,10 +2,13 @@ package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
 import io.peach.launch.base.core.ServiceException;
+import io.peach.launch.dto.GoodsMessageTokenDTO;
 import io.peach.launch.model.GoodsMessage;
+import io.peach.launch.model.User;
 import io.peach.launch.service.GoodsMessageService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
+import io.peach.launch.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -25,6 +28,8 @@ import java.util.Map;
 public class GoodsMessageController {
     @Resource
     private GoodsMessageService goodsMessageService;
+    @Resource
+    private UserService userService;
 
     @PostMapping("/add")
     public Result add(@RequestBody GoodsMessage goodsMessage) {
@@ -79,20 +84,25 @@ public class GoodsMessageController {
     }
 
     @PostMapping("/addGoods")
-    public Result addGoods(@RequestBody GoodsMessage goodsMessage) {
+    public Result addGoods(@RequestBody GoodsMessageTokenDTO goodsMessage) {
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(goodsMessage.getToken());
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
         BigDecimal b=new BigDecimal(0);
-        if(goodsMessage.getGoodsname()==null||goodsMessage.getGoodsname().equals("")||
-                goodsMessage.getGoodsprice().compareTo(b)<1){
+        if(goodsMessage.getGoodsMessage().getGoodsname()==null||goodsMessage.getGoodsMessage().getGoodsname().equals("")||
+                goodsMessage.getGoodsMessage().getGoodsprice().compareTo(b)<1){
             /*判断商品名称和商品价格是否符合要求  如果不符合要求  抛出异常*/
             throw new ServiceException(5005, "商品信息不符合要求！");
         }else{
-            if(goodsMessage.getGoodspicture()==null||goodsMessage.getGoodspicture().equals("")){
-                goodsMessage.setGoodspicture("../uploads/20190923/625e50dc-9ddf-4c83-86c1-e36049368275.jpg");
+            if(goodsMessage.getGoodsMessage().getGoodspicture()==null||goodsMessage.getGoodsMessage().getGoodspicture().equals("")){
+                goodsMessage.getGoodsMessage().setGoodspicture("../uploads/20190923/625e50dc-9ddf-4c83-86c1-e36049368275.jpg");
             }
         }
-        goodsMessage.setCreatetime(new Date());
-        goodsMessage.setUpdatetime(new Date());
-        goodsMessageService.save(goodsMessage);
+        goodsMessage.getGoodsMessage().setCreatetime(new Date());
+        goodsMessage.getGoodsMessage().setUpdatetime(new Date());
+        goodsMessageService.save(goodsMessage.getGoodsMessage());
         return ResultGenerator.successResult();
     }
 

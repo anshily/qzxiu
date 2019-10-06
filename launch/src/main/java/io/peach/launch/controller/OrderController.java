@@ -1,16 +1,19 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.dto.GoodsMessageDTO;
 import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.Order;
 import io.peach.launch.model.OrderMessage;
 import io.peach.launch.model.ShopMessage;
+import io.peach.launch.model.User;
 import io.peach.launch.service.OrderMessageService;
 import io.peach.launch.service.OrderService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
 import io.peach.launch.service.ShopMessageService;
+import io.peach.launch.service.UserService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,8 @@ public class OrderController {
     private OrderMessageService orderMessageService;
     @Resource
     private ShopMessageService shopMessageService;
+    @Resource
+    private UserService userService;
 
     @PostMapping("/add")
     public Result add(@RequestBody Order order) {
@@ -84,6 +89,11 @@ public class OrderController {
 
     @PostMapping("/shopCar")
     public Result shopCar(@RequestBody ShopCar shopCar){
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(shopCar.getToken());
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
          /*先创建一个订单对象  shopid   goodsnum   priceAll*/
         /*创建一个随机订单编号 时间戳+4位随机数字*/
         String orderid=new Date().getTime()+""+Math.round(Math.random() * 10000);
@@ -121,14 +131,19 @@ public class OrderController {
     }
 
     @GetMapping("/selectOrderMessageByOrderid")
-    public Result selectOrderMessageByOrderid(@RequestParam Integer orderid){
+    public Result selectOrderMessageByOrderid(@RequestParam String orderid){
         List<OrderMessage> list=orderService.selectOrderMessageByOrderid(orderid);
         Map<String,Object> map=new HashMap<>();
         map.put("OrderMessageList",list);
         return ResultGenerator.successResult(map);
     }
     @GetMapping("/cancelOrder")
-    public Result cancelOrder(@RequestParam Integer orderid){
+    public Result cancelOrder(@RequestParam String  orderid,@RequestParam String token){
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(token);
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
         orderService.cancelOrder(orderid);
         return ResultGenerator.successResult();
     }
@@ -144,9 +159,17 @@ public class OrderController {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/finishOrder")
-    public Result finishOrder(@RequestParam Integer orderid){
+    public Result finishOrder(@RequestParam String orderid,@RequestParam String token){
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(token);
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
+        Condition condition = new Condition(Order.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("orderid="+orderid);
         orderService.finishOrder(orderid);
-        Order order=orderService.findById(orderid);
+        Order order=orderService.findByCondition(condition).get(0);
         ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
         ShopMessage shopMessagePosition=shopMessageService.getFShopPosition(order.getShopid());
         shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId(),order.getPriceall());

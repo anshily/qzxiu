@@ -1,10 +1,13 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.model.RollPicture;
+import io.peach.launch.model.User;
 import io.peach.launch.service.RollPictureService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
+import io.peach.launch.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -22,6 +25,8 @@ import java.util.Map;
 public class RollPictureController {
     @Resource
     private RollPictureService rollPictureService;
+    @Resource
+    private UserService userService;
 
     @PostMapping("/add")
     public Result add(@RequestBody RollPicture rollPicture) {
@@ -94,7 +99,12 @@ public class RollPictureController {
     }
     /*将当前轮播图上架*/
     @GetMapping("/putOnPicture")
-    public Result putOnPicture(@RequestParam Integer id) {
+    public Result putOnPicture(@RequestParam Integer id,@RequestParam String token) {
+          /*根据用户token获取用户的id*/
+        User user=userService.getUserInfoByToken(token);
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
         rollPictureService.putOnPicture(id);
         return ResultGenerator.successResult();
     }

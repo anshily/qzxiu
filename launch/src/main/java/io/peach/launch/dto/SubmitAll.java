@@ -11,6 +11,15 @@ public class SubmitAll {
     private ShopMessage shopMessage;
     private Integer recommendID;
     private Integer positionID;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public User getUser() {
         return user;

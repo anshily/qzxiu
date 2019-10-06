@@ -31,7 +31,7 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
     }
 
     @Override
-    public List<OrderMessage> selectOrderMessageByOrderid(Integer orderid) {
+    public List<OrderMessage> selectOrderMessageByOrderid(String orderid) {
         List<OrderMessage> list=qzxOrderMapper.selectOrderMessageByOrderid(orderid);
         return list;
     }
@@ -39,12 +39,12 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
 
 
     @Override
-    public void cancelOrder(Integer orderid) {
+    public void cancelOrder(String orderid) {
         qzxOrderMapper.cancelOrder(orderid);
     }
 
     @Override
-    public void finishOrder(Integer orderid) {
+    public void finishOrder(String orderid) {
         qzxOrderMapper.finishOrder(orderid);
     }
 }

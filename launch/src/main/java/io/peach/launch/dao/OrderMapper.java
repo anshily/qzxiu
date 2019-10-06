@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface OrderMapper extends Mapper<Order> {
     List<Order> selectOrderByShopid(int shopid);
-    List<OrderMessage> selectOrderMessageByOrderid(int orderid);
-    void cancelOrder(int orderid);
-    void finishOrder(int orderid);
+    List<OrderMessage> selectOrderMessageByOrderid( String orderid);
+    void cancelOrder(String orderid);
+    void finishOrder(String orderid);
 
 }
