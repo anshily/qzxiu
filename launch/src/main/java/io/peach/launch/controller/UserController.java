@@ -1,5 +1,6 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.*;
+import io.peach.launch.base.utils.wechat.MpSDK;
 import io.peach.launch.model.User;
 import io.peach.launch.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -100,6 +101,20 @@ public class UserController {
     @GetMapping("/nameExist")
     public Result nameExist(@RequestParam String name) {
         Integer code=userService.nameExist(name);
+        return ResultGenerator.successResult(code);
+    }
+    @GetMapping("/getToken")
+    public Result getToken(@RequestParam String code) {
+        String openid= MpSDK.code2Session(code);
+        /*查詢出當前用戶列表中是否有當前的openid*/
+        Condition condition = new Condition(User.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andLike("openid=",openid);
+        List<User> list = userService.findByCondition(condition);
+        if(list.size()!=0){
+            /*有對象，獲取當前對象的token 返回*/
+            return ResultGenerator.successResult(list.get(0).getToken());
+        }
         return ResultGenerator.successResult(code);
     }
 }
