@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -22,5 +24,11 @@ public class ActivityServiceImpl extends AbstractService<Activity> implements Ac
     @Override
     public void deleteActivity(int id,String type) {
         qzxActivityMapper.deleteActivity(id, type);
+    }
+
+    @Override
+    public List<Map<String,String>> getActivityNameAndId() {
+        List<Map<String,String>> list=qzxActivityMapper.getActivityNameAndId();
+        return list;
     }
 }

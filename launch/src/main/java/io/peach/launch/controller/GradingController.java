@@ -64,4 +64,10 @@ public class GradingController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
+    @GetMapping("/changeFshop")
+    public Result changeFshop(@RequestParam Integer id) {
+        Grading grading = gradingService.findById(id);
+        return ResultGenerator.successResult(grading);
+    }
+
 }
