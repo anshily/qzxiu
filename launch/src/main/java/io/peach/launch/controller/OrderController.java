@@ -121,14 +121,14 @@ public class OrderController {
     }
 
     @GetMapping("/selectOrderMessageByOrderid")
-    public Result selectOrderMessageByOrderid(@RequestParam Integer orderid){
+    public Result selectOrderMessageByOrderid(@RequestParam String orderid){
         List<OrderMessage> list=orderService.selectOrderMessageByOrderid(orderid);
         Map<String,Object> map=new HashMap<>();
         map.put("OrderMessageList",list);
         return ResultGenerator.successResult(map);
     }
     @GetMapping("/cancelOrder")
-    public Result cancelOrder(@RequestParam Integer orderid){
+    public Result cancelOrder(@RequestParam String  orderid){
         orderService.cancelOrder(orderid);
         return ResultGenerator.successResult();
     }
@@ -144,9 +144,12 @@ public class OrderController {
 
     @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/finishOrder")
-    public Result finishOrder(@RequestParam Integer orderid){
+    public Result finishOrder(@RequestParam String orderid){
+        Condition condition = new Condition(Order.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("orderid="+orderid);
         orderService.finishOrder(orderid);
-        Order order=orderService.findById(orderid);
+        Order order=orderService.findByCondition(condition).get(0);
         ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
         ShopMessage shopMessagePosition=shopMessageService.getFShopPosition(order.getShopid());
         shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId(),order.getPriceall());

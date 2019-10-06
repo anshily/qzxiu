@@ -14,7 +14,7 @@ import java.util.List;
 public interface OrderService extends Service<Order> {
 
     List<Order> selectOrderByShopid(Integer shopid);
-    List<OrderMessage> selectOrderMessageByOrderid(Integer orderid);
-    void cancelOrder(Integer orderid);
-    void finishOrder(Integer orderid);
+    List<OrderMessage> selectOrderMessageByOrderid(String orderid);
+    void cancelOrder(String orderid);
+    void finishOrder(String orderid);
 }
