@@ -2,16 +2,14 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/user'
-import { ButtonItem } from '@components'
+import { ButtonItem, InputItem } from '@components'
 import { CDN } from '@constants/api'
+import loginBanner from '@assets/login-banner.jpg'
 // NOTE 使用统一接口的多端文件进行跨端处理
 // auth 中有 index.js/index.weapp.js/index.alipay.js
 // 若是编译微信，则实际引入的是 index.weapp.js
 // 若是编译 H5，因为不存在 index.h5.js，所以引入的是默认的 index.js
-import Auth from './auth'
 import './user-login.scss'
-
-const LOGO = `${CDN}/a7ba557fde54270c71656222c7837396.png`
 
 // TODO 由于 RN 的 app.js 中 initPxTransform 执行顺序关系，不能在 class 外用到 Taro.pxTransform
 // const BUTTON = {
@@ -22,6 +20,13 @@ const LOGO = `${CDN}/a7ba557fde54270c71656222c7837396.png`
 class UserLogin extends Component {
   config = {
     navigationBarTitleText: '登录'
+  }
+
+  state = {
+    username: '',
+    password: '',
+    isShowSuggest: false,
+    loading: false
   }
 
   handleClick = (type) => {
@@ -38,33 +43,69 @@ class UserLogin extends Component {
     })
   }
 
+  handleInput = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
+  handleLogin = () => {
+    const payload = {
+      username: this.state.username,
+      password: this.state.password
+    }
+    this.setState({ loading: true })
+    this.props.dispatchLogin(payload).then(() => {
+      this.setState({ loading: false })
+      Taro.navigateBack({ delta: 2 })
+      // TODO RN 的 navigateBack 参数 delta 无效，暂时用如下方式解决
+      // if (process.env.TARO_ENV === 'rn') {
+      //   setTimeout(() => Taro.navigateBack(), 1000)
+      // }
+    }).catch(() => {
+      this.setState({ loading: false })
+    })
+  }
+
   render () {
     const BUTTON = {
       marginTop: Taro.pxTransform(30)
     }
 
+    const { username, password, loading } = this.state
+    const isBtnDisabled = !username || !password
+
     return (
-      <View className='user-login'>
-        <View className='user-login__logo'>
-          <Image src={LOGO} className='user-login__logo-img' />
+
+      <View className='user-login-email'>
+        <View className='user-login-email__logo'>
+          <Image src={loginBanner} className='user-login-email__logo-img' />
         </View>
-        <Auth />
-        <ButtonItem
-          plain
-          text='邮箱账号登录'
-          compStyle={BUTTON}
-          onClick={this.handleClick.bind(this, 'email')}
-        />
-        <ButtonItem
-          plain
-          text='手机号登录'
-          compStyle={BUTTON}
-          onClick={this.handleClick.bind(this, 'telephone')}
-        />
-        <View className='user-login__reg'>
-          <Text className='user-login__reg-txt'>
-            {'手机号快捷注册>'}
-          </Text>
+        <View className='user-login-email__wrap'>
+          <InputItem
+            value={username}
+            placeholder='邮箱账号'
+            onInput={this.handleInput.bind(this, 'username')}
+          />
+          <InputItem
+            password
+            value={password}
+            placeholder='密码'
+            onInput={this.handleInput.bind(this, 'password')}
+          />
+        </View>
+        <View className='user-login-email__btn'>
+          <ButtonItem
+            text='登录'
+            disabled={isBtnDisabled}
+            loading={loading}
+            onClick={this.handleLogin}
+            compStyle={{
+              background: '#b59f7b',
+              borderRadius: Taro.pxTransform(4)
+            }}
+            textStyle={{
+              color: isBtnDisabled ? 'rgba(255, 255, 255, 0.4)' : '#ffffff'
+            }}
+          />
         </View>
       </View>
     )
