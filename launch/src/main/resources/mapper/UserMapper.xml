@@ -30,7 +30,7 @@
   </select>
 
   <select id="nameExist" resultType="io.peach.launch.model.User">
-    select id from qzx_user where identify_card =#{name}
+    select id from qzx_user where username = #{name}
   </select>
   <select id="selectUserByOpenid" resultType="io.peach.launch.model.User">
     select * from qzx_user where open_id=#{openid}

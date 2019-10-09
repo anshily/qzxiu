@@ -36,7 +36,7 @@ export default class Shop extends Component {
     console.log(shopItem)
     return(
       <View>
-        <Image src={ IMG_URL + shopItem.shoppicture} className='fade_in' />
+        <Image src={ IMG_URL + shopItem.shoppicture} mode='scaleToFill' className='pic-info' />
         <ParserRichText html={shopItem.description} selectable></ParserRichText>
       </View>
     )
