@@ -32,4 +32,10 @@
   <select id="nameExist" resultType="io.peach.launch.model.User">
     select id from qzx_user where identify_card =#{name}
   </select>
+  <select id="selectUserByOpenid" resultType="io.peach.launch.model.User">
+    select * from qzx_user where open_id=#{openid}
+  </select>
+  <select id="getUserByPassword" resultType="io.peach.launch.model.User">
+    select * from qzx_user where username=#{username} and password=#{password}
+  </select>
 </mapper>

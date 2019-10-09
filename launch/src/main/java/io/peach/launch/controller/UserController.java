@@ -1,6 +1,7 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.*;
 import io.peach.launch.base.utils.wechat.MpSDK;
+import io.peach.launch.dto.UserDTO;
 import io.peach.launch.model.User;
 import io.peach.launch.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -103,7 +104,7 @@ public class UserController {
         Integer code=userService.nameExist(name);
         return ResultGenerator.successResult(code);
     }
-    @GetMapping("/getToken")
+    @GetMapping("/accordingCodeGetToken")
     public Result getToken(@RequestParam String code) {
         String openid= MpSDK.code2Session(code);
         /*查詢出當前用戶列表中是否有當前的openid*/
@@ -114,7 +115,46 @@ public class UserController {
         if(list.size()!=0){
             /*有對象，獲取當前對象的token 返回*/
             return ResultGenerator.successResult(list.get(0).getToken());
+        }else{
+            /*沒有當前對象  創建一個新的對象，然後動態賦值一個token*/
+            User user=new User();
+            String token=UUID.randomUUID().toString();
+            user.setOpen_id(openid);
+            user.setToken(token);
+            userService.save(user);
+            return ResultGenerator.successResult(token);
         }
-        return ResultGenerator.successResult(code);
     }
+
+    /*用戶通過用戶名密碼登錄時將openid與用戶賬號綁定*/
+    @PostMapping("/bangding")
+    public Result bangding(@RequestBody UserDTO userDTO) {
+        String openid= MpSDK.code2Session(userDTO.getCode());
+        /*首先根據openid查詢用戶信息*/
+        User user1=userService.selectUserByOpenid(openid);
+        User user2=userService.getUserByPassword(userDTO.getUsername(),userDTO.getPassword());
+        /*判斷兩個用戶的id是否為同一個id*/
+        if(user1.getId()==user2.getId()){
+            /*如果相等，不做操作*/
+            return ResultGenerator.successResult(user1.getToken());
+        }else{
+         /*如果两个不相等，将user1的openid给user2*/
+            user2.setOpen_id(user1.getOpen_id());
+            userService.update(user2);
+            /*将user1删除*/
+            userService.delete(user1);
+            return ResultGenerator.successResult(user2.getToken());
+        }
+    }
+    @PostMapping("/loginByUsernameAndPassword")
+    public Result loginByUsernameAndPassword(@RequestParam String username,@RequestParam String password) {
+        User user=userService.getUserByPassword(username, password);
+        if(null==user){
+            throw new ServiceException(5009,"用户名或密码错误");
+        }else{
+            return ResultGenerator.successResult(user.getToken());
+        }
+
+    }
+
 }

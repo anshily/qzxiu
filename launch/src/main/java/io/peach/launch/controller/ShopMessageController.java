@@ -5,9 +5,11 @@ import io.peach.launch.dto.SubmitAll;
 import io.peach.launch.model.Record;
 import io.peach.launch.model.ShopMessage;
 import io.peach.launch.model.User;
+import io.peach.launch.model.UserRole;
 import io.peach.launch.service.RecordService;
 import io.peach.launch.service.ShopMessageService;
 import com.github.pagehelper.PageHelper;
+import io.peach.launch.service.UserRoleService;
 import io.peach.launch.service.UserService;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,8 @@ public class ShopMessageController {
     private UserService userService;
     @Resource
     private RecordService recordService;
+    @Resource
+    private UserRoleService userRoleService;
 
     @PostMapping("/add")
     public Result add(@RequestBody ShopMessage shopMessage) {
@@ -146,6 +150,11 @@ public class ShopMessageController {
         }
         /*先存储用户信息  返回用户id*/
         userService.save(submitAll.getUser());
+        /*将返回的用户绑定一个普通店铺的身份*/
+        UserRole userRole=new UserRole();
+        userRole.setRid(2);
+        userRole.setUid(submitAll.getUser().getId());
+        userRoleService.save(userRole);
         /*将返回的用户id存入店铺信息中*/
         submitAll.getShopMessage().setUserid(submitAll.getUser().getId());
         /*将店铺信息存储到数据库中*/

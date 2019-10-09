@@ -32,4 +32,16 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         }
         return 1;
     }
+
+    @Override
+    public User selectUserByOpenid(String openid) {
+        User user=selectUserByOpenid(openid);
+        return user;
+    }
+
+    @Override
+    public User getUserByPassword(String username, String password) {
+        User user=getUserByPassword(username, password);
+        return user;
+    }
 }
