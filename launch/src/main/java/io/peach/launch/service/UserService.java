@@ -9,4 +9,6 @@ import io.peach.launch.base.core.Service;
 public interface UserService extends Service<User> {
     User getUserInfoByToken(String token);
     Integer nameExist(String name);
+    User selectUserByOpenid(String openid);
+    User getUserByPassword(String username,String password);
 }
