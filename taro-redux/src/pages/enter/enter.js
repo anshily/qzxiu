@@ -41,7 +41,7 @@ export default class UserLogin extends Component {
     imgList: [],
     openModal: false,
     loading: false,
-    disabled: true
+    disabled: false
   }
 
   config = {
@@ -50,7 +50,7 @@ export default class UserLogin extends Component {
 
   componentWillMount() {
     this.props.dispatchRecommend({}).then(res => {
-      console.log(res)
+      // console.log(res)
       if (res && res.length > 0){
         this.setState({
           managerChecked: res[0],
@@ -66,7 +66,7 @@ export default class UserLogin extends Component {
   }
 
   imgSelected  = e => {
-    console.log(e);
+    // console.log(e);
     this.setState({
       imgList: e.map((item) => {
         item.status = 'loading'
@@ -79,8 +79,8 @@ export default class UserLogin extends Component {
       filePath: e[0].url,
       name: 'image'
     }).then((res) => {
-      console.log(res['data']);
-      console.log(typeof res['data']);
+      // console.log(res['data']);
+      // console.log(typeof res['data']);
       let tmp = JSON.parse(res['data']);
       this.setState({
         image: tmp['data']
@@ -104,7 +104,7 @@ export default class UserLogin extends Component {
   }
 
   onSubmit = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       loading: true,
       disabled: true
@@ -117,8 +117,10 @@ export default class UserLogin extends Component {
     }).then(res => {
       console.log(res);
 
-      if (res['code'] == 0) {
-        if (true){
+      console.log(Taro.getStorageSync('user_token'));
+
+      if (res['data']['code'] == 0) {
+        if (res['data']['data'] == 0){
           this.props.dispatchENTER({
             user: {
               username: this.state.username,
@@ -132,7 +134,8 @@ export default class UserLogin extends Component {
               shopaddress: this.state.address
             },
             recommendID: this.state.referrerChecked.id,
-            positionID: this.state.managerChecked.id
+            positionID: this.state.managerChecked.id,
+            token: Taro.getStorageSync('user_token')
           }).then( () => {
             console.log('test');
             this.setState({
@@ -142,6 +145,10 @@ export default class UserLogin extends Component {
             this.setState({
               openModal: true
             })
+          })
+        }else {
+          Taro.showToast({
+            title: '用户未登录'
           })
         }
       }
@@ -155,7 +162,7 @@ export default class UserLogin extends Component {
   }
 
   handleUsernameChange = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       username: e
     });
@@ -165,28 +172,28 @@ export default class UserLogin extends Component {
   }
 
   handlePasswordChange = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       password: e
     })
   }
 
   handlePhoneChange = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       phone: e
     })
   }
 
   handleShopNameChange = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       shopName: e
     })
   }
 
   handleAddressChange = e => {
-    console.log(e)
+    // console.log(e)
     this.setState({
       address: e
     })
@@ -199,7 +206,7 @@ export default class UserLogin extends Component {
   }
 
   onManagerChange = managerChecked => {
-    console.log(managerChecked)
+    // console.log(managerChecked)
     const { recommendList } = this.props
     this.setState({
       managerChecked: recommendList[managerChecked.detail.value]
@@ -223,6 +230,7 @@ export default class UserLogin extends Component {
   render () {
     const { recommendList } = this.props;
     const { loading, disabled } = this.state;
+    let acl = disabled && !this.testRequire();
     return (
       <View className='index'>
 
@@ -345,7 +353,7 @@ export default class UserLogin extends Component {
             <AtModalAction> <Button onClick={this.succeedCnfirm}>确定</Button> </AtModalAction>
           </AtModal>
 
-          <AtButton formType='submit' disabled={!this.testRequire()} loading={loading} type='primary'>提交</AtButton>
+          <AtButton formType='submit' disabled={acl} loading={loading} type='primary'>提交</AtButton>
 
           {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>
