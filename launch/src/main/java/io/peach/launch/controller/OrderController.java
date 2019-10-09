@@ -3,6 +3,7 @@ import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
 import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.dto.GoodsMessageDTO;
+import io.peach.launch.dto.OrderMessageDTO;
 import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.Order;
 import io.peach.launch.model.OrderMessage;
@@ -132,10 +133,8 @@ public class OrderController {
 
     @GetMapping("/selectOrderMessageByOrderid")
     public Result selectOrderMessageByOrderid(@RequestParam String orderid){
-        List<OrderMessage> list=orderService.selectOrderMessageByOrderid(orderid);
-        Map<String,Object> map=new HashMap<>();
-        map.put("OrderMessageList",list);
-        return ResultGenerator.successResult(map);
+        List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
+        return ResultGenerator.successResult(list);
     }
     @GetMapping("/cancelOrder")
     public Result cancelOrder(@RequestParam String  orderid,@RequestParam String token){
