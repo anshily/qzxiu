@@ -28,4 +28,7 @@
   <update id="finishOrder">
     update qzx_order set statu=2 where orderid=#{orderid}
   </update>
+  <select id="selectGoodsMessageById" resultType="io.peach.launch.model.GoodsMessage">
+    select * from qzx_goods_message where id=#{id}
+  </select>
 </mapper>

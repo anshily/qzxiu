@@ -1,4 +1,5 @@
 package io.peach.launch.service;
+import io.peach.launch.dto.OrderMessageDTO;
 import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.Order;
 import io.peach.launch.base.core.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 public interface OrderService extends Service<Order> {
 
     List<Order> selectOrderByShopid(Integer shopid);
-    List<OrderMessage> selectOrderMessageByOrderid(String orderid);
+    List<OrderMessageDTO> selectOrderMessageByOrderid(String orderid);
     void cancelOrder(String orderid);
     void finishOrder(String orderid);
 }
