@@ -4,6 +4,7 @@ import {connect} from '@tarojs/redux'
 import {AtSteps, AtAccordion, AtList, AtListItem} from 'taro-ui'
 import './referrer.scss'
 import * as actions from '@actions/referrer';
+import {ClCard} from 'mp-colorui'
 
 @connect(state => state.referrer, actions)
 export default class Referrer extends Component {
@@ -63,6 +64,28 @@ export default class Referrer extends Component {
     const {referrerLevelOne, referrerLevelTwo} = this.props
     return (
       <View className='home__wrap'>
+
+        <ClCard type='full'>
+          <View className='at-row'>
+            <View className='at-col at-col-6'>
+
+              <View className='at-row'>
+                <View className='at-col at-col-6'></View>
+              </View>
+              <View className='at-row'>
+                aaa
+              </View>
+              <View className='at-row'>
+                bbb
+              </View>
+
+            </View>
+
+            <View className='at-col at-col-10'>
+
+            </View>
+          </View>
+        </ClCard>
 
 
         <View className='at-row at-row__justify--center'>

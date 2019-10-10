@@ -1,12 +1,13 @@
 
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { CheckboxItem, InputNumber } from '@components'
+import { InputNumber } from '@components'
 import { connect } from '@tarojs/redux'
 import './order-detail.scss'
 import * as actions from '@actions/order-detail';
 import {IMG_URL} from "@constants/api";
-import { AtDivider } from 'taro-ui'
+import { AtDivider, AtButton  } from 'taro-ui'
+import {ClCard} from 'mp-colorui'
 
 @connect(state => state.orderDetail, actions)
 export default class OrderDetail extends Component {
@@ -23,7 +24,8 @@ export default class OrderDetail extends Component {
     this.state = {
       loaded: false
     }
-    this.orderId = parseInt(this.$router.params.orderId)
+    // this.orderId = parseInt(this.$router.params.orderId)
+    this.orderId = this.$router.params.orderId
   }
 
   componentDidMount() {
@@ -93,16 +95,25 @@ export default class OrderDetail extends Component {
 
         {/*<AtDivider />*/}
         <View className='order-bar'>
+          <ClCard type='full'>
+            <View className='at-row at-row__justify--end'>
+              {/*<View className='at-col at-col__offset-4'>总计 1 件商品， 共计 999 元</View>*/}
+              <View className='at-col'></View>
+              <View className='at-col'>总计 1 件商品， 共计 999 元</View>
 
-          <AtDivider />
-          <View className='at-row'>
-            <View className='at-col at-col-3'>A</View>
-            <View className='at-col at-col-6'>B</View>
-            <View className='at-col at-col-2'>C</View>
-            <View className='at-col at-col-1'>D</View>
-          </View>
+            </View>
 
+            <AtDivider />
+
+            <View className='at-row at-row__justify--end'>
+              <View className='at-col'></View>
+              <View className='at-col at-col-3'>
+                <AtButton type='secondary' size='small'>取消订单</AtButton>
+              </View>
+            </View>
+          </ClCard>
         </View>
+
       </View>
     )
   }
