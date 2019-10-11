@@ -1,10 +1,15 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.dto.ChangeGradingDTO;
 import io.peach.launch.model.Grading;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.service.GradingService;
 import io.peach.launch.base.core.PageBean;
 import com.github.pagehelper.PageHelper;
+import io.peach.launch.service.ShopMessageService;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -20,6 +25,8 @@ import java.util.List;
 public class GradingController {
     @Resource
     private GradingService gradingService;
+    @Resource
+    private ShopMessageService shopMessageService;
 
     @PostMapping("/add")
     public Result add(@RequestBody Grading grading) {
@@ -64,10 +71,41 @@ public class GradingController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
-    @GetMapping("/changeFshop")
-    public Result changeFshop(@RequestParam Integer id) {
-        Grading grading = gradingService.findById(id);
-        return ResultGenerator.successResult(grading);
+    @Transactional(propagation = Propagation.REQUIRED)
+    @GetMapping("/changeGrading")
+    public Result changeGrading(@RequestBody ChangeGradingDTO changeGradingDTO) {
+        gradingService.changeGrading(changeGradingDTO);
+        return ResultGenerator.successResult();
     }
+
+    @GetMapping("/getShopListAbandonMainShop")
+    public Result getShopListAbandonMainShop() {
+        Condition condition = new Condition(Grading.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("id!=1");
+        List<ShopMessage> list = shopMessageService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
+
+    @GetMapping("/getFShopListAbandonSomeShop")
+    public Result getFShopListAbandonSomeShop(){
+        Condition condition = new Condition(Grading.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("id!=1");
+        List<ShopMessage> list = shopMessageService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
+    @GetMapping("/getTargetShopList")
+    public Result getTargetShopList(@RequestParam Integer shopid,@RequestParam String type){
+        Condition condition = new Condition(Grading.class);
+        /*先根据店铺id和类别查询出当前店铺的上级店铺*/
+        Integer Fshopid=gradingService.getFshop(shopid, type);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("id!="+shopid);
+        criteria.andCondition("id!="+Fshopid);
+        List<ShopMessage> list = shopMessageService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
+
 
 }

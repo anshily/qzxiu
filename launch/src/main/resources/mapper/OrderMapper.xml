@@ -31,4 +31,6 @@
   <select id="selectGoodsMessageById" resultType="io.peach.launch.model.GoodsMessage">
     select * from qzx_goods_message where id=#{id}
   </select>
+
+
 </mapper>

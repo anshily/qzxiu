@@ -13,4 +13,16 @@
     <result column="updatetime" jdbcType="TIMESTAMP" property="updatetime" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <select id="selectFShopIdByTypeAndShopid" resultType="Integer">
+    select f_shopid from qzx_grading where shopid=#{shopid} and point_type=#{type}
+  </select>
+
+  <select id="getChildShopIdByTypeAndFshopid" resultType="Integer">
+    select shopid from qzx_grading where f_shopid=#{Fshopid} and point_type=#{type}
+  </select>
+
+  <insert id="insertCodeSameType">
+    insert into qzx_grading(shopid,f_shopid,point_type,createtime,updatetime) values(#{shopid},#{Fshopid},#{type},now(),now())
+  </insert>
 </mapper>
