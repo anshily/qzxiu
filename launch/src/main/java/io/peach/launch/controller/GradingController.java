@@ -102,7 +102,9 @@ public class GradingController {
         Integer Fshopid=gradingService.getFshop(shopid, type);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("id!="+shopid);
-        criteria.andCondition("id!="+Fshopid);
+        if(Fshopid!=null){
+            criteria.andCondition("id!="+Fshopid);
+        }
         List<ShopMessage> list = shopMessageService.findByCondition(condition);
         return ResultGenerator.successResult(list);
     }
