@@ -29,7 +29,7 @@ export default class SwiperBanner extends Component {
               <Image
                 className='home-banner__swiper-item-img'
                 src={item.img}
-                mode='scaleToFill'
+                mode='aspectFill'
               />
             </SwiperItem>
           ))}

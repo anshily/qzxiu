@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <div class="modal-title">查看 {{ record.id }} 信息</div>
+</div>
+<nz-spin *ngIf="!loaded" class="modal-spin"></nz-spin>
+<nz-card *ngIf="loaded" >
+  <nz-tabset nzTabPosition="left">
+    <nz-tab nzTitle="推荐人">
+      商户的购买行为可以对推荐人进行返点
+
+      <nz-radio-group [(ngModel)]="recommendValue" [nzButtonStyle]="'solid'">
+        <label *ngFor="let item of recommendList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname']}}</label>
+      </nz-radio-group>
+
+    </nz-tab>
+    <nz-tab nzTitle="上级代理">
+      商户的购买行为可以对代理商进行返点
+
+      <nz-radio-group [(ngModel)]="proxyValue" [nzButtonStyle]="'solid'">
+        <label *ngFor="let item of proxyList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname']}}</label>
+      </nz-radio-group>
+
+    </nz-tab>
+  </nz-tabset>
+  <div class="modal-footer">
+    <button nz-button type="button" (click)="close()">关闭</button>
+    <button nz-button type="submit" nzType="primary"
+            *ngIf="!(this.params && this.params.edit)"
+            (click)="save()"
+            [nzLoading]="http.loading">保存
+    </button>
+  </div>
+</nz-card>
+<!--<sf *ngIf="loaded" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">-->
+
+<!--</sf>-->

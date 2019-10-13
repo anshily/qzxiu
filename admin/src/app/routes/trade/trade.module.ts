@@ -23,6 +23,7 @@ import { TradeOrdersComponent } from './orders/orders.component';
 import { TradeOrdersEditComponent } from './orders/edit/edit.component';
 import { TradeOrdersViewComponent } from './orders/view/view.component';
 import {EditorQuillModule} from "@shared/quill/editor-quill.module";
+import {TradeShopsReferrerComponent} from "./shops/referrer/referrer.component";
 
 const COMPONENTS = [
   TradeCurdComponent,
@@ -46,7 +47,8 @@ const COMPONENTS_NOROUNT = [
   TradeShopsEditComponent,
   TradeShopsViewComponent,
   TradeOrdersEditComponent,
-  TradeOrdersViewComponent];
+  TradeOrdersViewComponent,
+  TradeShopsReferrerComponent];
 
 @NgModule({
   imports: [

@@ -59,6 +59,7 @@ export default class OrderDetail extends Component {
               {/*onClick={this.handleUpdateCheck.bind(this, item)}*/}
             {/*/>*/}
             <Image
+              mode='aspectFill'
               className='cart-list__item-img'
               src={item.pic}
             />

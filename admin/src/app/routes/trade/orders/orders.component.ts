@@ -8,7 +8,20 @@ import { SFSchema } from '@delon/form';
   templateUrl: './orders.component.html',
 })
 export class TradeOrdersComponent implements OnInit {
-  url = `/user`;
+  url = ROOT_URL + `order/list`;
+  resObj = {
+    reName: {
+      total: 'data.total',
+      list: 'data.list'
+    },
+    process: (res) => {
+      console.log(res);
+      return res.map(item => {
+        // item['shoppicture'] = IMG_URL + item['shoppicture'];
+        return item;
+      });
+    }
+  }
   searchSchema: SFSchema = {
     properties: {
       no: {
@@ -19,14 +32,15 @@ export class TradeOrdersComponent implements OnInit {
   };
   @ViewChild('st', { static: false }) st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '店铺id', index: 'shopid' },
+    { title: '价格', type: 'number', index: 'priceall' },
+    { title: '订单编号', index: 'orderid' },
+    { title: '创建时间', type: 'date', index: 'updatedAt' },
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '取消订单', click: (item: any) => `/form/${item.id}` }
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }

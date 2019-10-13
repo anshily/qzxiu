@@ -41,12 +41,14 @@ export class StartupService {
         .pipe(
           // 接收其他拦截器后产生的异常消息
           catchError(([langData, appData]) => {
+            console.log(langData, appData)
             resolve(null);
             return [langData, appData];
           }),
         )
         .subscribe(
           ([langData, appData]) => {
+            console.log(langData, appData)
             // setting language data
             this.translate.setTranslation(this.i18n.defaultLang, langData);
             this.translate.setDefaultLang(this.i18n.defaultLang);

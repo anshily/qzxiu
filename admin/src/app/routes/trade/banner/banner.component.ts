@@ -54,7 +54,9 @@ export class TradeBannerComponent implements OnInit {
           }, iif: (item) => {
           return item.isputon == 1
           }  },
-        { text: '编辑', type: 'static', component: TradeBannerEditComponent, click: 'reload' },
+        { text: '编辑', click: (item: any) => {
+          this.edit(item.id)
+          } },
         { text: '删除', click: (item: any) => {
             this.delete(item.id)
           }, pop: '确认删除？' }
@@ -69,6 +71,12 @@ export class TradeBannerComponent implements OnInit {
   add() {
     this.modal
       .createStatic(TradeBannerEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
+  }
+
+  edit(id) {
+    this.modal
+      .createStatic(TradeBannerEditComponent, { params: { id: id, edit: true } })
       .subscribe(() => this.st.reload());
   }
 
