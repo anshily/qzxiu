@@ -83,7 +83,12 @@ public class UserController {
         {
             throw new ServiceException(Constants.CODE_ERR_USER_NAME);
         }
-        List<User> users =  userService.selectByCSql("username=" + user.getUsername() + " and password=" + user.getPassword());
+       /* List<User> users =  userService.selectByCSql("username=" + user.getUsername() + " and password=" + user.getPassword());*/
+        Condition condition = new Condition(User.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("username="+user.getUsername());
+        criteria.andCondition("password="+user.getPassword());
+        List<User> users = userService.findByCondition(condition);
         if (users.size() > 0){
             String newToken = UUID.randomUUID().toString();
 
