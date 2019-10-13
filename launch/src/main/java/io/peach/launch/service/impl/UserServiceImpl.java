@@ -35,13 +35,13 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public User selectUserByOpenid(String openid) {
-        User user=selectUserByOpenid(openid);
+        User user=qzxUserMapper.selectUserByOpenid(openid);
         return user;
     }
 
     @Override
     public User getUserByPassword(String username, String password) {
-        User user=getUserByPassword(username, password);
+        User user=qzxUserMapper.getUserByPassword(username, password);
         return user;
     }
 
