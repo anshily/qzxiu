@@ -1,13 +1,49 @@
 <div class="modal-header">
   <div class="modal-title">查看 {{ record.id }} 信息</div>
 </div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
+<nz-spin *ngIf="!record" class="modal-spin"></nz-spin>
+<div sv-container *ngIf="record">
+
+  <sv-container col="2">
+    <sv label="店铺名">{{ record['shopname'] }}</sv>
+    <sv label="店铺地址">{{record['shopaddress']}}</sv>
+    <sv label="佣金">{{record['cashin']}}</sv>
+    <sv label="联系方式">{{record['owner_phone']}}</sv>
+
+  </sv-container>
+
+  <nz-divider></nz-divider>
+
+  <sv-container col="1">
+
+    <sv label="地区上级">
+      {{record['position']}}
+      <button nz-button nzType="danger" (click)="edit(1)">更换地区上级</button>
+    </sv>
+    <sv label="推荐人">
+      {{record['person']}}
+      <button nz-button nzType="danger" (click)="edit(2)">更换推荐人</button>
+    </sv>
+
+    <sv label="操作">
+      <!--<button nz-button nzType="danger" (click)="edit()">更换推荐人</button>-->
+      <!--<button nz-button nzType="danger">更换代理人</button>-->
+      <!--<nz-select style="width: 120px;" [(ngModel)]="proxyValue" nzAllowClear nzPlaceHolder="Choose">-->
+        <!--<nz-option nzValue="jack" nzLabel="Jack"></nz-option>-->
+        <!--<nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>-->
+        <!--<nz-option nzValue="disabled" nzLabel="Disabled" nzDisabled></nz-option>-->
+      <!--</nz-select>-->
+    </sv>
+    <sv label="店铺介绍">
+      <nz-collapse [nzBordered]="false">
+      <nz-collapse-panel [nzHeader]="'展开'">
+        <div innerHTML="{{record['description']}}">
+
+        </div>
+      </nz-collapse-panel>
+    </nz-collapse>
+    </sv>
+  </sv-container>
 </div>
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>

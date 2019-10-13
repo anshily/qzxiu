@@ -9,7 +9,10 @@ import {SFSchema, SFSelectWidgetSchema, SFUISchema, SFUploadWidgetSchema} from '
 })
 export class TradeBannerEditComponent implements OnInit {
   record: any = {};
-  i: any;
+  params: any;
+  loaded = false;
+  options = [];
+  itemInfo = {};
   schema: SFSchema = {
     properties: {
       picture: {
@@ -61,46 +64,126 @@ export class TradeBannerEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
 
-    this.http.get(ROOT_URL + 'activity/getActivityListByStatu',{statu: 1}).subscribe(res => {
-      console.log(res)
-      if (res['code'] == 0){
-
-        let list = [];
-
-        res['data'].forEach(item => {
-          list.push({
-            label: item['activityname'],
-            value: item['id']
-          })
-        })
-        this.schema = {
-          properties: {
-            picture: {
-              type: 'string',
-              title: '封面图',
-              ui: {
-                widget: 'upload',
-                action: ROOT_URL + 'shop/message/uploadPicture',
-                resReName: 'data',
-                urlReName: 'url',
-                fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                name: 'image'
-              } as SFUploadWidgetSchema,
+    if (this.params && this.params.edit){
+      console.log(this.params.id)
+      // isputon: 1
+      // note: "1"
+      // picture_address: "../uploads/assets/index1.jpg"
+      this.initForm().then( () => {
+        console.log(this.itemInfo);
+          this.schema = {
+            properties: {
+              picture: {
+                type: 'string',
+                title: '封面图',
+                ui: {
+                  widget: 'upload',
+                  action: ROOT_URL + 'shop/message/uploadPicture',
+                  resReName: 'data',
+                  urlReName: 'url',
+                  fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+                  name: 'image'
+                } as SFUploadWidgetSchema,
+                // default: this.itemInfo['picture_address'] || 'index.jpg',
+                enum: [
+                  {
+                    uid: -1,
+                    name: '轮播图.png',
+                    status: 'done',
+                    url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
+                    response: {
+                      url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
+                    },
+                  },
+                ]
+              },
+              note: { type: 'string', title: '备注',
+                default: this.itemInfo['note'] || ''
+              },
+              activity: { type: 'number', title: '活动编号',enum: this.options,
+                default: this.itemInfo['activityid'] || 1,
+                ui: {
+                  widget: 'select',
+                } as SFSelectWidgetSchema }
             },
-            note: { type: 'string', title: '备注' },
-            activity: { type: 'number', title: '活动编号',enum: list,
-              default: 1,
-              ui: {
-                widget: 'select',
-              } as SFSelectWidgetSchema }
-          },
-          required: ['picture', 'note', 'activity'],
-        };
+            // required: ['picture', 'note', 'activity'],
+          };
+          this.loaded = true;
       }
+      )
+    }else {
+      this.http.get(ROOT_URL + 'activity/getActivityListByStatu',{statu: 1}).subscribe(res => {
+        console.log(res)
+        if (res['code'] == 0){
+          let list = [];
+          res['data'].forEach(item => {
+            list.push({
+              label: item['activityname'],
+              value: item['id']
+            })
+          })
+          this.schema = {
+            properties: {
+              picture: {
+                type: 'string',
+                title: '封面图',
+                ui: {
+                  widget: 'upload',
+                  action: ROOT_URL + 'shop/message/uploadPicture',
+                  resReName: 'data',
+                  urlReName: 'url',
+                  fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+                  name: 'image'
+                } as SFUploadWidgetSchema,
+              },
+              note: { type: 'string', title: '备注' },
+              activity: { type: 'number', title: '活动编号',enum: list,
+                default: 1,
+                ui: {
+                  widget: 'select',
+                } as SFSelectWidgetSchema }
+            },
+            required: ['picture', 'note', 'activity'],
+          };
+
+          this.loaded = true;
+        }
+      })
+    }
+  }
+
+  async initForm(){
+
+    await new Promise((resolve, reject) => {
+      this.http.get(ROOT_URL + 'roll/picture/detail',{id: this.params.id}).subscribe(res => {
+        console.log(1,res)
+        if (res['code'] == 0){
+          this.itemInfo = res['data'];
+          resolve()
+        }else {
+          reject()
+        }
+      })
     })
+
+    await new Promise((resolve, reject) => {
+      this.http.get(ROOT_URL + 'activity/getActivityListByStatu',{statu: 1}).subscribe(res => {
+        console.log(2,res)
+        if (res['code'] == 0) {
+          res['data'].forEach(item => {
+            this.options.push({
+              label: item['activityname'],
+              value: item['id']
+            })
+          })
+          resolve();
+        }else {
+          reject()
+        }
+      });
+    })
+
   }
 
   save(value: any) {
@@ -113,6 +196,23 @@ export class TradeBannerEditComponent implements OnInit {
     this.http.post(`${ROOT_URL}roll/picture/add`, params).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('保存成功');
+        this.modal.close(true);
+      }else {
+        this.msgSrv.success(res['message']);
+      }
+    });
+  }
+  alter(value: any) {
+    let params = {
+      id: this.itemInfo['id'],
+      activityid: value.activity,
+      picture_address: value.picture['url'],
+      note: value.note
+    };
+    console.log(params)
+    this.http.post(`${ROOT_URL}roll/picture/update`, params).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('修改成功');
         this.modal.close(true);
       }else {
         this.msgSrv.success(res['message']);

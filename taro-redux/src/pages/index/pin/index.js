@@ -52,6 +52,7 @@ export default class Pin extends Component {
                 {group.map(item => (
                   <View key={item.id} className='home-pin__item' onClick={this.handleClick.bind(this, item)}>
                     <Image
+                      mode='aspectFill'
                       className='home-pin__item-img'
                       src={IMG_URL + item.shoppicture}
                     />

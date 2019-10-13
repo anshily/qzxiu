@@ -32,6 +32,7 @@ export default class Gallery extends Component {
               className='item-gallery__swiper-item'
             >
               <Image
+                mode='aspectFill'
                 className='item-gallery__swiper-item-img'
                 src={item}
               />

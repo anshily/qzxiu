@@ -31,7 +31,7 @@ export default class Recommend extends Component {
                 className='home-recommend__list-item'
                 onClick={this.handleClick.bind(this, id)}
               >
-                <Image className='home-recommend__list-item-img' src={categoryItem.listPicUrl} />
+                <Image mode='aspectFill' className='home-recommend__list-item-img' src={categoryItem.listPicUrl} />
                 {!!categoryItem.simpleDesc && !categoryItem.simpleDescClose &&
                   <Text className='home-recommend__list-item-desc' numberOfLines={1}>
                     {categoryItem.simpleDesc}

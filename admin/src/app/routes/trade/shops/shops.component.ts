@@ -3,6 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {TradeShopsEditComponent} from "./edit/edit.component";
+import {TradeShopsViewComponent} from "./view/view.component";
 
 @Component({
   selector: 'app-trade-shops',
@@ -40,13 +41,19 @@ export class TradeShopsComponent implements OnInit {
     { title: '缩略图', type: 'img', width: '50px', index: 'shoppicture' },
     { title: '添加时间', type: 'date', index: 'updatedAt' },
     {
-      title: '',
+      title: '操作',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        { text: '查看', click: (item: any) => {
+          this.detail(item['id']);
+          } },
+        { text: '编辑', click: (item: any) => {
+            this.edit(item['id']);
+          } },
       ]
     }
   ];
+
+  // 身份证 毕业证
 
   constructor(private http: _HttpClient, private modal: ModalHelper) { }
 
@@ -55,6 +62,18 @@ export class TradeShopsComponent implements OnInit {
   add() {
     this.modal
       .createStatic(TradeShopsEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
+  }
+
+  edit(id) {
+    this.modal
+      .createStatic(TradeShopsEditComponent, { params: { id: id, edit: true } })
+      .subscribe(() => this.st.reload());
+  }
+
+  detail(id) {
+    this.modal
+      .createStatic(TradeShopsViewComponent, { itemId: id })
       .subscribe(() => this.st.reload());
   }
 
