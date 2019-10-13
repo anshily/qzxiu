@@ -91,8 +91,12 @@ public class UserController {
             u.setToken(newToken);
             u.setUpdate_time(new Date());
             userService.update(u);
+            /*根据用户id查询出用户的角色对象*/
+            String role=userService.getRoleNameByUserid(u.getId());
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("token",newToken);
+            map.put("id",u.getId());
+            map.put("roleName",role);
             return ResultGenerator.successResult(map);
         }else {
             return ResultGenerator.errResult(5001, "用户名密码错误");

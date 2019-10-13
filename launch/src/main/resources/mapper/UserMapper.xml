@@ -38,4 +38,7 @@
   <select id="getUserByPassword" resultType="io.peach.launch.model.User">
     select * from qzx_user where username=#{username} and password=#{password}
   </select>
+  <select id="getRoleNameByUserid" resultType="String">
+    select info from qzx_role where id=(select rid from qzx_user_role where uid=#{id})
+  </select>
 </mapper>

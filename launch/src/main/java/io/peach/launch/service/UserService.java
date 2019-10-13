@@ -11,4 +11,5 @@ public interface UserService extends Service<User> {
     Integer nameExist(String name);
     User selectUserByOpenid(String openid);
     User getUserByPassword(String username,String password);
+    String getRoleNameByUserid(int id);
 }
