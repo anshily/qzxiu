@@ -44,4 +44,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         User user=getUserByPassword(username, password);
         return user;
     }
+
+    @Override
+    public String getRoleNameByUserid(int id) {
+        String role=qzxUserMapper.getRoleNameByUserid(id);
+        return role;
+    }
 }

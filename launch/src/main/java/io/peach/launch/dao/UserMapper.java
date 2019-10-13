@@ -9,4 +9,5 @@ public interface UserMapper extends Mapper<User> {
     User nameExist(String name);
     User selectUserByOpenid(String openid);
     User getUserByPassword(@Param(value = "username") String username,@Param(value = "password") String password);
+    String getRoleNameByUserid(int id);
 }

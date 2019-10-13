@@ -84,20 +84,19 @@ public class UserController {
             throw new ServiceException(Constants.CODE_ERR_USER_NAME);
         }
        /* List<User> users =  userService.selectByCSql("username=" + user.getUsername() + " and password=" + user.getPassword());*/
-        Condition condition = new Condition(User.class);
-        Example.Criteria criteria = condition.createCriteria();
-        criteria.andCondition("username="+user.getUsername());
-        criteria.andCondition("password="+user.getPassword());
-        List<User> users = userService.findByCondition(condition);
-        if (users.size() > 0){
-            String newToken = UUID.randomUUID().toString();
 
-            User user1 = users.get(0);
-            user1.setToken(newToken);
-            user1.setUpdate_time(new Date());
-            userService.update(user1);
+        User u= userService.getUserByPassword(user.getUsername(),user.getPassword());
+        if (null!=u){
+            String newToken = UUID.randomUUID().toString();
+            u.setToken(newToken);
+            u.setUpdate_time(new Date());
+            userService.update(u);
+            /*根据用户id查询出用户的角色对象*/
+            String role=userService.getRoleNameByUserid(u.getId());
             Map<String,Object> map = new HashMap<String,Object>();
             map.put("token",newToken);
+            map.put("id",u.getId());
+            map.put("roleName",role);
             return ResultGenerator.successResult(map);
         }else {
             return ResultGenerator.errResult(5001, "用户名密码错误");
