@@ -38,14 +38,18 @@ export default async function fetch(options) {
   }).then(async (res) => {
     const { code, data } = res.data
     console.log(res);
-    console.log(code);
-    console.log(data);
-    console.log(anshiModify);
+    // console.log(code);
+    // console.log(data);
+    // console.log(anshiModify);
 
     if (anshiModify) {
       if (code == 0){
         return data
-      } else {
+      }else if (code == 5008) {
+        Taro.navigateTo({
+          url: '/pages/user-login/user-login'
+        })
+      }else {
         return Promise.reject(res.data)
       }
     }

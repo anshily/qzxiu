@@ -145,6 +145,11 @@ export default class UserLogin extends Component {
             this.setState({
               openModal: true
             })
+          }).catch(rej => {
+            console.log(rej)
+            if (rej && rej['code'] == 5008){
+              Taro.showModal()
+            }
           })
         }else {
           Taro.showToast({
@@ -358,6 +363,16 @@ export default class UserLogin extends Component {
           {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>
 
+        <AtModal
+          isOpened
+          title='标题'
+          cancelText='取消'
+          confirmText='确认'
+          onClose={ this.handleClose }
+          onCancel={ this.handleCancel }
+          onConfirm={ this.handleConfirm }
+          content='欢迎加入京东凹凸实验室\n\r欢迎加入京东凹凸实验室'
+        />
 
 
         {/*<SwNav/>*/}
