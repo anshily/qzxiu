@@ -3,8 +3,12 @@ import io.peach.launch.base.core.*;
 import io.peach.launch.base.utils.wechat.MpSDK;
 import io.peach.launch.dto.UserDTO;
 import io.peach.launch.model.User;
+import io.peach.launch.model.UserRole;
+import io.peach.launch.service.UserRoleService;
 import io.peach.launch.service.UserService;
 import com.github.pagehelper.PageHelper;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
@@ -20,6 +24,8 @@ import java.util.*;
 public class UserController {
     @Resource
     private UserService userService;
+    @Resource
+    private UserRoleService userRoleService;
 
     @GetMapping("/userInfo")
     public Result userInfo(@RequestParam String token){
@@ -108,8 +114,10 @@ public class UserController {
         Integer code=userService.nameExist(name);
         return ResultGenerator.successResult(code);
     }
+    @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/accordingCodeGetToken")
     public Result getToken(@RequestParam String code) {
+        Map<String,Object> map=new HashMap<>();
         String openid= MpSDK.code2Session(code);
         /*查詢出當前用戶列表中是否有當前的openid*/
         Condition condition = new Condition(User.class);
@@ -119,7 +127,10 @@ public class UserController {
         List<User> list = userService.findByCondition(condition);
         if(list.size()!=0){
             /*有對象，獲取當前對象的token 返回*/
-            return ResultGenerator.successResult(list.get(0).getToken());
+            map.put("id",list.get(0).getId());
+            map.put("token",list.get(0).getToken());
+            map.put("rolename",userService.getRoleNameByUserid(list.get(0).getId()));
+            return ResultGenerator.successResult(map);
         }else{
             /*沒有當前對象  創建一個新的對象，然後動態賦值一個token*/
             User user=new User();
@@ -127,7 +138,15 @@ public class UserController {
             user.setOpen_id(openid);
             user.setToken(token);
             userService.save(user);
-            return ResultGenerator.successResult(token);
+            /*将游客角色绑定到当前用户上*/
+            UserRole userRole=new UserRole();
+            userRole.setRid(3);
+            userRole.setUid(user.getId());
+            userRoleService.save(userRole);
+            map.put("id",user.getId());
+            map.put("token",token);
+            map.put("rolename","游客");
+            return ResultGenerator.successResult(map);
         }
     }
 

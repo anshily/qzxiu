@@ -99,9 +99,9 @@ public class OrderController {
         /*创建一个随机订单编号 时间戳+4位随机数字*/
         String orderid=new Date().getTime()+""+Math.round(Math.random() * 10000);
         BigDecimal priceAll=new BigDecimal(0);
-        OrderMessage orderMessage=new OrderMessage();
         int goodsnum=0;
         for (GoodsMessageDTO g:shopCar.getList()) {
+            OrderMessage orderMessage=new OrderMessage();
             goodsnum+=g.getGoodsNum();
             priceAll=priceAll.add(new BigDecimal(g.getGoodsNum()).multiply(g.getGoodsPrice()));
             orderMessage.setOrderid(orderid);
