@@ -29,6 +29,17 @@ export const dispatchLogin = payload => createAction({
 })
 
 /**
+ * 用户code登录
+ * @param {*} payload
+ */
+export const dispatchCodeLogin = payload => createAction({
+  url: ROOT_URL + 'user/accordingCodeGetToken',
+  type: 'USER_CODE_LOGIN',
+  method: 'GET',
+  payload
+})
+
+/**
  * 用户退出登录
  */
 export const dispatchLogout = () => ({ type: USER_LOGOUT })

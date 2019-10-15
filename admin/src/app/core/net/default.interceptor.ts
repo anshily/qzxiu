@@ -77,7 +77,7 @@ export class DefaultInterceptor implements HttpInterceptor {
             // console.log(body)
           if (body && body.code == 5008){
             this.goTo('/passport/login');
-            return throwError({});
+            return throwError(ev.body);
           }
 
           return of(ev);

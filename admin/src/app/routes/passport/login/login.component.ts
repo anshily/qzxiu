@@ -116,14 +116,30 @@ export class UserLoginComponent implements OnDestroy {
       })
       .subscribe((res: any) => {
         console.log(res)
-        if (res.msg !== 'ok') {
+
+        let data = res['data']
+        if (res['code'] !== 0) {
           this.error = res.msg;
+          this.msg.error(res['message']);
           return;
         }
+        if (res['code'] == 0 && res['data']['roleName'] != '总店管理员') {
+          this.msg.error('当前用户无权限');
+          return;
+        }
+        // id: 1
+        // roleName: "总店管理员"
+        // token: "f02f3adf-ed19-4a3d-ad8f-02970a3fa92c"
+
+        localStorage.setItem('user_id',data['id'])
+        localStorage.setItem('user_role',data['roleName'])
+        localStorage.setItem('user_token',data['token'])
         // 清空路由复用信息
         this.reuseTabService.clear();
         // 设置用户Token信息
-        this.tokenService.set(res.user);
+        this.tokenService.set({
+          token:data['token']
+        });
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
           let url = this.tokenService.referrer!.url || '/';

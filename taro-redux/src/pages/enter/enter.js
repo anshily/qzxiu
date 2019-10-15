@@ -147,9 +147,6 @@ export default class UserLogin extends Component {
             })
           }).catch(rej => {
             console.log(rej)
-            if (rej && rej['code'] == 5008){
-              Taro.showModal()
-            }
           })
         }else {
           Taro.showToast({
@@ -205,8 +202,9 @@ export default class UserLogin extends Component {
   }
 
   onLevelChange = e => {
+    console.log(e);
     this.setState({
-      shopLevel: e.detail.value
+      levelChecked: e.detail.value
     })
   }
 
@@ -247,7 +245,7 @@ export default class UserLogin extends Component {
             name='value'
             title='用户名'
             type='text'
-            placeholder='单行文本'
+            placeholder='作为登录使用'
             value={this.state.username}
             onChange={this.handleUsernameChange}
           />
@@ -256,7 +254,7 @@ export default class UserLogin extends Component {
             name='value3'
             title='密码'
             type='password'
-            placeholder='密码不能少于10位数'
+            placeholder='密码不能少于6位数'
             value={this.state.password}
             onChange={this.handlePasswordChange}
           />
@@ -275,7 +273,7 @@ export default class UserLogin extends Component {
             name='value'
             title='店铺名'
             type='text'
-            placeholder='单行文本'
+            placeholder='用户佣金发放标识'
             value={this.state.shopName}
             onChange={this.handleShopNameChange}
           />
@@ -362,17 +360,6 @@ export default class UserLogin extends Component {
 
           {/*<ClModal show renderAction={true && <ClButton>确认</ClButton>} >店铺添加成功</ClModal>*/}
         </AtForm>
-
-        <AtModal
-          isOpened
-          title='标题'
-          cancelText='取消'
-          confirmText='确认'
-          onClose={ this.handleClose }
-          onCancel={ this.handleCancel }
-          onConfirm={ this.handleConfirm }
-          content='欢迎加入京东凹凸实验室\n\r欢迎加入京东凹凸实验室'
-        />
 
 
         {/*<SwNav/>*/}

@@ -27,11 +27,6 @@
           "icon": "anticon-appstore"
         },{
           "text": "小部件",
-          "i18n": "用户",
-          "link": "/trade/users",
-          "icon": "anticon-appstore"
-        },{
-          "text": "小部件",
           "i18n": "活动",
           "link": "/trade/actives",
           "icon": "anticon-appstore"

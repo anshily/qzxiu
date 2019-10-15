@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-trade-orders',
@@ -46,9 +47,13 @@ export class TradeOrdersComponent implements OnInit {
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    let token = localStorage.getItem('user_token');
+    let role = localStorage.getItem('user_role');
+    !(token && role && role == '总店管理员') && this.router.navigateByUrl('/passport/login').then()
+  }
 
   add() {
     // this.modal

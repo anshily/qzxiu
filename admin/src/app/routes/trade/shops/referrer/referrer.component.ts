@@ -8,7 +8,6 @@ import { _HttpClient } from '@delon/theme';
 })
 export class TradeShopsReferrerComponent implements OnInit {
   record: any = {};
-  params: any;
   itemId: any;
   proxyValue: any;
   recommendValue: any;

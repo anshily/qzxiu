@@ -114,7 +114,8 @@ public class UserController {
         /*查詢出當前用戶列表中是否有當前的openid*/
         Condition condition = new Condition(User.class);
         Example.Criteria criteria = condition.createCriteria();
-        criteria.andLike("openid=",openid);
+//        criteria.andLike("openid",openid);
+        criteria.andEqualTo("openid",openid);
         List<User> list = userService.findByCondition(condition);
         if(list.size()!=0){
             /*有對象，獲取當前對象的token 返回*/

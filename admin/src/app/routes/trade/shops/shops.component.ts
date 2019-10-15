@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {TradeShopsEditComponent} from "./edit/edit.component";
 import {TradeShopsViewComponent} from "./view/view.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-trade-shops',
@@ -55,9 +56,13 @@ export class TradeShopsComponent implements OnInit {
 
   // 身份证 毕业证
 
-  constructor(private http: _HttpClient, private modal: ModalHelper) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    let token = localStorage.getItem('user_token');
+    let role = localStorage.getItem('user_role');
+    !(token && role && role == '总店管理员') && this.router.navigateByUrl('/passport/login').then()
+  }
 
   add() {
     this.modal

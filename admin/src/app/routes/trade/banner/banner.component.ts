@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {TradeBannerEditComponent} from "./edit/edit.component";
 import {NzMessageService} from "ng-zorro-antd";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-trade-banner',
@@ -64,9 +65,14 @@ export class TradeBannerComponent implements OnInit {
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService,) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private msgSrv: NzMessageService,private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    let token = localStorage.getItem('user_token');
+    let role = localStorage.getItem('user_role');
+    !(token && role && role == '总店管理员') && this.router.navigateByUrl('/passport/login').then()
+    console.log(token,role);
+  }
 
   add() {
     this.modal

@@ -9,6 +9,7 @@ import {SFSchema, SFSelectWidgetSchema, SFUISchema, SFUploadWidgetSchema} from '
 })
 export class TradeShopsEditComponent implements OnInit {
   record: any = {};
+  priviewFlie: any;
   params: any;
   loaded = false;
   recommendList = [];
@@ -108,6 +109,8 @@ export class TradeShopsEditComponent implements OnInit {
       this.formInit().then(() => {
         console.log(this.typeList)
 
+        this.priviewFlie = this.shopInfo['shoppicture'] || '../uploads/assets/index1.jpg';
+        this.receiveContent = this.shopInfo['description'];
         this.schema = {
           properties: {
             // username: { type: 'string', title: '用户', default: this.shopInfo['owner_phone'] },
@@ -146,18 +149,7 @@ export class TradeShopsEditComponent implements OnInit {
                 urlReName: 'url',
                 fileType: 'image/png,image/jpeg,image/gif,image/bmp',
                 name: 'image'
-              } as SFUploadWidgetSchema,
-              enum: [
-                {
-                  uid: -1,
-                  name: '门面图.png',
-                  status: 'done',
-                  url: this.shopInfo['shoppicture'] || '../uploads/assets/index1.jpg',
-                  response: {
-                    url: this.shopInfo['shoppicture'] || '../uploads/assets/index1.jpg',
-                  },
-                },
-              ]
+              } as SFUploadWidgetSchema
             },
             custom: {
               type: 'string',
@@ -311,7 +303,8 @@ export class TradeShopsEditComponent implements OnInit {
         description: this.receiveContent
       },
       recommendID: value.recommendID,
-      positionID: value.positionID
+      positionID: value.positionID,
+      token: localStorage.getItem('user_token')
     }
     this.http.post(ROOT_URL + `shop/message/saveUserAndShopMessageAndGrading`, params).subscribe(res => {
       if (res['code'] == 0){
@@ -329,11 +322,12 @@ export class TradeShopsEditComponent implements OnInit {
         owner_phone: value.phone,
         shoptype_id: value.shopType,
         shopname: value.shopName,
-        shoppicture: value.file['url'],
+        shoppicture: value.file || this.priviewFlie,
         shopaddress: value.shopAddress,
         description: this.receiveContent
 
     }
+    // console.log(params,value.file);
     this.http.post(ROOT_URL + `shop/message/update`, params).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('修改成功');

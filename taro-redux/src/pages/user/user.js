@@ -18,6 +18,11 @@ class User extends Component {
 
   componentDidShow() {
     this.props.dispatchUser()
+    Taro.login().then(res => {
+      this.props.dispatchCodeLogin({
+        code: res['code']
+      })
+    })
     this.props.dispatchCartNum()
     console.log(cartUtil.getCart())
   }
