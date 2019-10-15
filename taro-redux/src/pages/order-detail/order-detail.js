@@ -47,9 +47,11 @@ export default class OrderDetail extends Component {
       actualPrice: 10,
       cnt: 2
     }];
+
+    let  {orderDetail} = this.props;
     return(
       <View className='cart-list'>
-        {list.map(item => (
+        {orderDetail && orderDetail.list.map(item => (
           <View
             key={item.id}
             className='cart-list__item'
@@ -100,7 +102,7 @@ export default class OrderDetail extends Component {
             <View className='at-row at-row__justify--end'>
               {/*<View className='at-col at-col__offset-4'>总计 1 件商品， 共计 999 元</View>*/}
               <View className='at-col'></View>
-              <View className='at-col'>总计 1 件商品， 共计 999 元</View>
+              <View className='at-col'>总计 {orderDetail['sumCnt']} 件商品， 共计 {orderDetail['sumPrice']} 元</View>
 
             </View>
 

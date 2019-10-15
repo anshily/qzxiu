@@ -33,11 +33,13 @@ const MENU_LIST = [{
 //   key: 'red-packet',
 //   text: '红包',
 //   img: require('./assets/red-packet.png')
-// }, {
-//   key: 'allowance',
-//   text: '津贴',
-//   img: require('./assets/allowance.png')
-// }, {
+// },
+{
+  key: 'allowance',
+  text: '提现管理',
+  img: require('./assets/allowance.png')
+},
+// {
 //   key: 'gif-card',
 //   text: '礼品卡',
 //   img: require('./assets/gif-card.png')
@@ -59,8 +61,8 @@ const MENU_LIST = [{
 //   img: require('./assets/feedback.png')
 // },
   {
-  key: 'help',
-  text: '帮助中心',
+  key: 'message',
+  text: '消息中心',
   url: 'http://m.you.163.com/help',
   img: require('./assets/help.png')
 }]
@@ -80,6 +82,14 @@ export default class Menu extends Component {
         url: '/pages/referrer/referrer'
       })
     }else if (menu.key === 'order') {
+      Taro.navigateTo({
+        url: '/pages/order/order'
+      })
+    }else if (menu.key === 'allowance') {
+      Taro.navigateTo({
+        url: '/pages/order/order'
+      })
+    } else if (menu.key === 'message') {
       Taro.navigateTo({
         url: '/pages/order/order'
       })

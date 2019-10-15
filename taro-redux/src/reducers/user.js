@@ -24,9 +24,12 @@ export default function user(state = INITIAL_STATE, action) {
     case 'USER_CODE_LOGIN': {
       console.log(action.payload)
       Taro.setStorage({ key: 'user_token', data: action.payload.token});
-      Taro.setStorage({ key: 'user_role', data: action.payload.token});
-      Taro.setStorage({ key: 'user_id', data: action.payload.token});
-      return { ...state }
+      Taro.setStorage({ key: 'user_role', data: action.payload.rolename});
+      Taro.setStorage({ key: 'user_id', data: action.payload.id});
+      return { ...state, userInfo: {
+          ...action.payload,
+          login: true
+        }}
     }
     case USER_LOGOUT: {
       return {
