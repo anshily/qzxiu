@@ -1,4 +1,5 @@
 package io.peach.launch.service;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.model.User;
 import io.peach.launch.base.core.Service;
 
@@ -12,4 +13,5 @@ public interface UserService extends Service<User> {
     User selectUserByOpenid(String openid);
     User getUserByPassword(String username,String password);
     String getRoleNameByUserid(int id);
+    ShopMessage getShopMessageByToken(String token);
 }

@@ -2,6 +2,7 @@ package io.peach.launch.controller;
 import io.peach.launch.base.core.*;
 import io.peach.launch.base.utils.wechat.MpSDK;
 import io.peach.launch.dto.UserDTO;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.model.User;
 import io.peach.launch.model.UserRole;
 import io.peach.launch.service.UserRoleService;
@@ -148,6 +149,12 @@ public class UserController {
             map.put("rolename","游客");
             return ResultGenerator.successResult(map);
         }
+    }
+    @GetMapping("/accordingTokenGetShop")
+    public Result accordingTokenGetShop(@RequestParam String token) {
+        /*先根据token查询出有没有对应的店铺id*/
+        ShopMessage shopMessage=userService.getShopMessageByToken(token);
+        return ResultGenerator.successResult(shopMessage);
     }
 
     /*用戶通過用戶名密碼登錄時將openid與用戶賬號綁定*/

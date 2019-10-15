@@ -1,6 +1,7 @@
 package io.peach.launch.service.impl;
 
 import io.peach.launch.dao.UserMapper;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.model.User;
 import io.peach.launch.service.UserService;
 import io.peach.launch.base.core.AbstractService;
@@ -49,5 +50,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     public String getRoleNameByUserid(int id) {
         String role=qzxUserMapper.getRoleNameByUserid(id);
         return role;
+    }
+
+    @Override
+    public ShopMessage getShopMessageByToken(String token) {
+        ShopMessage shopMessage=qzxUserMapper.getShopMessageByToken(token);
+        return shopMessage;
     }
 }
