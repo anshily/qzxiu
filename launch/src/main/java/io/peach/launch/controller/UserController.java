@@ -115,7 +115,7 @@ public class UserController {
         Condition condition = new Condition(User.class);
         Example.Criteria criteria = condition.createCriteria();
 //        criteria.andLike("openid",openid);
-        criteria.andEqualTo("openid",openid);
+        criteria.andEqualTo("open_id",openid);
         List<User> list = userService.findByCondition(condition);
         if(list.size()!=0){
             /*有對象，獲取當前對象的token 返回*/
