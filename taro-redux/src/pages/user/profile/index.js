@@ -60,7 +60,7 @@ export default class Profile extends Component {
                 {/* XXX 没有全部 level 对应的图标，暂时都用 v1 */}
                 <Image className='user-profile__info-level' src={level01} />
                 <Text className='user-profile__info-uid'>
-                  {this.getUid(userInfo.uid)}
+                  {userInfo.rolename == '游客' ? '游客' + userInfo['id'] : userInfo['id'] }
                 </Text>
               </View> :
               <Text className='user-profile__info-tip'>点击登录账号</Text>

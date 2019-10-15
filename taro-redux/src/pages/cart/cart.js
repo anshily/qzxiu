@@ -126,7 +126,8 @@ class Index extends Component {
 
     const payload = {
       shopId: 1,
-      list: orders
+      list: orders,
+      token: Taro.getStorageSync('user_token')
     }
     this.props.dispatchOrder(payload).then(res => {
       console.log(res)

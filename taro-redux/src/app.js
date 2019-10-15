@@ -35,7 +35,9 @@ class App extends Component {
       'pages/order/order',
       'pages/webview/webview',
       'pages/shop/shop',
-      'pages/order-detail/order-detail'
+      'pages/order-detail/order-detail',
+      'pages/message/message',
+      'pages/allowance/allowance'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -74,15 +76,20 @@ class App extends Component {
 
   componentDidMount () {
     Taro.login().then(res => {
-      console.log(res)
+      // console.log(res)
       Taro.request({
-        url: ROOT_URL + 'anshi/mplogin',
+        url: ROOT_URL + 'user/accordingCodeGetToken',
         method: 'GET',
         data: {
           code: res['code']
         }
-      }).then( res => {
-        console.log(res)
+      }).then( info => {
+        console.log(info)
+        if (info['code'] == 0){
+          Taro.setStorage({ key: 'user_token', data: info.data.token});
+          Taro.setStorage({ key: 'user_role', data: info.data.rolename});
+          Taro.setStorage({ key: 'user_id', data: info.data.id});
+        }
         }
       )
     })

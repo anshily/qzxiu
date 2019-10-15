@@ -45,11 +45,11 @@ class User extends Component {
         >
           <Profile userInfo={userInfo} />
           <Menu />
-          {userInfo.login &&
-            <View className='user__logout' onClick={this.handleLogin}>
-              <Text className='user__logout-txt'>切换账号</Text>
-            </View>
-          }
+          {/*{userInfo.login &&*/}
+            {/*<View className='user__logout' onClick={this.handleLogin}>*/}
+              {/*<Text className='user__logout-txt'>切换账号</Text>*/}
+            {/*</View>*/}
+          {/*}*/}
           <View className='user__empty' />
         </ScrollView>
         {/*<View className='user__activity'>*/}
