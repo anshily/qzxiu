@@ -158,6 +158,8 @@ public class ShopMessageController {
         /*将返回的用户id存入店铺信息中*/
         submitAll.getShopMessage().setUserid(submitAll.getUser().getId());
         /*将店铺信息存储到数据库中*/
+        submitAll.getShopMessage().setUpdatetime(new Date());
+        submitAll.getShopMessage().setCreatetime(new Date());
         shopMessageService.save(submitAll.getShopMessage());
         /*将店铺id与两个推荐人的id一起传入service层进行分级处理*/
         shopMessageService.addGrading(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
