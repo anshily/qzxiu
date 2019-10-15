@@ -70,13 +70,15 @@ export default class Referrer extends Component {
             <View className='at-col at-col-6'>
 
               <View className='at-row'>
-                <View className='at-col at-col-6'></View>
+                <View className='at-col at-col-6'>
+                  当前余额 0 元
+                </View>
               </View>
               <View className='at-row'>
-                aaa
+                累计推荐 0 人 奖励 0 元
               </View>
               <View className='at-row'>
-                bbb
+                提现详情
               </View>
 
             </View>
