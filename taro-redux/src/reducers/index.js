@@ -9,6 +9,8 @@ import referrer from './referrer'
 import order from './order'
 import shop from './shop'
 import orderDetail from './order-detail'
+import allowance from './allowance'
+import message from './message'
 
 export default combineReducers({
   home,
@@ -20,5 +22,7 @@ export default combineReducers({
   referrer,
   order,
   shop,
-  orderDetail
+  orderDetail,
+  message,
+  allowance
 })

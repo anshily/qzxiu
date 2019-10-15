@@ -87,11 +87,11 @@ export default class Menu extends Component {
       })
     }else if (menu.key === 'allowance') {
       Taro.navigateTo({
-        url: '/pages/order/order'
+        url: '/pages/allowance/allowance'
       })
     } else if (menu.key === 'message') {
       Taro.navigateTo({
-        url: '/pages/order/order'
+        url: '/pages/message/message'
       })
     } else {
       Taro.showToast({

@@ -5,8 +5,8 @@ const INITIAL_STATE = {
 
 export default function allowance(state = {}, action) {
   switch(action.type) {
-    case 'ALLOWANCE_ADD': {
-      const { allowanceItem } = action.payload
+    case 'ALLOWANCE_LIST': {
+      const allowanceItem = action.payload
       return { ...state, allowanceItem: allowanceItem }
     }
     default:
