@@ -17,6 +17,9 @@ export default class Allowance extends Component {
       console.log(res)
     })
   }
+  alterPage(page){
+    console.log(page);
+  }
   render() {
     let {allowanceItem} = this.props
     return(
@@ -41,6 +44,7 @@ export default class Allowance extends Component {
           total={50}
           pageSize={10}
           current={1}
+          onPageChange={this.alterPage}
         >
         </AtPagination>
       </View>

@@ -31,6 +31,10 @@ export default function user(state = INITIAL_STATE, action) {
           login: true
         }}
     }
+    case 'USER_SHOP_INFO': {
+      console.log(action.payload)
+      return { ...state, shopInfo: action.payload}
+    }
     case USER_LOGOUT: {
       return {
         ...INITIAL_STATE

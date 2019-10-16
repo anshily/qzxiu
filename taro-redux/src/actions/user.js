@@ -38,6 +38,27 @@ export const dispatchCodeLogin = payload => createAction({
   method: 'GET',
   payload
 })
+/**
+ * 用户商铺绑定
+ * @param {*} payload
+ */
+export const dispatchBind = payload => createAction({
+  url: ROOT_URL + 'user/bangding',
+  type: 'USER_BIND',
+  method: 'POST',
+  payload
+})
+
+/**
+ * 用户code登录
+ * @param {*} payload
+ */
+export const dispatchShopInfo = payload => createAction({
+  url: ROOT_URL + 'user/accordingTokenGetShop',
+  type: 'USER_SHOP_INFO',
+  method: 'GET',
+  payload
+})
 
 /**
  * 用户退出登录

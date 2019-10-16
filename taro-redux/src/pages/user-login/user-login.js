@@ -22,13 +22,20 @@ class UserLogin extends Component {
     navigationBarTitleText: '登录'
   }
 
-  state = {
-    username: '',
-    password: '',
-    isShowSuggest: false,
-    loading: false
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      isShowSuggest: false,
+      loading: false
+    }
+    this.loginType = this.$router.params.type;
   }
 
+  componentWillMount() {
+    console.log(this.loginType)
+  }
   handleClick = (type) => {
     if (type !== 'email') {
       Taro.showToast({
@@ -53,16 +60,28 @@ class UserLogin extends Component {
       password: this.state.password
     }
     this.setState({ loading: true })
-    this.props.dispatchLogin(payload).then(() => {
-      this.setState({ loading: false })
-      Taro.navigateBack({ delta: 2 })
-      // TODO RN 的 navigateBack 参数 delta 无效，暂时用如下方式解决
-      // if (process.env.TARO_ENV === 'rn') {
-      //   setTimeout(() => Taro.navigateBack(), 1000)
-      // }
-    }).catch(() => {
-      this.setState({ loading: false })
-    })
+    if (this.loginType && this.loginType == 1){
+      Taro.login().then(res => {
+        payload['code'] = res['code'];
+        this.props.dispatchBind(payload).then(() => {
+          this.setState({ loading: false })
+          Taro.navigateBack({ delta: 1 })
+        }).catch(() => {
+          this.setState({ loading: false })
+        })
+      })
+    } else {
+      this.props.dispatchLogin(payload).then(() => {
+        this.setState({ loading: false })
+        Taro.navigateBack({ delta: 1 })
+        // TODO RN 的 navigateBack 参数 delta 无效，暂时用如下方式解决
+        // if (process.env.TARO_ENV === 'rn') {
+        //   setTimeout(() => Taro.navigateBack(), 1000)
+        // }
+      }).catch(() => {
+        this.setState({ loading: false })
+      })
+    }
   }
 
   render () {

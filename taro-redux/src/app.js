@@ -89,9 +89,22 @@ class App extends Component {
           Taro.setStorage({ key: 'user_token', data: info.data.token});
           Taro.setStorage({ key: 'user_role', data: info.data.rolename});
           Taro.setStorage({ key: 'user_id', data: info.data.id});
+          this.getShop(info.data.token)
         }
         }
       )
+    })
+  }
+
+  getShop(token) {
+    Taro.request({
+      url: ROOT_URL + 'user/accordingTokenGetShop',
+      method: 'GET',
+      data: {
+        token: token
+      }
+    }).then(res => {
+      console.log(res);
     })
   }
 
