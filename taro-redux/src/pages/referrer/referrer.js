@@ -90,21 +90,20 @@ export default class Referrer extends Component {
         </ClCard>
 
 
-        <View className='at-row at-row__justify--center'>
-          <View className='at-col at-col-10'>
+        {/*<View className='at-row at-row__justify--center'>*/}
+          {/*<View className='at-col at-col-10'>*/}
 
-            <View className='at-row at-row__align--center'>
-              <View style='height:100px' className='at-col'>
-                <AtSteps
-                  items={items}
-                  current={this.state.current}
-                  onChange={this.onChange.bind(this)}
-                />
-              </View>
-            </View>
-
-          </View>
-        </View>
+            {/*<View className='at-row at-row__align--center'>*/}
+              {/*<View style='height:100px' className='at-col'>*/}
+                {/*<AtSteps*/}
+                  {/*items={items}*/}
+                  {/*current={this.state.current}*/}
+                  {/*onChange={this.onChange.bind(this)}*/}
+                {/*/>*/}
+              {/*</View>*/}
+            {/*</View>*/}
+          {/*</View>*/}
+        {/*</View>*/}
 
 
         <AtAccordion

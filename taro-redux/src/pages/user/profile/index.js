@@ -30,6 +30,13 @@ export default class Profile extends Component {
     return `${firstLetter}****${lastLetter}@${suffix}`
   }
 
+  bindShop = () => {
+    console.log('bindShop')
+    Taro.navigateTo({
+      url: '/pages/user-login/user-login?type=1'
+    })
+  }
+
   render () {
     const { userInfo } = this.props
 
@@ -53,15 +60,27 @@ export default class Profile extends Component {
 
           <View className='user-profile__info' onClick={this.handleLogin}>
             <Text className='user-profile__info-name'>
-              {userInfo.login ? userInfo.nickname : '未登录'}
+              {userInfo.login ? userInfo.rolename == '游客' ? '游客' + userInfo['id'] : userInfo['id'] : '未登录'}
             </Text>
             {userInfo.login ?
               <View className='user-profile__info-wrap'>
                 {/* XXX 没有全部 level 对应的图标，暂时都用 v1 */}
                 <Image className='user-profile__info-level' src={level01} />
-                <Text className='user-profile__info-uid'>
-                  {userInfo.rolename == '游客' ? '游客' + userInfo['id'] : userInfo['id'] }
-                </Text>
+                {/*<Text className='user-profile__info-uid'>*/}
+                  {/*{userInfo.rolename == '游客' ? '游客' + userInfo['id'] : userInfo['id'] }*/}
+                {/*</Text>*/}
+                <View>
+                  {
+                    userInfo.rolename == '游客' ?
+                      <View>
+                        {/*<Text className='user-profile__info-uid'>{'游客' + userInfo['id']}</Text>*/}
+                        <Text className='user-profile__info-uid' onClick={this.bindShop}>点击绑定商铺</Text>
+                      </View> :
+                      <Text className='user-profile__info-uid'>
+                        { userInfo['id'] }
+                      </Text>
+                  }
+                </View>
               </View> :
               <Text className='user-profile__info-tip'>点击登录账号</Text>
             }

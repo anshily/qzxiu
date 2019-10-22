@@ -38,6 +38,7 @@ export class TradeShopsComponent implements OnInit {
     { title: '编号', index: 'id' },
     { title: '店铺名', index: 'shopname' },
     { title: '电话', index: 'owner_phone' },
+    { title: '可提现金额', index: 'cashin' },
     { title: '地址', index: 'shopaddress' },
     { title: '缩略图', type: 'img', width: '50px', index: 'shoppicture' },
     { title: '添加时间', type: 'date', index: 'updatedAt' },

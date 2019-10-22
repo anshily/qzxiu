@@ -17,13 +17,15 @@ class User extends Component {
   }
 
   componentDidShow() {
-    this.props.dispatchUser()
+    this.props.dispatchShopInfo({
+      token: Taro.getStorageSync('user_token')
+    })
     Taro.login().then(res => {
       this.props.dispatchCodeLogin({
         code: res['code']
       })
     })
-    this.props.dispatchCartNum()
+    // this.props.dispatchCartNum()
     console.log(cartUtil.getCart())
   }
 
