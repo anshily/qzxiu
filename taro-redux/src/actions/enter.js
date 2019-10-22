@@ -16,3 +16,12 @@ export const dispatchRecommend = payload => createAction({
   },
   payload
 })
+export const dispatchTypeList = payload => createAction({
+  url: ROOT_URL + `shop/type/getTypeList`,
+  type: 'ENTER_TYPE_LIST',
+  method: 'GET',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

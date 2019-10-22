@@ -6,7 +6,6 @@ import { dispatchCartNum } from '@actions/cart'
 import { getWindowHeight } from '@utils/style'
 import Profile from './profile'
 import Menu from './menu'
-import Activity from './activity'
 import * as cartUtil from '@utils/cart'
 import './user.scss'
 
@@ -14,6 +13,17 @@ import './user.scss'
 class User extends Component {
   config = {
     navigationBarTitleText: '个人中心'
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      isShowSuggest: false,
+      loading: false
+    }
+    this.loginType = this.$router.params.type;
   }
 
   componentDidShow() {
@@ -25,8 +35,7 @@ class User extends Component {
         code: res['code']
       })
     })
-    // this.props.dispatchCartNum()
-    console.log(cartUtil.getCart())
+    // console.log(cartUtil.getCart())
   }
 
   handleLogin = () => {
@@ -37,7 +46,6 @@ class User extends Component {
 
   render () {
     const { userInfo } = this.props
-
     return (
       <View className='user'>
         <ScrollView

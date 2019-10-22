@@ -125,7 +125,7 @@ class Index extends Component {
     })
 
     const payload = {
-      shopId: 1,
+      shopId:Taro.getStorageSync('shopId'),
       list: orders,
       token: Taro.getStorageSync('user_token')
     }

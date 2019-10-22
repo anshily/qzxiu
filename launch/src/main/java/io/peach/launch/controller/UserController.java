@@ -169,8 +169,10 @@ public class UserController {
             /*如果相等，不做操作*/
             return ResultGenerator.successResult(user1.getToken());
         }else{
+            String newToken = UUID.randomUUID().toString();
          /*如果两个不相等，将user1的openid给user2*/
             user2.setOpen_id(user1.getOpen_id());
+            user2.setToken(newToken);
             userService.update(user2);
             /*将user1删除*/
             userService.delete(user1);

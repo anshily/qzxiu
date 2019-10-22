@@ -2,7 +2,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import {AtList, AtListItem} from 'taro-ui'
+import { AtSteps, AtDivider, AtList, AtListItem } from 'taro-ui'
+
 import './message.scss'
 import * as actions from '@actions/message';
 
@@ -12,11 +13,12 @@ export default class Message extends Component {
     navigationBarTitleText: 'message'
   }
   render() {
+    let messages = [];
     return(
       <View>
         <AtList hasBorder={false}>
           {
-            referrerLevelOne.map(item => (
+            messages.map(item => (
               <AtListItem
                 key={String(item.id)}
                 title={item.shopname}
@@ -27,8 +29,9 @@ export default class Message extends Component {
               />
             ))
           }
-
         </AtList>
+
+        {messages.length == 0 && <AtDivider content='暂无订单'  />}
       </View>
     )
   }

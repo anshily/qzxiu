@@ -20,14 +20,21 @@ export default class Allowance extends Component {
   alterPage(page){
     console.log(page);
   }
+  goCashPage(item){
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/cashout/cashout?shopId=${item.id}`
+    })
+  }
   render() {
     let {allowanceItem} = this.props
     return(
       <View>
         <AtList hasBorder={false}>
-          {
+          {allowanceItem && allowanceItem.list &&
             allowanceItem.list.map(item => (
               <AtListItem
+                onClick={this.goCashPage.bind(this, item)}
                 key={String(item.id)}
                 title={item.shopname}
                 note={'可提现金额' + item['cashin']}

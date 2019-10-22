@@ -17,13 +17,13 @@ export default function enter(state = {}, action) {
         recommendList: action.payload
       }
     }
-    // case CATE_SUB_LIST: {
-    //   const { id, itemList } = action.payload
-    //   return {
-    //     ...state,
-    //     subCategory: { ...state.subCategory, [id]: itemList }
-    //   }
-    // }
+    case 'ENTER_TYPE_LIST': {
+      console.log(action.payload)
+      return {
+        ...state,
+        typeList: action.payload['typeList']
+      }
+    }
     default:
       return state
   }

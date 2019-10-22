@@ -69,6 +69,63 @@ const MENU_LIST = [{
 const COUNT_LINE = 3
 
 export default class Menu extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      menus: []
+    }
+  }
+  componentWillMount() {
+    const userRole = Taro.getStorageSync('user_role')
+    if (userRole) {
+      if (userRole == '普通店铺') {
+        this.setState({
+          menus: [{
+            key: 'order',
+            text: '我的订单',
+            img: require('./assets/order.png')
+          }, {
+            key: 'referrer',
+            text: '客户关系',
+            img: require('./assets/bargain.png')
+          }, {
+            key: 'message',
+            text: '消息中心',
+            url: 'http://m.you.163.com/help',
+            img: require('./assets/help.png')
+          }]
+        })
+      }else if (userRole == '管理'){
+        this.setState({
+          menus: [{
+            key: 'add-shop',
+            text: '添加商铺',
+            img: require('./assets/pin.png')
+          }, {
+            key: 'allowance',
+            text: '提现管理',
+            img: require('./assets/allowance.png')
+          },{
+            key: 'order',
+            text: '我的订单',
+            img: require('./assets/order.png')
+          }, {
+            key: 'referrer',
+            text: '客户关系',
+            img: require('./assets/bargain.png')
+          }, {
+            key: 'message',
+            text: '消息中心',
+            url: 'http://m.you.163.com/help',
+            img: require('./assets/help.png')
+          }]
+        })
+      } else if (userRole == '开发'){
+
+      }
+    }
+  }
   handleClick = (menu) => {
     // NOTE 时间关系，此处只实现帮助中心，用于演示多端 webview
     if (menu.key === 'help') {
@@ -102,12 +159,13 @@ export default class Menu extends Component {
   }
 
   render () {
+    const {menus} = this.state
     return (
       <View className='user-menu'>
-        {MENU_LIST.map((menu, index) => {
+        {menus.map((menu, index) => {
           // NOTE 不用伪元素选择器，需自行计算
           const nth = (index + 1) % COUNT_LINE === 0
-          const lastLine = parseInt(index / COUNT_LINE) === parseInt(MENU_LIST.length / COUNT_LINE)
+          const lastLine = parseInt(index / COUNT_LINE) === parseInt(menus.length / COUNT_LINE)
           return (
             <View
               key={menu.key}

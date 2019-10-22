@@ -38,7 +38,62 @@ export default class Profile extends Component {
   }
 
   render () {
-    const { userInfo } = this.props
+    const { userInfo } = this.props;
+
+    let role = Taro.getStorageSync('user_role');
+
+    if (role){
+      const shopInfo = Taro.getStorageSync('shopInfo');
+      const userId = Taro.getStorageSync('user_id');
+      return (
+        <View className='user-profile'>
+          {/* // NOTE 背景图片：Image 标签 + position absolute 实现 */}
+          <Image
+            className='user-profile__bg'
+            src={bg}
+            mode='widthFix'
+          />
+          <View className='user-profile__wrap'>
+            <View className='user-profile__avatar'>
+              <Image
+                className='user-profile__avatar-img'
+                src={shopInfo.avatar || defaultAvatar}
+                onClick={this.handleLogin}
+              />
+            </View>
+            <View className='user-profile__info' onClick={this.handleLogin}>
+              <Text className='user-profile__info-name'>
+                {role == '游客' ? '游客' + userId : shopInfo['shopname']}
+              </Text>
+                <View className='user-profile__info-wrap'>
+                  <Image className='user-profile__info-level' src={level01} />
+                  <View>
+                    {
+                      shopInfo.rolename == '游客' ?
+                        <View>
+                          {/*<Text className='user-profile__info-uid'>{'游客' + userInfo['id']}</Text>*/}
+                          <Text className='user-profile__info-uid' onClick={this.bindShop}>点击绑定商铺</Text>
+                        </View> :
+                        <Text className='user-profile__info-uid'>
+                          { '店铺id：' + shopInfo['id'] }
+                        </Text>
+                    }
+                  </View>
+                </View>
+            </View>
+
+            {/*<View className='user-profile__extra'>*/}
+              {/*<View className='user-profile__extra-qr'>*/}
+                {/*<Image*/}
+                  {/*className='user-profile__extra-qr-img'*/}
+                  {/*src={qrCode}*/}
+                {/*/>*/}
+              {/*</View>*/}
+            {/*</View>*/}
+          </View>
+        </View>
+      )
+    }
 
     return (
       <View className='user-profile'>
@@ -58,6 +113,7 @@ export default class Profile extends Component {
             />
           </View>
 
+          {/*user_role*/}
           <View className='user-profile__info' onClick={this.handleLogin}>
             <Text className='user-profile__info-name'>
               {userInfo.login ? userInfo.rolename == '游客' ? '游客' + userInfo['id'] : userInfo['id'] : '未登录'}

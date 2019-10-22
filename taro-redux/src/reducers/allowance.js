@@ -1,6 +1,8 @@
 
 const INITIAL_STATE = {
-  allowanceItem: {},
+  allowanceItem: {
+    list: []
+  },
 }
 
 export default function allowance(state = {}, action) {
