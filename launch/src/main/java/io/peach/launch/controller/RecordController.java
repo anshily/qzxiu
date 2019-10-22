@@ -64,4 +64,13 @@ public class RecordController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
+
+    @GetMapping("/getRecordByShopid")
+    public Result getRecordByShopid(@RequestParam Integer shopid) {
+        Condition condition = new Condition(Record.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("shopid=",shopid);
+        List<Record> list = recordService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
 }
