@@ -87,7 +87,7 @@
   </select>
 
   <select id="getChildShopMessage" resultType="io.peach.launch.model.ShopMessage">
-     select s.userid,s.owner_phone,s.shoptype_id,s.shopname,s.shoppicture,s.shopaddress,s.profit,s.cashout,s.cashin,s.createtime,s.updatetime,
+     select s.id,s.userid,s.owner_phone,s.shoptype_id,s.shopname,s.shoppicture,s.shopaddress,s.profit,s.cashout,s.cashin,s.createtime,s.updatetime,
      g.point_type as recommmend_type
      from qzx_shop_message as s,qzx_grading as g
      where s.id=g.shopid and g.f_shopid =#{shopid}
