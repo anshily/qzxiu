@@ -31,6 +31,10 @@ export default class Referrer extends Component {
     })
   }
 
+  goDetail(item) {
+    console.log(item)
+  }
+
   onChange(current) {
     console.log(current)
     this.setState({
@@ -51,7 +55,7 @@ export default class Referrer extends Component {
   }
 
   config = {
-    navigationBarTitleText: 'referrer'
+    navigationBarTitleText: '客户关系'
   }
 
   render() {
@@ -115,6 +119,7 @@ export default class Referrer extends Component {
             {
               referrerLevelOne.map(item => (
                 <AtListItem
+                  onClick={this.goDetail.bind(this,item)}
                   key={String(item.id)}
                   title={item.shopname}
                   note='描述信息'

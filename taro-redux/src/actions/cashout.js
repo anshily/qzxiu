@@ -11,7 +11,7 @@ export const dispatchCashout = payload => createAction({
 
 export const dispatchDetail = payload => createAction({
   url: ROOT_URL + 'cashout',
-  type: 'CASHOUT_ADD',
+  type: 'CASHOUT_DETAIL',
   method: 'POST',
   payload
 })

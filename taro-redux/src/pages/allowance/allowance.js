@@ -9,7 +9,7 @@ import {AtList, AtListItem, AtPagination} from 'taro-ui'
 @connect(state => state.allowance, actions)
 export default class Allowance extends Component {
   config = {
-    navigationBarTitleText: 'allowance'
+    navigationBarTitleText: '提现管理'
   }
 
   componentDidShow(){

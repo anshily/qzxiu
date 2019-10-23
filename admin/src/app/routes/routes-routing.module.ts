@@ -26,12 +26,12 @@ const routes: Routes = [
     canActivate: [SimpleGuard],
     canActivateChild: [SimpleGuard],
     children: [
-      { path: '', redirectTo: 'trade/banner', pathMatch: 'full' },
-      { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
-      { path: 'dashboard/v1', component: DashboardV1Component },
-      { path: 'dashboard/analysis', component: DashboardAnalysisComponent },
-      { path: 'dashboard/monitor', component: DashboardMonitorComponent },
-      { path: 'dashboard/workplace', component: DashboardWorkplaceComponent },
+      { path: '', redirectTo: 'trade/message', pathMatch: 'full' },
+      // { path: 'dashboard', redirectTo: 'dashboard/v1', pathMatch: 'full' },
+      // { path: 'dashboard/v1', component: DashboardV1Component },
+      // { path: 'dashboard/analysis', component: DashboardAnalysisComponent },
+      // { path: 'dashboard/monitor', component: DashboardMonitorComponent },
+      // { path: 'dashboard/workplace', component: DashboardWorkplaceComponent },
       // {
       //   path: 'widgets',
       //   loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule),

@@ -16,27 +16,32 @@
       "hideInBreadcrumb": true,
       "children": [
         {
-          "text": "小部件",
+          "text": "消息",
+          "i18n": "消息",
+          "link": "/trade/message",
+          "icon": "anticon-appstore"
+        },{
+          "text": "轮播图",
           "i18n": "轮播图",
           "link": "/trade/banner",
           "icon": "anticon-appstore"
         },{
-          "text": "小部件",
+          "text": "店铺",
           "i18n": "店铺",
           "link": "/trade/shops",
           "icon": "anticon-appstore"
         },{
-          "text": "小部件",
+          "text": "活动",
           "i18n": "活动",
           "link": "/trade/actives",
           "icon": "anticon-appstore"
         },{
-          "text": "小部件",
+          "text": "订单",
           "i18n": "订单",
           "link": "/trade/orders",
           "icon": "anticon-appstore"
         },{
-          "text": "小部件",
+          "text": "商品",
           "i18n": "商品",
           "link": "/trade/goods",
           "icon": "anticon-appstore"

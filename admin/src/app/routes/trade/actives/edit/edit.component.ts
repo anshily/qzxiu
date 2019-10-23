@@ -51,8 +51,11 @@ export class TradeActivesEditComponent implements OnInit {
 
   save(value: any) {
     let params = {
-      note: this.receiveContent,
-      activityname: value.name
+      activity: {
+        note: this.receiveContent,
+        activityname: value.name,
+      },
+      token: localStorage.getItem('user_token')
     }
     this.http.post(`${ROOT_URL}activity/add`, params).subscribe(res => {
       if (res['code'] == 0){

@@ -118,7 +118,7 @@ let flag = !this.testRequire()
 
           <View className='at-row sw-input'>
             <View className='at-col at-col-3 sw-title'>
-              <Text>门面图</Text>
+              <Text>票据</Text>
             </View>
             <View className='at-col at-col-8'>
 

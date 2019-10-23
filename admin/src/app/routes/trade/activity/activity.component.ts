@@ -2,14 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
-import {TradeActivesEditComponent} from "./edit/edit.component";
+import {TradeActivesEditComponent} from "../actives/edit/edit.component";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-trade-actives',
-  templateUrl: './actives.component.html',
+  selector: 'app-trade-activity',
+  templateUrl: './activity.component.html',
 })
-export class TradeActivesComponent implements OnInit {
+export class TradeActivityComponent implements OnInit {
   url = ROOT_URL + `activity/list`;
 
   resObj = {
@@ -19,10 +19,7 @@ export class TradeActivesComponent implements OnInit {
     },
     process: (res) => {
       console.log(res);
-      return res.map(item => {
-        // item['picture_address'] = IMG_URL + item['picture_address'];
-        return item;
-      });
+      return res;
     }
   }
 
@@ -38,7 +35,7 @@ export class TradeActivesComponent implements OnInit {
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '活动名称', index: 'activityname' },
-    { title: '活动状态', type: 'date', index: 'updatedAt' },
+    { title: '活动状态', index: 'updatedAt' },
     {
       title: '操作',
       buttons: [

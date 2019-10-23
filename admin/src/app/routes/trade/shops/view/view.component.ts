@@ -3,6 +3,7 @@ import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
 import {_HttpClient, ModalHelper} from '@delon/theme';
 import {TradeShopsEditComponent} from "../edit/edit.component";
 import {TradeShopsReferrerComponent} from "../referrer/referrer.component";
+import {TradeShopsCashComponent} from "../cash/cash.component";
 
 @Component({
   selector: 'app-trade-shops-view',
@@ -64,6 +65,13 @@ export class TradeShopsViewComponent implements OnInit {
   this.modalHelper.createStatic(TradeShopsReferrerComponent, { params: { id: this.record['id'], type: itemType} })
       .subscribe(() => {
 
+      });
+  }
+
+  cash() {
+    this.modalHelper.createStatic(TradeShopsCashComponent, { shopInfo: { id: this.record['id'], total: this.record['cashin']} })
+      .subscribe(() => {
+          this.close()
       });
   }
 

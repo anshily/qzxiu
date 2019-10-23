@@ -96,7 +96,7 @@ export default class Menu extends Component {
             img: require('./assets/help.png')
           }]
         })
-      }else if (userRole == '管理'){
+      }else if (userRole == '总店管理员'){
         this.setState({
           menus: [{
             key: 'add-shop',
