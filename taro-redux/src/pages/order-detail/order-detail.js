@@ -34,24 +34,11 @@ export default class OrderDetail extends Component {
     })
   }
   render() {
-    let list = [{
-      id: 1,
-      pic: IMG_URL + '../uploads/assets/index1.jpg',
-      itemName: 'test',
-      actualPrice: 10,
-      cnt: 2
-    },{
-      id: 2,
-      pic: IMG_URL + '../uploads/assets/index1.jpg',
-      itemName: 'test',
-      actualPrice: 10,
-      cnt: 2
-    }];
 
     let  {orderDetail} = this.props;
     return(
       <View className='cart-list'>
-        {orderDetail && orderDetail.list.map(item => (
+        {orderDetail &&  orderDetail.list && orderDetail.list.map(item => (
           <View
             key={item.id}
             className='cart-list__item'

@@ -37,7 +37,7 @@ export class TradeActivesComponent implements OnInit {
   @ViewChild('st', { static: false }) st: STComponent;
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
-    { title: '活动名称', type: 'number', index: 'activityname' },
+    { title: '活动名称', index: 'activityname' },
     { title: '活动状态', type: 'date', index: 'updatedAt' },
     {
       title: '操作',

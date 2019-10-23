@@ -17,23 +17,8 @@ export default class UserLogin extends Component {
     shopName: '',
     image: '',
     address: '',
-    shopLevel: [{
-      key: 1,
-      value: '省代理'
-    }, {
-      key: 2,
-      value: '市代理'
-    },{
-      key: 3,
-      value: '县代理'
-    },{
-      key: 4,
-      value: '加盟店'
-    }],
-    levelChecked: {
-      key: 1,
-      value: '省代理'
-    },
+    shopLevel: [],
+    levelChecked: {},
     manager: [],
     managerChecked: {},
     referrer: [],
@@ -41,7 +26,7 @@ export default class UserLogin extends Component {
     imgList: [],
     openModal: false,
     loading: false,
-    disabled: false
+    disabled: true
   }
 
   config = {
@@ -55,13 +40,23 @@ export default class UserLogin extends Component {
         this.setState({
           managerChecked: res[0],
           referrerChecked: res[0],
-          referrer: res,
-          manager: res
+          // referrer: res,
+          // manager: res
         })
       }
       // this.setState({
       //   referrer: res
       // })
+    })
+
+    this.props.dispatchTypeList({}).then(res => {
+      console.log(res)
+      if (res && res.length > 0){
+        this.setState({
+          levelChecked: res[0],
+          // shopLevel: res['typeList']
+        })
+      }
     })
   }
 
@@ -89,9 +84,7 @@ export default class UserLogin extends Component {
         imgList: this.state.imgList.map((item) => {
           item.status = 'success'
           return item
-        })
-      })
-      this.setState({
+        }),
         disabled: !this.testRequire()
       })
     });
@@ -99,7 +92,7 @@ export default class UserLogin extends Component {
 
   testRequire(){
     return !!this.state.username && !!this.state.password && !!this.state.phone && !!this.state.levelChecked
-    && !!this.state.levelChecked.key && !!this.state.shopName && !!this.state.image && !!this.state.address
+    && !!this.state.levelChecked.id && !!this.state.shopName && !!this.state.image && !!this.state.address
     && !!this.state.referrerChecked.id && !!this.state.managerChecked.id
   }
 
@@ -166,45 +159,49 @@ export default class UserLogin extends Component {
   handleUsernameChange = e => {
     // console.log(e)
     this.setState({
-      username: e
-    });
-    this.setState({
+      username: e,
       disabled: !this.testRequire()
-    })
+    });
   }
 
   handlePasswordChange = e => {
     // console.log(e)
     this.setState({
-      password: e
+      password: e,
+      disabled: !this.testRequire()
     })
   }
 
   handlePhoneChange = e => {
     // console.log(e)
     this.setState({
-      phone: e
+      phone: e,
+      disabled: !this.testRequire()
     })
   }
 
   handleShopNameChange = e => {
     // console.log(e)
     this.setState({
-      shopName: e
+      shopName: e,
+      disabled: !this.testRequire()
     })
   }
 
   handleAddressChange = e => {
     // console.log(e)
     this.setState({
-      address: e
+      address: e,
+      disabled: !this.testRequire()
     })
   }
 
   onLevelChange = e => {
     console.log(e);
+    const { typeList } = this.props
     this.setState({
-      levelChecked: e.detail.value
+      levelChecked: typeList[e.detail.value],
+      disabled: !this.testRequire()
     })
   }
 
@@ -212,14 +209,16 @@ export default class UserLogin extends Component {
     // console.log(managerChecked)
     const { recommendList } = this.props
     this.setState({
-      managerChecked: recommendList[managerChecked.detail.value]
+      managerChecked: recommendList[managerChecked.detail.value],
+      disabled: !this.testRequire()
     })
   }
 
   onReferrerChange = referrerChecked => {
     const { recommendList } = this.props
     this.setState({
-      referrerChecked: recommendList[referrerChecked.detail.value]
+      referrerChecked: recommendList[referrerChecked.detail.value],
+      disabled: !this.testRequire()
     })
   }
 
@@ -231,7 +230,7 @@ export default class UserLogin extends Component {
   }
 
   render () {
-    const { recommendList } = this.props;
+    const { recommendList, typeList } = this.props;
     const { loading, disabled } = this.state;
     let acl = disabled && !this.testRequire();
     return (
@@ -292,9 +291,9 @@ export default class UserLogin extends Component {
               <Text>店铺类型</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={this.state.shopLevel}  rangeKey='value'  onChange={this.onLevelChange}>
+              <Picker mode='selector' range={typeList}  rangeKey='typename'  onChange={this.onLevelChange}>
                 <View className='picker sw-picker'>
-                  当前选择：{this.state.levelChecked.value}
+                  当前选择：{this.state.levelChecked.typename}
                 </View>
               </Picker>
             </View>
@@ -318,7 +317,7 @@ export default class UserLogin extends Component {
               <Text>推荐人</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={this.state.referrer} rangeKey='shopname' onChange={this.onReferrerChange}>
+              <Picker mode='selector' range={recommendList} rangeKey='shopname' onChange={this.onReferrerChange}>
                 <View className='picker sw-picker'>
                   当前选择：{this.state.referrerChecked.shopname}
                 </View>

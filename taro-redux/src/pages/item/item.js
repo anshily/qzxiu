@@ -54,12 +54,13 @@ class Item extends Component {
       }
       // const skuItem = itemInfo.skuMap[selectedItem.id] || {}
       const payload = {
-        shopId: 1,
+        shopId: Taro.getStorageSync('shopId'),
         list: [{
           goodsId: selectedItem.id,
           goodsNum: selectedItem.cnt,
           goodsPrice: itemInfo.activityPrice * selectedItem.cnt
-        }]
+        }],
+        token: Taro.getStorageSync('user_token')
       }
       this.props.dispatchOrder(payload).then(res => {
         console.log(res)

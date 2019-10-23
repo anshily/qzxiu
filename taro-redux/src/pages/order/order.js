@@ -3,7 +3,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import './order.scss'
-import { AtSteps, AtAccordion, AtList, AtListItem } from 'taro-ui'
+import { AtSteps, AtDivider, AtList, AtListItem } from 'taro-ui'
 import * as actions from '@actions/order';
 
 @connect(state => state.order, actions)
@@ -18,7 +18,7 @@ export default class Order extends Component {
 
   componentDidMount() {
     console.log(this.props);
-    this.props.dispatchOrderSet({ shopid: 1, statu: 1 }).then((res) => {
+    this.props.dispatchOrderSet({ shopid: Taro.getStorageSync('shopId'), statu: 1 }).then((res) => {
       console.log(res)
       this.setState({ loaded: true })
     })
@@ -37,16 +37,38 @@ export default class Order extends Component {
 
   onChange (current) {
     console.log(current)
+    let status = current;
+    if (current == 0){
+      status = 1
+    }
+    if (current == 1){
+      status = 2
+    }
+    if (current == 2){
+      status = 0
+    }
     this.setState({
       current
     })
+
+    this.props.dispatchOrderSet({ shopid: Taro.getStorageSync('shopId'), statu: status }).then((res) => {
+      console.log(res)
+      this.setState({ loaded: true })
+    })
+
   }
 
   render() {
     const items = [
-      { 'title': '已下单', 'desc': '这里是额外的信息，最多两行' },
-      { 'title': '已发货', 'desc': '这里是额外的信息，最多两行' },
-      { 'title': '已完成', 'desc': '这里是额外的信息，最多两行' }
+      { 'title': '已下单',
+        // 'desc': '这里是额外的信息，最多两行'
+      },
+      { 'title': '已完成',
+        // 'desc': '这里是额外的信息，最多两行'
+      },
+      { 'title': '已取消',
+        // 'desc': '这里是额外的信息，最多两行'
+      }
     ]
     return(
       <View>
@@ -76,6 +98,8 @@ export default class Order extends Component {
             }
           </AtList>
         </View>
+
+        {!(this.props.orderList.length > 0) && <AtDivider content='暂无订单'  /> }
       </View>
     )
   }

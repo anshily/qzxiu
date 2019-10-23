@@ -24,6 +24,13 @@ import { TradeOrdersEditComponent } from './orders/edit/edit.component';
 import { TradeOrdersViewComponent } from './orders/view/view.component';
 import {EditorQuillModule} from "@shared/quill/editor-quill.module";
 import {TradeShopsReferrerComponent} from "./shops/referrer/referrer.component";
+import { TradeMessageComponent } from './message/message.component';
+import { TradeMessageEditComponent } from './message/edit/edit.component';
+import { TradeMessageViewComponent } from './message/view/view.component';
+import { TradeActivityComponent } from './activity/activity.component';
+import { TradeActivityEditComponent } from './activity/edit/edit.component';
+import { TradeActivityViewComponent } from './activity/view/view.component';
+import {TradeShopsCashComponent} from "./shops/cash/cash.component";
 
 const COMPONENTS = [
   TradeCurdComponent,
@@ -32,7 +39,9 @@ const COMPONENTS = [
   TradeUsersComponent,
   TradeActivesComponent,
   TradeShopsComponent,
-  TradeOrdersComponent];
+  TradeOrdersComponent,
+  TradeMessageComponent,
+  TradeActivityComponent];
 const COMPONENTS_NOROUNT = [
   TradeCurdEditComponent,
   TradeCurdViewComponent,
@@ -48,7 +57,12 @@ const COMPONENTS_NOROUNT = [
   TradeShopsViewComponent,
   TradeOrdersEditComponent,
   TradeOrdersViewComponent,
-  TradeShopsReferrerComponent];
+  TradeShopsReferrerComponent,
+  TradeMessageEditComponent,
+  TradeMessageViewComponent,
+  TradeActivityEditComponent,
+  TradeActivityViewComponent,
+  TradeShopsCashComponent];
 
 @NgModule({
   imports: [

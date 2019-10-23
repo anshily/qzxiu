@@ -37,7 +37,8 @@ class App extends Component {
       'pages/shop/shop',
       'pages/order-detail/order-detail',
       'pages/message/message',
-      'pages/allowance/allowance'
+      'pages/allowance/allowance',
+      'pages/cashout/cashout'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -85,11 +86,12 @@ class App extends Component {
         }
       }).then( info => {
         console.log(info)
-        if (info['code'] == 0){
-          Taro.setStorage({ key: 'user_token', data: info.data.token});
-          Taro.setStorage({ key: 'user_role', data: info.data.rolename});
-          Taro.setStorage({ key: 'user_id', data: info.data.id});
-          this.getShop(info.data.token)
+        let data = info['data']
+        if (data['code'] == 0){
+          Taro.setStorage({ key: 'user_token', data: data['data']['token']});
+          Taro.setStorage({ key: 'user_role', data: data['data']['rolename']});
+          Taro.setStorage({ key: 'user_id', data: data['data']['id']});
+          this.getShop(data['data']['token'])
         }
         }
       )
@@ -105,6 +107,11 @@ class App extends Component {
       }
     }).then(res => {
       console.log(res);
+      let data = res['data'];
+      if (data['code'] == 0 && data['data']){
+        Taro.setStorageSync('shopInfo',data['data']);
+        Taro.setStorageSync('shopId',data['data']['id']);
+      }
     })
   }
 

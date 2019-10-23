@@ -26,7 +26,8 @@
     </sv>
 
     <sv label="操作">
-      <!--<button nz-button nzType="danger" (click)="edit()">更换推荐人</button>-->
+      {{'可提现：' + record['cashin']}}
+      <button nz-button nzType="danger" (click)="cash()">提现</button>
       <!--<button nz-button nzType="danger">更换代理人</button>-->
       <!--<nz-select style="width: 120px;" [(ngModel)]="proxyValue" nzAllowClear nzPlaceHolder="Choose">-->
         <!--<nz-option nzValue="jack" nzLabel="Jack"></nz-option>-->

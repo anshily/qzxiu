@@ -8,3 +8,10 @@ export const dispatchMessage = payload => createAction({
   method: 'POST',
   payload
 })
+
+export const dispatchMessageList = payload => createAction({
+  url: ROOT_URL + 'record/getRecordByShopid',
+  type: 'MESSAGES',
+  method: 'GET',
+  payload
+})

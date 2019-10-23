@@ -47,9 +47,13 @@ export class TradeShopsComponent implements OnInit {
       buttons: [
         { text: '查看', click: (item: any) => {
           this.detail(item['id']);
-          } },
+          }, iif: (item) => {
+          return item['id'] != 1
+        } },
         { text: '编辑', click: (item: any) => {
             this.edit(item['id']);
+          },iif: (item) => {
+            return item['id'] != 1
           } },
       ]
     }

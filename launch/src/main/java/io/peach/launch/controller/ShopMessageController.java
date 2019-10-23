@@ -211,7 +211,7 @@ public class ShopMessageController {
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
-    @GetMapping("/getCashOut")
+    @PostMapping("/getCashOut")
     public Result getCashOut(@RequestBody CashOutDTO cashOutDTO) {
          /*先查询出当前店铺信息*/
         ShopMessage shopMessage=shopMessageService.findById(cashOutDTO.getShopid());
