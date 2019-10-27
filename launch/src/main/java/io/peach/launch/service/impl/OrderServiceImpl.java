@@ -7,8 +7,10 @@ import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.GoodsMessage;
 import io.peach.launch.model.Order;
 import io.peach.launch.model.OrderMessage;
+import io.peach.launch.model.ShopMessage;
 import io.peach.launch.service.OrderService;
 import io.peach.launch.base.core.AbstractService;
+import io.peach.launch.service.ShopMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,8 @@ import java.util.List;
 public class OrderServiceImpl extends AbstractService<Order> implements OrderService {
     @Resource
     private OrderMapper qzxOrderMapper;
+    @Resource
+    private ShopMessageService shopMessageService;
 
     @Override
     public List<Order> selectOrderByShopid(Integer shopid) {
@@ -47,6 +51,21 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
         return l;
     }
 
+    @Override
+    public List<ShopMessage> getAllDaiLi(int shopid) {
+        List<ShopMessage> list=new ArrayList<>();
+        /*查询出代理店铺信息*/
+        while(shopid!=1){
+            /*先查询出当前店铺的上级地区代理*/
+            ShopMessage shopMessage=shopMessageService.getFShopPosition(shopid);
+            if(shopMessage.getId()!=1){
+                /*不是总店  添加到list中*/
+                list.add(shopMessage);
+                shopid=shopMessage.getId();
+            }
+        }
+        return list;
+    }
 
 
     @Override

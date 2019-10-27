@@ -4,6 +4,7 @@ import io.peach.launch.dto.ShopCar;
 import io.peach.launch.model.Order;
 import io.peach.launch.base.core.Service;
 import io.peach.launch.model.OrderMessage;
+import io.peach.launch.model.ShopMessage;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface OrderService extends Service<Order> {
 
     List<Order> selectOrderByShopid(Integer shopid);
     List<OrderMessageDTO> selectOrderMessageByOrderid(String orderid);
+    List<ShopMessage> getAllDaiLi(int shopid);
     void cancelOrder(String orderid);
     void finishOrder(String orderid);
 }

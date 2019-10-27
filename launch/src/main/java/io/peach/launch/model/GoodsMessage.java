@@ -34,6 +34,25 @@ public class GoodsMessage {
 
     private Date updatetime;
 
+    private BigDecimal dan;
+    private BigDecimal dai;
+
+    public BigDecimal getDan() {
+        return dan;
+    }
+
+    public void setDan(BigDecimal dan) {
+        this.dan = dan;
+    }
+
+    public BigDecimal getDai() {
+        return dai;
+    }
+
+    public void setDai(BigDecimal dai) {
+        this.dai = dai;
+    }
+
     /**
      * 商品状态（1：可用，2：不可用）
      */

@@ -164,7 +164,7 @@ public class ShopMessageController {
         /*将店铺id与两个推荐人的id一起传入service层进行分级处理*/
         shopMessageService.addGrading(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
         /*分完级后结算酬金*/
-        shopMessageService.balanceMoney(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID(),new BigDecimal(0));
+        shopMessageService.balanceMoney(submitAll.getShopMessage().getId(),submitAll.getRecommendID(),submitAll.getPositionID());
         return ResultGenerator.successResult();
     }
 

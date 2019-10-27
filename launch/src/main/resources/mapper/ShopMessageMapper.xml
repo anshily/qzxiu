@@ -83,7 +83,7 @@
   <select id="getFShopPosition" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message where id=(
     select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='地区推荐'
-    )
+    ) and shoptype_id!=1
   </select>
 
   <select id="getChildShopMessage" resultType="io.peach.launch.model.ShopMessage">
@@ -95,5 +95,8 @@
 
   <select id="getGoodShopList" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message order by rand() limit 3
+  </select>
+  <select id="getShopMessageById" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where id=#{shopid}
   </select>
 </mapper>
