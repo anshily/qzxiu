@@ -148,6 +148,9 @@ public class ShopMessageController {
         if (user == null){
             throw new ServiceException(5008,"用戶未登錄！");
         }
+        if(!userService.getRoleNameByUserid(user.getId()).equals("总店管理员")){
+            throw new ServiceException(5008,"无权限操作！");
+        }
         /*先存储用户信息  返回用户id*/
         userService.save(submitAll.getUser());
         /*将返回的用户绑定一个普通店铺的身份*/
@@ -213,8 +216,10 @@ public class ShopMessageController {
     @Transactional(propagation = Propagation.REQUIRED)
     @PostMapping("/getCashOut")
     public Result getCashOut(@RequestBody CashOutDTO cashOutDTO) {
+
          /*先查询出当前店铺信息*/
         ShopMessage shopMessage=shopMessageService.findById(cashOutDTO.getShopid());
+
         if(cashOutDTO.getMoney().compareTo(shopMessage.getCashin())>0){
             throw new ServiceException(5007,"超出最大可体现金额！");
         }else{
