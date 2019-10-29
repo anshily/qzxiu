@@ -11,6 +11,7 @@
   <sv *ngIf="info['createtime']" label="下单时间"> {{info['createtime']}} </sv>
 </div>
 <div class="modal-footer">
+  <button nz-button type="button" (click)="submit()">确认订单</button>
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>
 

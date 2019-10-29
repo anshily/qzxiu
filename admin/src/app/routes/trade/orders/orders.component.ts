@@ -42,7 +42,16 @@ export class TradeOrdersComponent implements OnInit {
       title: '操作',
       buttons: [
         { text: '查看', click: (item: any) => this.show(item) },
-        { text: '取消订单', click: (item: any) => `/form/${item.id}` }
+        { text: '取消订单', click: (item: any) => {
+          this.http.get(ROOT_URL + 'order/cancelOrder',{
+            orderid: item.orderid,
+            token: localStorage.getItem('user_token')
+          }).subscribe(res => {
+            if (res['code'] == 0){
+              this.st.reload()
+            }
+          })
+          } }
         // { text: '', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }

@@ -20,6 +20,17 @@ export class TradeOrdersViewComponent implements OnInit {
     // this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
   }
 
+  submit(){
+    this.http.get(`${ROOT_URL}/order/finishOrder`,{
+      orderid: this.info['orderid'],
+      token: localStorage.getItem('user_token')
+    }).subscribe(res => {
+      if (res['code'] == 0){
+        this.close()
+      }
+    });
+  }
+
   close() {
     this.modal.destroy();
   }
