@@ -9,7 +9,7 @@ import { SFSchema, SFUISchema } from '@delon/form';
 })
 export class TradeActivityEditComponent implements OnInit {
   record: any = {};
-  i: any;
+  params: any;
   schema: SFSchema = {
     properties: {
       no: { type: 'string', title: '编号' },
@@ -44,8 +44,19 @@ export class TradeActivityEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+    if (this.params.isEdit){
+      let info = this.params.info
+      this.schema = {
+        properties: {
+          no: { type: 'string', title: '编号' },
+          owner: { type: 'string', title: '姓名', maxLength: 15 },
+          callNo: { type: 'number', title: '调用次数' },
+          href: { type: 'string', title: '链接', format: 'uri' },
+          description: { type: 'string', title: '描述', maxLength: 140 },
+        },
+        required: ['owner', 'callNo', 'href', 'description'],
+      };
+    }
   }
 
   save(value: any) {

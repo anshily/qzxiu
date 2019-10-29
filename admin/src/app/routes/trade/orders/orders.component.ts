@@ -3,6 +3,7 @@ import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {Router} from "@angular/router";
+import {TradeOrdersEditComponent} from "./edit/edit.component";
 
 @Component({
   selector: 'app-trade-orders',
@@ -40,9 +41,9 @@ export class TradeOrdersComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
+        { text: '查看', click: (item: any) => this.show(item) },
         { text: '取消订单', click: (item: any) => `/form/${item.id}` }
-        // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
+        // { text: '', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }
   ];
@@ -55,10 +56,10 @@ export class TradeOrdersComponent implements OnInit {
     !(token && role && role == '总店管理员') && this.router.navigateByUrl('/passport/login').then()
   }
 
-  add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+  show(item) {
+    this.modal
+      .createStatic(TradeOrdersEditComponent, { info: item })
+      .subscribe(() => this.st.reload());
   }
 
 }

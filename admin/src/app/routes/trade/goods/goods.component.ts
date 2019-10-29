@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {TradeGoodsEditComponent} from "./edit/edit.component";
 import {Router} from "@angular/router";
+import {TradeGoodsViewComponent} from "./view/view.component";
 
 @Component({
   selector: 'app-trade-goods',
@@ -43,8 +44,12 @@ export class TradeGoodsComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => `/form/${item.id}` },
-        { text: '编辑', type: 'static', component: TradeGoodsEditComponent, click: 'reload' },
+        { text: '查看', click: (item: any) => {
+            this.show(item)
+          } },
+        { text: '编辑', click: (item: any) => {
+          this.edit(item)
+          } },
       ]
     }
   ];
@@ -60,6 +65,16 @@ export class TradeGoodsComponent implements OnInit {
   add() {
     this.modal
       .createStatic(TradeGoodsEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
+  }
+  edit(item) {
+    this.modal
+      .createStatic(TradeGoodsEditComponent, { params: { item: item, isEdit: true } })
+      .subscribe(() => this.st.reload());
+  }
+  show(item) {
+    this.modal
+      .createStatic(TradeGoodsViewComponent, { params: item })
       .subscribe(() => this.st.reload());
   }
 

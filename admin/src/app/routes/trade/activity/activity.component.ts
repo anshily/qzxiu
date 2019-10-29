@@ -59,4 +59,9 @@ export class TradeActivityComponent implements OnInit {
       .subscribe(() => this.st.reload());
   }
 
+  edit(item) {
+    this.modal
+      .createStatic(TradeActivesEditComponent, { params: { info: item, isEdit: true } })
+      .subscribe(() => this.st.reload());
+  }
 }

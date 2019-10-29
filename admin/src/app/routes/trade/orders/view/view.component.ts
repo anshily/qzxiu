@@ -8,7 +8,7 @@ import { _HttpClient } from '@delon/theme';
 })
 export class TradeOrdersViewComponent implements OnInit {
   record: any = {};
-  i: any;
+  info: any;
 
   constructor(
     private modal: NzModalRef,
@@ -17,7 +17,7 @@ export class TradeOrdersViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+    // this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
   }
 
   close() {

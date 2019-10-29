@@ -42,7 +42,9 @@ export class TradeActivesComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '编辑', type: 'static', component: TradeActivesEditComponent, click: 'reload' },
+        { text: '编辑', click: (item: any) => {
+          this.edit(item)
+          } },
         { text: '删除', click: (item: any) => `/form/${item.id}` },
       ]
     }
@@ -59,6 +61,12 @@ export class TradeActivesComponent implements OnInit {
   add() {
     this.modal
       .createStatic(TradeActivesEditComponent, { i: { id: 0 } })
+      .subscribe(() => this.st.reload());
+  }
+
+  edit(item) {
+    this.modal
+      .createStatic(TradeActivesEditComponent, { params: { info: item, isEdit: true } })
       .subscribe(() => this.st.reload());
   }
 

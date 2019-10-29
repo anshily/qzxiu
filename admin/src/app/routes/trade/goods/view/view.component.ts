@@ -7,9 +7,8 @@ import { _HttpClient } from '@delon/theme';
   templateUrl: './view.component.html',
 })
 export class TradeGoodsViewComponent implements OnInit {
-  record: any = {};
-  i: any;
-
+  params: any = {};
+  IMG_URL = IMG_URL;
   constructor(
     private modal: NzModalRef,
     public msgSrv: NzMessageService,
@@ -17,7 +16,7 @@ export class TradeGoodsViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+    // this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
   }
 
   close() {

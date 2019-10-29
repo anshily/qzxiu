@@ -1,14 +1,24 @@
 <div class="modal-header">
   <div class="modal-title">查看 {{ record.id }} 信息</div>
 </div>
-<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="i">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
+<!--<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>-->
+<div sv-container *ngIf="info">
+  <!--<sv label="商品编号">{{ info[''] }}</sv>-->
+  <sv *ngIf="info['orderid']" label="订单编号">{{info['orderid']}}</sv>
+  <sv *ngIf="info['shopid']" label="买家">{{info['shopid']}}</sv>
+  <sv *ngIf="info['priceall']" label="总价">{{info['priceall']}}</sv>
+  <sv *ngIf="info['goodsnum']" label="数量">{{info['goodsnum']}}</sv>
+  <sv *ngIf="info['createtime']" label="下单时间"> {{info['createtime']}} </sv>
 </div>
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>
+
+<!--createtime: "2019-10-15T05:08:18.000+0000"-->
+<!--goodsnum: 2-->
+<!--id: 10-->
+<!--orderid: "15711160973929022"-->
+<!--priceall: 223455-->
+<!--shopid: 1-->
+<!--statu: 1-->
+<!--updatetime: "2019- -->

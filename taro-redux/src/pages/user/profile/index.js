@@ -69,7 +69,7 @@ export default class Profile extends Component {
                   <Image className='user-profile__info-level' src={level01} />
                   <View>
                     {
-                      shopInfo.rolename == '游客' ?
+                      role == '游客' ?
                         <View>
                           {/*<Text className='user-profile__info-uid'>{'游客' + userInfo['id']}</Text>*/}
                           <Text className='user-profile__info-uid' onClick={this.bindShop}>点击绑定商铺</Text>

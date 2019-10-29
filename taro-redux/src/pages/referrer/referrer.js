@@ -33,6 +33,9 @@ export default class Referrer extends Component {
 
   goDetail(item) {
     console.log(item)
+    Taro.navigateTo({
+      url: '/pages/referrer/referrer'
+    })
   }
 
   onChange(current) {

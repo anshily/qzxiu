@@ -9,6 +9,7 @@ import { _HttpClient } from '@delon/theme';
 export class TradeMessageViewComponent implements OnInit {
   record: any = {};
   info: any;
+  IMG_URL = IMG_URL;
 
   constructor(
     private modal: NzModalRef,
@@ -17,9 +18,9 @@ export class TradeMessageViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`${ROOT_URL}/record/detail`,{id: this.info.id}).subscribe(res => {
-      console.log(res)
-    });
+    // this.http.get(`${ROOT_URL}/record/detail`,{id: this.info.id}).subscribe(res => {
+    //   console.log(res)
+    // });
   }
 
   close() {

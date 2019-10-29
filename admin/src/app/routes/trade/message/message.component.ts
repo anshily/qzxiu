@@ -54,7 +54,7 @@ export class TradeMessageComponent implements OnInit {
       title: '操作',
       buttons: [
         { text: '查看', click: (item: any) => {
-          this.show(item.id)
+          this.show(item)
           } },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
@@ -75,9 +75,9 @@ export class TradeMessageComponent implements OnInit {
     //   .subscribe(() => this.st.reload());
   }
 
-  show(id) {
+  show(item) {
     this.modal
-      .createStatic(TradeMessageViewComponent, { info: { id: id } })
+      .createStatic(TradeMessageViewComponent, { info: item })
       .subscribe(() => this.st.reload());
   }
 

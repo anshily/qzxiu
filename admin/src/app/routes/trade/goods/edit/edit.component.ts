@@ -9,7 +9,7 @@ import {SFSchema, SFUISchema, SFUploadWidgetSchema} from '@delon/form';
 })
 export class TradeGoodsEditComponent implements OnInit {
   record: any = {};
-  i: any;
+  params: any;
   receiveContent: 'aaaa';
   schema: SFSchema = {
     properties: {
@@ -56,8 +56,39 @@ export class TradeGoodsEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    if (this.record.id > 0)
-    this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
+    if (this.params.isEdit){
+      let item = this.params.item
+      this.receiveContent = item['represent'];
+      this.schema = {
+        properties: {
+          name: { type: 'string', title: '姓名', maxLength: 15, default: item['goodsname'] },
+          price: { type: 'number', title: '价格', default: item['goodsprice'] },
+          file: {
+            type: 'string',
+            title: '封面图',
+            ui: {
+              widget: 'upload',
+              action: ROOT_URL + 'shop/message/uploadPicture',
+              resReName: 'data',
+              urlReName: 'url',
+              fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+              name: 'image'
+            } as SFUploadWidgetSchema,
+          },
+          custom: {
+            type: 'string',
+            title: '描述',
+            ui: {
+              widget: 'custom',
+              grid: { span: 24 }
+            },
+            default: 'test',
+          }
+        },
+        required: ['name', 'price', 'file'],
+      };
+    }
+    // this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
   }
 
   updateContent(e){
@@ -71,12 +102,33 @@ export class TradeGoodsEditComponent implements OnInit {
       goodsname: value.name,
       goodsprice: value.price,
       goodspicture: value.file,
-      represent: this.receiveContent
+      represent: this.receiveContent,
+      token: localStorage.getItem('user_token')
     }
     console.log(params);
     this.http.post(ROOT_URL + `goods/message/addGoods`, params).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('保存成功');
+        this.modal.close(true);
+      }else {
+        this.msgSrv.success(res['data']);
+      }
+    });
+  }
+  updateInfo(value: any) {
+    console.log(value)
+    let params = {
+      id: this.params.item.id,
+      goodsname: value.name,
+      goodsprice: value.price,
+      goodspicture: value.file,
+      represent: this.receiveContent,
+      token: localStorage.getItem('user_token')
+    }
+    console.log(params);
+    this.http.post(ROOT_URL + `goods/message/update`, params).subscribe(res => {
+      if (res['code'] == 0){
+        this.msgSrv.success('修改成功');
         this.modal.close(true);
       }else {
         this.msgSrv.success(res['data']);
