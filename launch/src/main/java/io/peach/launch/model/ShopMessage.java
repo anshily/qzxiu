@@ -20,6 +20,7 @@ public class ShopMessage {
      */
     private String owner_phone;
 
+    private  String username;
     /**
      * 店铺类型id
      */
@@ -31,6 +32,14 @@ public class ShopMessage {
     private String recommmend_type;
 
     private String description;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public String getDescription() {
         return description;

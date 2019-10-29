@@ -91,6 +91,9 @@ public class OrderController {
         if (user == null){
             throw new ServiceException(5008,"用戶未登錄！");
         }
+        if(userService.getRoleNameByUserid(user.getId()).equals("游客")){
+            throw new ServiceException(5008,"无权限操作！");
+        }
          /*先创建一个订单对象  shopid   goodsnum   priceAll*/
         /*创建一个随机订单编号 时间戳+4位随机数字*/
         String orderid=new Date().getTime()+""+Math.round(Math.random() * 10000);
@@ -159,6 +162,9 @@ public class OrderController {
         User user=userService.getUserInfoByToken(token);
         if (user == null){
             throw new ServiceException(5008,"用戶未登錄！");
+        }
+        if(userService.getRoleNameByUserid(user.getId()).equals("总店管理员")){
+            throw new ServiceException(5008,"无权限操作！");
         }
         Condition condition = new Condition(Order.class);
         Example.Criteria criteria = condition.createCriteria();
