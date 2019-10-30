@@ -86,17 +86,17 @@ export class TradeBannerEditComponent implements OnInit {
                   name: 'image'
                 } as SFUploadWidgetSchema,
                 // default: this.itemInfo['picture_address'] || 'index.jpg',
-                enum: [
-                  {
-                    uid: -1,
-                    name: '轮播图.png',
-                    status: 'done',
-                    url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
-                    response: {
-                      url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
-                    },
-                  },
-                ]
+                // enum: [
+                //   {
+                //     uid: -1,
+                //     name: '轮播图.png',
+                //     status: 'done',
+                //     url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
+                //     response: {
+                //       url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
+                //     },
+                //   },
+                // ]
               },
               note: { type: 'string', title: '备注',
                 default: this.itemInfo['note'] || ''
@@ -206,7 +206,7 @@ export class TradeBannerEditComponent implements OnInit {
     let params = {
       id: this.itemInfo['id'],
       activityid: value.activity,
-      picture_address: value.picture['url'],
+      picture_address: value.picture,
       note: value.note
     };
     console.log(params)

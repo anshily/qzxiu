@@ -34,8 +34,8 @@ public class RollPictureController {
         return ResultGenerator.successResult();
     }
 
-    @PostMapping("/delete")
-    public Result delete(@RequestBody Integer id) {
+    @GetMapping("/delete")
+    public Result delete(@RequestParam Integer id) {
         rollPictureService.deleteById(id);
         return ResultGenerator.successResult();
     }

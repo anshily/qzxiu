@@ -87,7 +87,7 @@ export class TradeBannerComponent implements OnInit {
   }
 
   delete(id) {
-    this.http.get(ROOT_URL + 'roll/picture/deletePicture',{id: id}).subscribe(res => {
+    this.http.get(ROOT_URL + 'roll/picture/delete',{id: id}).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('删除成功');
         this.st.reload()
@@ -98,7 +98,7 @@ export class TradeBannerComponent implements OnInit {
   }
 
   putUp(id) {
-    this.http.get(ROOT_URL + 'roll/picture/putOnPicture',{id: id}).subscribe(res => {
+    this.http.get(ROOT_URL + 'roll/picture/putOnPicture',{id: id, token: localStorage.getItem('user_token')}).subscribe(res => {
       if (res['code'] == 0){
         this.msgSrv.success('上架成功');
         this.st.reload()

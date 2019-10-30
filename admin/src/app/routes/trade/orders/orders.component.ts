@@ -4,6 +4,7 @@ import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
 import {Router} from "@angular/router";
 import {TradeOrdersEditComponent} from "./edit/edit.component";
+import {TradeOrdersViewComponent} from "./view/view.component";
 
 @Component({
   selector: 'app-trade-orders',
@@ -67,7 +68,7 @@ export class TradeOrdersComponent implements OnInit {
 
   show(item) {
     this.modal
-      .createStatic(TradeOrdersEditComponent, { info: item })
+      .createStatic(TradeOrdersViewComponent, { info: item })
       .subscribe(() => this.st.reload());
   }
 

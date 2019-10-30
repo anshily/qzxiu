@@ -5,7 +5,7 @@
 <div sv-container *ngIf="params">
   <sv label="商品名">{{ params['goodsname'] }}</sv>
   <sv label="价格">{{params['goodsprice']}}</sv>
-  <sv label="缩略图"><img src="{{ params['goodspicture']}}}"></sv>
+  <sv label="缩略图"><img src="{{ params['goodspicture']}}"></sv>
   <sv label="详情" innerHTML="{{params['represent']}}"></sv>
 </div>
 <div class="modal-footer">

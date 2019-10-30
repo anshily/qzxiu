@@ -14,6 +14,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +56,13 @@ public class ActivityController {
     public Result detail(@RequestParam Integer id) {
         Activity activity = activityService.findById(id);
         return ResultGenerator.successResult(activity);
+    }
+
+    @GetMapping("/delete")
+    public Result delete(@RequestParam @NotNull Integer id) {
+        activityService.deleteById(id);
+//        Activity activity = activityService.findById(id);
+        return ResultGenerator.successResult();
     }
 
     @GetMapping("/list")

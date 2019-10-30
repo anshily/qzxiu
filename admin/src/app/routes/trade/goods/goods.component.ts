@@ -64,7 +64,7 @@ export class TradeGoodsComponent implements OnInit {
 
   add() {
     this.modal
-      .createStatic(TradeGoodsEditComponent, { i: { id: 0 } })
+      .createStatic(TradeGoodsEditComponent, {  params: { isEdit: false }  })
       .subscribe(() => this.st.reload());
   }
   edit(item) {

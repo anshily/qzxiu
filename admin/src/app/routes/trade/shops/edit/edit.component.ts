@@ -117,7 +117,8 @@ export class TradeShopsEditComponent implements OnInit {
             // password: { type: 'string', title: '密码' },
             phone: { type: 'string', title: '电话', default: this.shopInfo['owner_phone'] },
             shopName: { type: 'string', title: '店铺名', maxLength: 15, default: this.shopInfo['shopname'] },
-            shopAddress: { type: 'string', title: '地址', maxLength: 15, default: this.shopInfo['shopaddress'] },
+            shopUserName: { type: 'string', title: '店主姓名', maxLength: 5, default: this.shopInfo['username'] },
+            shopAddress: { type: 'string', title: '地址', maxLength: 50, default: this.shopInfo['shopaddress'] },
             shopType: { type: 'number', title: '店铺类型',enum: [
                 ...this.typeList
               ],
@@ -167,16 +168,19 @@ export class TradeShopsEditComponent implements OnInit {
       })
     }else {
 
-      this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
-        if (res['code'] == 0) {
-          this.recommendList = res['data'];
-          let reList = []
-          this.recommendList.forEach(item => {
-            reList.push({
-              label: item['shopname'],
-              value: item['id']
-            })
-          })
+      this.formAddInit().then(res => {
+        console.log(res)
+        // this.loaded = true;
+      // this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
+      //   if (res['code'] == 0) {
+      //     this.recommendList = res['data'];
+      //     let reList = []
+      //     this.recommendList.forEach(item => {
+      //       reList.push({
+      //         label: item['shopname'],
+      //         value: item['id']
+      //       })
+      //     })
 
           this.schema = {
             properties: {
@@ -184,27 +188,26 @@ export class TradeShopsEditComponent implements OnInit {
               password: { type: 'string', title: '密码' },
               phone: { type: 'string', title: '电话' },
               shopName: { type: 'string', title: '店铺名', maxLength: 15 },
-              shopAddress: { type: 'string', title: '地址', maxLength: 15 },
+              shopUserName: { type: 'string', title: '店主姓名', maxLength: 5, default: this.shopInfo['username'] },
+              shopAddress: { type: 'string', title: '地址', maxLength: 50 },
               shopType: { type: 'number', title: '店铺类型',enum: [
-                  { label: '省代理', value: 1 },
-                  { label: '市代理', value: 2 },
-                  { label: '县代理', value: 3 },
+                  ...this.typeList
                 ],
                 default: 1,
                 ui: {
                   widget: 'select',
                 } as SFSelectWidgetSchema },
               recommendID: { type: 'number', title: '推荐人', enum: [
-                  ...reList
+                  ...this.recommendList
                 ],
-                default: reList[0].value,
+                default: this.recommendList[0].value,
                 ui: {
                   widget: 'select',
                 } as SFSelectWidgetSchema },
               positionID: { type: 'number', title: '代理人', enum: [
-                  ...reList
+                  ...this.recommendList
                 ],
-                default: reList[0].value,
+                default: this.recommendList[0].value,
                 ui: {
                   widget: 'select',
                 } as SFSelectWidgetSchema },
@@ -233,7 +236,6 @@ export class TradeShopsEditComponent implements OnInit {
             required: ['username', 'password', 'shopName', 'shopAddress', 'shopType', 'recommendID', 'positionID', 'file', 'phone'],
           };
           this.loaded = true;
-        }
       });
     }
 
@@ -287,6 +289,43 @@ export class TradeShopsEditComponent implements OnInit {
       })
     })
   }
+  async formAddInit(){
+    await new Promise((resolve, reject) => {
+      this.http.get(ROOT_URL + `shop/message/getRecommendAndPosition`).subscribe(res => {
+        console.log(res)
+
+        if (res['code'] == 0){
+          res['data'].forEach(item => {
+            this.recommendList.push({
+              label: item['shopname'],
+              value: item['id']
+            })
+          })
+          resolve()
+        } else {
+          reject()
+        }
+      })
+    })
+
+
+    await new Promise((resolve, reject) => {
+      this.http.get(ROOT_URL + 'shop/type/getTypeList').subscribe(res => {
+        console.log(res)
+        if (res['code'] == 0){
+          res['data'].forEach(item => {
+            this.typeList.push({
+              label: item['typename'],
+              value: item['id']
+            })
+          });
+          resolve()
+        } else {
+          reject()
+        }
+      })
+    })
+  }
 
   save(value: any) {
     let params = {
@@ -295,6 +334,7 @@ export class TradeShopsEditComponent implements OnInit {
         password: value.password
       },
       shopMessage: {
+        username: value.shopUserName,
         owner_phone: value.phone,
         shoptype_id: value.shopType,
         shopname: value.shopName,
@@ -319,6 +359,7 @@ export class TradeShopsEditComponent implements OnInit {
   alter(value: any) {
     let params = {
       id: this.shopInfo['id'],
+      username: value.shopUserName,
         owner_phone: value.phone,
         shoptype_id: value.shopType,
         shopname: value.shopName,

@@ -61,8 +61,41 @@ export class TradeGoodsEditComponent implements OnInit {
       this.receiveContent = item['represent'];
       this.schema = {
         properties: {
-          name: { type: 'string', title: '姓名', maxLength: 15, default: item['goodsname'] },
+          name: { type: 'string', title: '商品名称', maxLength: 15, default: item['goodsname'] },
           price: { type: 'number', title: '价格', default: item['goodsprice'] },
+          dan: { type: 'number', title: '单店推广利润', default: item['dan'] },
+          dai: { type: 'number', title: '代理推广利润', default: item['dai'] },
+          file: {
+            type: 'string',
+            title: '封面图',
+            ui: {
+              widget: 'upload',
+              action: ROOT_URL + 'shop/message/uploadPicture',
+              resReName: 'data',
+              urlReName: 'url',
+              fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+              name: 'image'
+            } as SFUploadWidgetSchema,
+          },
+          custom: {
+            type: 'string',
+            title: '描述',
+            ui: {
+              widget: 'custom',
+              grid: { span: 24 }
+            },
+            default: 'test',
+          }
+        },
+        required: ['name', 'price', 'file'],
+      };
+    }else {
+      this.schema = {
+        properties: {
+          name: { type: 'string', title: '商品名称', maxLength: 15, default: item['goodsname'] },
+          price: { type: 'number', title: '价格', default: item['goodsprice'] },
+          dan: { type: 'number', title: '单店推广利润', default: item['dan'] },
+          dai: { type: 'number', title: '代理推广利润', default: item['dai'] },
           file: {
             type: 'string',
             title: '封面图',

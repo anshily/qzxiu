@@ -52,8 +52,6 @@ export class TradeShopsComponent implements OnInit {
         } },
         { text: '编辑', click: (item: any) => {
             this.edit(item['id']);
-          },iif: (item) => {
-            return item['id'] != 1
           } },
       ]
     }
