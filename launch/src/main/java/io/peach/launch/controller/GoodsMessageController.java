@@ -4,6 +4,7 @@ import io.peach.launch.base.core.ResultGenerator;
 import io.peach.launch.base.core.ServiceException;
 import io.peach.launch.dto.GoodsMessageTokenDTO;
 import io.peach.launch.model.GoodsMessage;
+import io.peach.launch.model.Order;
 import io.peach.launch.model.User;
 import io.peach.launch.service.GoodsMessageService;
 import io.peach.launch.base.core.PageBean;
@@ -76,11 +77,18 @@ public class GoodsMessageController {
     }
 
     @GetMapping("/getGoodsList")
-    public Result getGoodsList() {
-        List<GoodsMessage> l=goodsMessageService.getGoodsList();
-        Map<String,Object> map=new HashMap<>();
-        map.put("goodsList",l);
-        return ResultGenerator.successResult(map);
+    public Result getGoodsList(@RequestParam Integer statu,@RequestParam Integer pi,@RequestParam Integer ps) {
+        PageBean<GoodsMessage> page = new PageBean<GoodsMessage>();
+        PageHelper.startPage(pi,ps);
+        /*List<GoodsMessage> l=goodsMessageService.getGoodsList();*/
+        Condition condition = new Condition(Order.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("statu="+statu);
+        List<GoodsMessage> list = goodsMessageService.findByCondition(condition);
+        /*Map<String,Object> map=new HashMap<>();
+        map.put("goodsList",l);*/
+        page.setList(list);
+        return ResultGenerator.successResult(page);
     }
 
     @PostMapping("/addGoods")
