@@ -70,6 +70,13 @@ public class OrderController {
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
+    @GetMapping("/orderList")
+    public Result orderList(PageBean<Order> page) {
+        PageHelper.startPage(page.getPageNum(),page.getSize());
+        List<Order> list = orderService.findAll();
+        page.setList(list);
+        return ResultGenerator.successResult(page);
+    }
 
     @PostMapping("/custom/list")
     public Result customList(@RequestBody Order order) {
@@ -163,7 +170,7 @@ public class OrderController {
         if (user == null){
             throw new ServiceException(5008,"用戶未登錄！");
         }
-        if(userService.getRoleNameByUserid(user.getId()).equals("总店管理员")){
+        if(!userService.getRoleNameByUserid(user.getId()).equals("总店管理员")){
             throw new ServiceException(5008,"无权限操作！");
         }
         Condition condition = new Condition(Order.class);
