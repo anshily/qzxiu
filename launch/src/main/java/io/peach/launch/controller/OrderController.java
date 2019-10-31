@@ -152,6 +152,17 @@ public class OrderController {
         orderService.cancelOrder(orderid);
         return ResultGenerator.successResult();
     }
+    @GetMapping("/adminGetOrderByStatu")
+    public Result adminGetOrderByStatu(@RequestParam Integer statu,@RequestParam Integer pi,@RequestParam Integer ps){
+        PageBean<Order> page = new PageBean<Order>();
+        PageHelper.startPage(pi,ps);
+        Condition condition = new Condition(Order.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("statu="+statu);
+        List<Order> list = orderService.findByCondition(condition);
+        page.setList(list);
+        return ResultGenerator.successResult(page);
+    }
     @GetMapping("/getOrderByStatu")
     public Result getOrderByStatu(@RequestParam Integer shopid,@RequestParam Integer statu){
         Condition condition = new Condition(Order.class);
