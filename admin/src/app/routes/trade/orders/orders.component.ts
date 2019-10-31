@@ -11,7 +11,7 @@ import {TradeOrdersViewComponent} from "./view/view.component";
   templateUrl: './orders.component.html',
 })
 export class TradeOrdersComponent implements OnInit {
-  url = ROOT_URL + `order/list`;
+  url = ROOT_URL + `order/adminGetOrderByStatu`;
   reqObj: STReq = {
     params: {
       statu: 1
@@ -60,9 +60,9 @@ export class TradeOrdersComponent implements OnInit {
   };
   @ViewChild('st', {static: false}) st: STComponent;
   columns: STColumn[] = [
-    {title: '店铺id', index: 'shopid'},
-    {title: '价格', type: 'number', index: 'priceall'},
+    // {title: '店铺id', index: 'shopid'},
     {title: '订单编号', index: 'orderid'},
+    {title: '价格', type: 'number', index: 'priceall'},
     {title: '创建时间', type: 'date', index: 'createtime'},
     {title: '订单状态', index: 'orderStatus'},
     {
@@ -105,5 +105,11 @@ export class TradeOrdersComponent implements OnInit {
 
   search(ev){
     console.log(ev);
+    this.reqObj = {
+      params: {
+        statu: ev.status
+      }
+    }
+    this.st.reload();
   }
 }

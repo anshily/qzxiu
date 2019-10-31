@@ -9,6 +9,8 @@ import { _HttpClient } from '@delon/theme';
 export class TradeOrdersViewComponent implements OnInit {
   record: any = {};
   info: any;
+  shopInfo : any;
+  orderInfo : any;
 
   constructor(
     private modal: NzModalRef,
@@ -17,7 +19,22 @@ export class TradeOrdersViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+    this.http.get(`${ROOT_URL}shop/message/detail`,{
+      id: this.info['shopid']
+    }).subscribe(res => {
+      if (res['code'] == 0){
+        console.log(res);
+        this.shopInfo = res['data']
+      }
+    });
+    this.http.get(`${ROOT_URL}order/selectOrderMessageByOrderid`,{
+      orderid: this.info['orderid']
+    }).subscribe(res => {
+      if (res['code'] == 0){
+        console.log(res);
+        this.orderInfo = res['data']
+      }
+    });
   }
 
   submit(){

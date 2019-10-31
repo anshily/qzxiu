@@ -2,16 +2,63 @@
   <div class="modal-title">查看 {{ record.id }} 信息</div>
 </div>
 <!--<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>-->
-<div sv-container *ngIf="info">
-  <!--<sv label="商品编号">{{ info[''] }}</sv>-->
-  <sv *ngIf="info['orderid']" label="订单编号">{{info['orderid']}}</sv>
-  <sv *ngIf="info['shopid']" label="买家">{{info['shopid']}}</sv>
-  <sv *ngIf="info['priceall']" label="总价">{{info['priceall']}}</sv>
-  <sv *ngIf="info['goodsnum']" label="数量">{{info['goodsnum']}}</sv>
-  <sv *ngIf="info['createtime']" label="下单时间"> {{info['createtime']}} </sv>
-</div>
+
+<nz-card *ngIf="info">
+  <nz-card-tab>订单信息</nz-card-tab>
+  <div sv-container >
+    <!--<sv label="商品编号">{{ info[''] }}</sv>-->
+    <sv *ngIf="info['orderid']" label="订单编号">{{info['orderid']}}</sv>
+    <sv *ngIf="info['shopid']" label="买家">{{info['shopid']}}</sv>
+    <sv *ngIf="info['priceall']" label="总价">{{info['priceall']}}</sv>
+    <sv *ngIf="info['goodsnum']" label="数量">{{info['goodsnum']}}</sv>
+    <sv *ngIf="info['createtime']" label="下单时间"> {{info['createtime']}} </sv>
+  </div>
+</nz-card>
+
+<nz-card *ngIf="orderInfo">
+
+  <nz-card-tab>订单详情</nz-card-tab>
+  <!--<nz-list>-->
+    <!--<nz-list-item  style="width: 100%;">-->
+      <div *ngFor="let item of orderInfo" sv-container col="4" >
+        <!--<sv label="商品编号">{{ info[''] }}</sv>-->
+        <sv *ngIf="item['goodsMessage']" label="商品名">{{item['goodsMessage']['goodsname']}}</sv>
+        <sv *ngIf="item['goodsMessage']" label="买家">{{item['goodsMessage']['id']}}</sv>
+        <sv *ngIf="item['goodsMessage']" label="单价">{{item['goodsMessage']['goodsprice']}}</sv>
+        <sv *ngIf="item['goodsMessage']" label="数量">{{item['quantity']}}</sv>
+      </div>
+    <!--</nz-list-item>-->
+  <!--</nz-list>-->
+
+</nz-card>
+
+<nz-card *ngIf="shopInfo">
+  <nz-card-tab>买家信息</nz-card-tab>
+  <div sv-container col="2">
+    <!--<sv label="商品编号">{{ info[''] }}</sv>-->
+    <sv *ngIf="shopInfo['shopname']" label="店铺名称">{{shopInfo['shopname']}}</sv>
+    <sv *ngIf="shopInfo['username']" label="店铺负责人">{{shopInfo['username']}}</sv>
+    <sv *ngIf="shopInfo['owner_phone']" label="负责人电话">{{shopInfo['owner_phone']}}</sv>
+    <sv *ngIf="shopInfo['shopaddress']" label="店铺地址">{{shopInfo['shopaddress']}}</sv>
+  </div>
+</nz-card>
+
+<!--goodsMessage:-->
+<!--createtime: "2019-10-27T18:59:03.000+0000"-->
+<!--dai: 113-->
+<!--dan: 50-->
+<!--goodsname: "维护套装"-->
+<!--goodspicture: "../uploads/20191029/cdd1c977-79e3-4970-8aa0-e9119c6acb85.jpg"-->
+<!--goodsprice: 1800-->
+<!--id: 2-->
+<!--represent: "<p><img src="https://sweet.tiantianquan.xyz/qzx/../uploads/20191029/4fcc516d-9f5b-49d6-b50b-99cf51719c5d.jpg">&lt;</p>"-->
+<!--statu: 1-->
+<!--updatetime: "2019-10-27T18:59:13.000+0000"-->
+<!--__proto__: Object-->
+<!--quantity: 1-->
+
 <div class="modal-footer">
-  <button nz-button type="button" (click)="submit()">确认订单</button>
+  <button nz-button type="button" nzType="primary" (click)="submit()">确认订单</button>
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>
 

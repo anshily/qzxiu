@@ -40,7 +40,7 @@ export class TradeGoodsComponent implements OnInit {
     { title: '价格', type: 'number', index: 'goodsprice' },
     { title: '图片', type: 'img', width: '50px', index: 'goodspicture' },
     // { title: '描述', index: 'represent' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '商品信息更新时间', type: 'date', index: 'updatetime' },
     {
       title: '操作',
       buttons: [
