@@ -76,7 +76,7 @@ export default class Menu extends Component {
       menus: []
     }
   }
-  componentWillMount() {
+  updateCom(){
     const userRole = Taro.getStorageSync('user_role')
     if (userRole) {
       if (userRole == '普通店铺') {
@@ -126,6 +126,14 @@ export default class Menu extends Component {
       }
     }
   }
+  componentWillMount() {
+    console.log(Taro.getStorageSync('user_role'))
+  }
+
+  componentDidShow() {
+    this.updateCom();
+  }
+
   handleClick = (menu) => {
     // NOTE 时间关系，此处只实现帮助中心，用于演示多端 webview
     if (menu.key === 'help') {
@@ -159,6 +167,8 @@ export default class Menu extends Component {
   }
 
   render () {
+    console.log('aaa')
+    // this.updateCom();
     const {menus} = this.state
     return (
       <View className='user-menu'>

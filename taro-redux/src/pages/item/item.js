@@ -65,7 +65,7 @@ class Item extends Component {
       this.props.dispatchOrder(payload).then(res => {
         console.log(res)
         Taro.showToast({
-          title: '加入购物车成功',
+          title: '下单成功',
           icon: 'none'
         })
       }).catch(err => {

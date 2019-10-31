@@ -30,11 +30,11 @@ class User extends Component {
     this.props.dispatchShopInfo({
       token: Taro.getStorageSync('user_token')
     })
-    Taro.login().then(res => {
-      this.props.dispatchCodeLogin({
-        code: res['code']
-      })
-    })
+    // Taro.login().then(res => {
+    //   this.props.dispatchCodeLogin({
+    //     code: res['code']
+    //   })
+    // })
     // console.log(cartUtil.getCart())
   }
 

@@ -12,12 +12,25 @@ export default class Profile extends Component {
     userInfo: {}
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      role: Taro.getStorageSync('user_role')
+    }
+  }
+
   handleLogin = () => {
     if (!this.props.userInfo.login) {
       Taro.navigateTo({
         url: '/pages/user-login/user-login'
       })
     }
+  }
+
+  componentDidShow() {
+    this.setState({
+      role: Taro.getStorageSync('user_role')
+    })
   }
 
   getUid = (uid) => {
@@ -39,8 +52,9 @@ export default class Profile extends Component {
 
   render () {
     const { userInfo } = this.props;
+    console.log(userInfo)
 
-    let role = Taro.getStorageSync('user_role');
+    const {role} = this.state;
 
     if (role){
       const shopInfo = Taro.getStorageSync('shopInfo');

@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {_HttpClient, ModalHelper} from '@delon/theme';
+import {STColumn, STComponent} from '@delon/abc';
+import {SFSchema} from '@delon/form';
 import {Router} from "@angular/router";
 import {TradeOrdersEditComponent} from "./edit/edit.component";
 import {TradeOrdersViewComponent} from "./view/view.component";
@@ -21,6 +21,17 @@ export class TradeOrdersComponent implements OnInit {
       console.log(res);
       return res.map(item => {
         // item['shoppicture'] = IMG_URL + item['shoppicture'];
+        switch (item['statu']) {
+          case 0:
+            item['orderStatus'] = '已取消';
+            break;
+          case 1:
+            item['orderStatus'] = '待审核';
+            break;
+          case 2:
+            item['orderStatus'] = '已完成';
+            break;
+        }
         return item;
       });
     }
@@ -33,32 +44,38 @@ export class TradeOrdersComponent implements OnInit {
       }
     }
   };
-  @ViewChild('st', { static: false }) st: STComponent;
+  @ViewChild('st', {static: false}) st: STComponent;
   columns: STColumn[] = [
-    { title: '店铺id', index: 'shopid' },
-    { title: '价格', type: 'number', index: 'priceall' },
-    { title: '订单编号', index: 'orderid' },
-    { title: '创建时间', type: 'date', index: 'updatedAt' },
+    {title: '店铺id', index: 'shopid'},
+    {title: '价格', type: 'number', index: 'priceall'},
+    {title: '订单编号', index: 'orderid'},
+    {title: '创建时间', type: 'date', index: 'updatedAt'},
+    {title: '订单状态', index: 'orderStatus'},
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => this.show(item) },
-        { text: '取消订单', click: (item: any) => {
-          this.http.get(ROOT_URL + 'order/cancelOrder',{
-            orderid: item.orderid,
-            token: localStorage.getItem('user_token')
-          }).subscribe(res => {
-            if (res['code'] == 0){
-              this.st.reload()
-            }
-          })
-          } }
+        {text: '查看', click: (item: any) => this.show(item)},
+        {
+          text: '取消订单', click: (item: any) => {
+            this.http.get(ROOT_URL + 'order/cancelOrder', {
+              orderid: item.orderid,
+              token: localStorage.getItem('user_token')
+            }).subscribe(res => {
+              if (res['code'] == 0) {
+                this.st.reload()
+              }
+            })
+          }, iif: (item) => {
+            return item['statu'] == 1
+          }, pop: '确认取消？'
+        }
         // { text: '', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router) {
+  }
 
   ngOnInit() {
     let token = localStorage.getItem('user_token');
@@ -68,7 +85,7 @@ export class TradeOrdersComponent implements OnInit {
 
   show(item) {
     this.modal
-      .createStatic(TradeOrdersViewComponent, { info: item })
+      .createStatic(TradeOrdersViewComponent, {info: item})
       .subscribe(() => this.st.reload());
   }
 
