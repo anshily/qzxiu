@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/user'
+import authReload from '@utils/auth'
 import { ButtonItem, InputItem } from '@components'
 import { CDN } from '@constants/api'
 import loginBanner from '@assets/login-banner.jpg'
@@ -64,8 +65,12 @@ class UserLogin extends Component {
       Taro.login().then(res => {
         payload['code'] = res['code'];
         this.props.dispatchBind(payload).then(() => {
-          this.setState({ loading: false })
-          Taro.navigateBack({ delta: 1 })
+
+          authReload().then(() => {
+            console.log(5);
+            this.setState({ loading: false });
+            Taro.navigateBack({ delta: 1 });
+          });
         }).catch(() => {
           this.setState({ loading: false })
         })

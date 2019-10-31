@@ -5,7 +5,7 @@ import { Provider } from '@tarojs/redux'
 import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
 import {ROOT_URL} from '@constants/api';
-
+import authReload from '@utils/auth';
 import configStore from './store'
 
 import './app.scss'
@@ -76,26 +76,30 @@ class App extends Component {
   }
 
   componentDidMount () {
-    Taro.login().then(res => {
-      // console.log(res)
-      Taro.request({
-        url: ROOT_URL + 'user/accordingCodeGetToken',
-        method: 'GET',
-        data: {
-          code: res['code']
-        }
-      }).then( info => {
-        console.log(info)
-        let data = info['data']
-        if (data['code'] == 0){
-          Taro.setStorage({ key: 'user_token', data: data['data']['token']});
-          Taro.setStorage({ key: 'user_role', data: data['data']['rolename']});
-          Taro.setStorage({ key: 'user_id', data: data['data']['id']});
-          this.getShop(data['data']['token'])
-        }
-        }
-      )
+    authReload().then( () => {
+      console.log(5);
+      console.log('resolve');
     })
+    // Taro.login().then(res => {
+    //   // console.log(res)
+    //   Taro.request({
+    //     url: ROOT_URL + 'user/accordingCodeGetToken',
+    //     method: 'GET',
+    //     data: {
+    //       code: res['code']
+    //     }
+    //   }).then( info => {
+    //     console.log(info)
+    //     let data = info['data']
+    //     if (data['code'] == 0){
+    //       Taro.setStorage({ key: 'user_token', data: data['data']['token']});
+    //       Taro.setStorage({ key: 'user_role', data: data['data']['rolename']});
+    //       Taro.setStorage({ key: 'user_id', data: data['data']['id']});
+    //       this.getShop(data['data']['token'])
+    //     }
+    //     }
+    //   )
+    // })
   }
 
   getShop(token) {

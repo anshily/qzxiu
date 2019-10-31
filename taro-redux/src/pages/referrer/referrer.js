@@ -21,11 +21,11 @@ export default class Referrer extends Component {
       open1: false,
       open2: false
     }
-    // this.itemId = parseInt(this.$router.params.itemId)
+    this.shopId = parseInt(this.$router.params.shopId)
   }
 
   componentDidMount() {
-    this.props.dispatchChild({shopid: 1}).then((res) => {
+    this.props.dispatchChild({shopid: this.shopId ? this.shopId : Taro.getStorageSync('shopId')}).then((res) => {
       console.log(res)
       // this.setState({ loaded: true })
     })
@@ -34,7 +34,7 @@ export default class Referrer extends Component {
   goDetail(item) {
     console.log(item)
     Taro.navigateTo({
-      url: '/pages/referrer/referrer'
+      url: '/pages/referrer/referrer?shopId=' + item['shopId']
     })
   }
 
@@ -95,22 +95,6 @@ export default class Referrer extends Component {
             </View>
           </View>
         </ClCard>
-
-
-        {/*<View className='at-row at-row__justify--center'>*/}
-          {/*<View className='at-col at-col-10'>*/}
-
-            {/*<View className='at-row at-row__align--center'>*/}
-              {/*<View style='height:100px' className='at-col'>*/}
-                {/*<AtSteps*/}
-                  {/*items={items}*/}
-                  {/*current={this.state.current}*/}
-                  {/*onChange={this.onChange.bind(this)}*/}
-                {/*/>*/}
-              {/*</View>*/}
-            {/*</View>*/}
-          {/*</View>*/}
-        {/*</View>*/}
 
 
         <AtAccordion
