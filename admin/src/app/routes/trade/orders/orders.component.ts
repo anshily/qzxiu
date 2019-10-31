@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {_HttpClient, ModalHelper} from '@delon/theme';
-import {STColumn, STComponent} from '@delon/abc';
-import {SFSchema} from '@delon/form';
+import {STColumn, STComponent, STReq} from '@delon/abc';
+import {SFSchema, SFSelectWidgetSchema} from '@delon/form';
 import {Router} from "@angular/router";
 import {TradeOrdersEditComponent} from "./edit/edit.component";
 import {TradeOrdersViewComponent} from "./view/view.component";
@@ -12,6 +12,12 @@ import {TradeOrdersViewComponent} from "./view/view.component";
 })
 export class TradeOrdersComponent implements OnInit {
   url = ROOT_URL + `order/list`;
+  reqObj: STReq = {
+    params: {
+      statu: 1
+    }
+  }
+
   resObj = {
     reName: {
       total: 'data.total',
@@ -20,7 +26,6 @@ export class TradeOrdersComponent implements OnInit {
     process: (res) => {
       console.log(res);
       return res.map(item => {
-        // item['shoppicture'] = IMG_URL + item['shoppicture'];
         switch (item['statu']) {
           case 0:
             item['orderStatus'] = '已取消';
@@ -38,9 +43,18 @@ export class TradeOrdersComponent implements OnInit {
   }
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      status: {
         type: 'string',
-        title: '编号'
+        title: '状态',
+        enum: [
+          {label: '待审核', value: 1},
+          {label: '已取消', value: 0},
+          {label: '已完成', value: 2},
+        ],
+        default: 1,
+        ui: {
+          widget: 'select',
+        } as SFSelectWidgetSchema,
       }
     }
   };
@@ -49,7 +63,7 @@ export class TradeOrdersComponent implements OnInit {
     {title: '店铺id', index: 'shopid'},
     {title: '价格', type: 'number', index: 'priceall'},
     {title: '订单编号', index: 'orderid'},
-    {title: '创建时间', type: 'date', index: 'updatedAt'},
+    {title: '创建时间', type: 'date', index: 'createtime'},
     {title: '订单状态', index: 'orderStatus'},
     {
       title: '操作',
@@ -89,4 +103,7 @@ export class TradeOrdersComponent implements OnInit {
       .subscribe(() => this.st.reload());
   }
 
+  search(ev){
+    console.log(ev);
+  }
 }
