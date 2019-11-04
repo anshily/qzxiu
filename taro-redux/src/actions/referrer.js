@@ -17,3 +17,11 @@ export const dispatchChild = payload => createAction({
   },
   payload
 })
+export const dispatchCashInfo = payload => createAction({
+  url: ROOT_URL + 'shop/message/detail',
+  type: 'REFERRER_DETAIL',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

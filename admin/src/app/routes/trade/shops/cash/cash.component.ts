@@ -21,12 +21,16 @@ export class TradeShopsCashComponent implements OnInit {
         title: '票据',
         ui: {
           widget: 'upload',
-          action: ROOT_URL + 'shop/message/uploadPicture',
+          action: IMG_URL + `files/uploadPicture`,
           resReName: 'data',
           urlReName: 'url',
           fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-          name: 'image'
-        } as SFUploadWidgetSchema,
+          name: 'image',
+          data: {
+            token: 'anshi',
+            prefix: 'qzx'
+          }
+        } as SFUploadWidgetSchema
       },
       note: { type: 'string', title: '备注' }
     },
@@ -71,7 +75,7 @@ export class TradeShopsCashComponent implements OnInit {
         this.msgSrv.success('转账成功');
         this.modal.close(true);
       }else {
-        this.msgSrv.success(res['msg']);
+        this.msgSrv.error(res['message']);
       }
     });
   }

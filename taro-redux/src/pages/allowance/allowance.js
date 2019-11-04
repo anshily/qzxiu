@@ -36,8 +36,8 @@ export default class Allowance extends Component {
               <AtListItem
                 onClick={this.goCashPage.bind(this, item)}
                 key={String(item.id)}
-                title={item.shopname}
-                note={'可提现金额' + item['cashin']}
+                title={item.shopname + '--' + item.username}
+                note={'可提现金额 ' + item['cashin'] + '元'}
                 extraText='提现'
                 arrow='right'
                 thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'

@@ -1,12 +1,11 @@
-
-import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { InputNumber } from '@components'
-import { connect } from '@tarojs/redux'
+import Taro, {Component} from '@tarojs/taro'
+import {View, Text} from '@tarojs/components'
+import {InputNumber} from '@components'
+import {connect} from '@tarojs/redux'
 import './order-detail.scss'
 import * as actions from '@actions/order-detail';
 import {IMG_URL} from "@constants/api";
-import { AtDivider, AtButton  } from 'taro-ui'
+import {AtDivider, AtButton} from 'taro-ui'
 import {ClCard} from 'mp-colorui'
 
 @connect(state => state.orderDetail, actions)
@@ -33,19 +32,34 @@ export default class OrderDetail extends Component {
       orderid: this.orderId
     })
   }
+
+  oredrCancel(item) {
+    console.log(item)
+    this.props.dispatchOrderCancel({
+      orderid: this.orderId,
+      token: Taro.getStorageSync('user_token')
+    }).then(res => {
+      Taro.showToast({
+        title: '订单已取消',
+        icon: 'none'
+      })
+      Taro.navigateBack({ delta: 1 });
+    });
+  }
+
   render() {
 
-    let  {orderDetail} = this.props;
-    return(
+    let {orderDetail} = this.props;
+    return (
       <View className='cart-list'>
-        {orderDetail &&  orderDetail.list && orderDetail.list.map(item => (
+        {orderDetail && orderDetail.list && orderDetail.list.map(item => (
           <View
             key={item.id}
             className='cart-list__item'
           >
             {/*<CheckboxItem*/}
-              {/*checked={item.checked}*/}
-              {/*onClick={this.handleUpdateCheck.bind(this, item)}*/}
+            {/*checked={item.checked}*/}
+            {/*onClick={this.handleUpdateCheck.bind(this, item)}*/}
             {/*/>*/}
             <Image
               mode='aspectFill'
@@ -93,12 +107,13 @@ export default class OrderDetail extends Component {
 
             </View>
 
-            <AtDivider />
+            <AtDivider/>
 
             <View className='at-row at-row__justify--end'>
               <View className='at-col'></View>
               <View className='at-col at-col-3'>
-                <AtButton type='secondary' size='small'>取消订单</AtButton>
+                <AtButton type='secondary' size='small'
+                          onClick={this.oredrCancel.bind(this, orderDetail)}>取消订单</AtButton>
               </View>
             </View>
           </ClCard>

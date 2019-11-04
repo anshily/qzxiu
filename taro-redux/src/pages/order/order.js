@@ -31,7 +31,7 @@ export default class Order extends Component {
   }
 
   config = {
-    navigationBarTitleText: 'order'
+    navigationBarTitleText: '订单'
   }
 
   onChange(current) {

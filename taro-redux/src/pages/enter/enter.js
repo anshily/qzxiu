@@ -5,7 +5,7 @@ import {AtButton, AtForm, AtInput, AtModal, AtModalHeader, AtModalContent, AtMod
 import {ClImagePicker, ClModal, ClButton} from 'mp-colorui';
 import './enter.scss'
 import * as actions from '@actions/enter';
-import { ROOT_URL } from '../../constants/api';
+import { ROOT_URL, IMG_URL } from '../../constants/api';
 
 @connect(state => state.enter, actions)
 export default class UserLogin extends Component {
@@ -70,9 +70,13 @@ export default class UserLogin extends Component {
     });
 
     Taro.uploadFile({
-      url: ROOT_URL + 'shop/message/uploadPicture',
+      url: IMG_URL + 'files/uploadPicture',
       filePath: e[0].url,
-      name: 'image'
+      name: 'image',
+      formData: {
+        token: 'anshi',
+        prefix: 'qzx'
+      }
     }).then((res) => {
       // console.log(res['data']);
       // console.log(typeof res['data']);

@@ -45,7 +45,7 @@ export class TradeOrdersComponent implements OnInit {
     properties: {
       status: {
         type: 'string',
-        title: '状态',
+        title: '订单状态',
         enum: [
           {label: '待审核', value: 1},
           {label: '已取消', value: 0},

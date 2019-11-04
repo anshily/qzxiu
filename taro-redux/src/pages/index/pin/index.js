@@ -35,7 +35,6 @@ export default class Pin extends Component {
 
         <HomeTitle
           title='优秀店铺'
-          link='#'
         />
         <View className='home-pin__wrap'>
           <Swiper

@@ -2,24 +2,38 @@
   <div class="modal-title">查看 {{ record.id }} 信息</div>
 </div>
 <nz-spin *ngIf="!loaded" class="modal-spin"></nz-spin>
-<nz-card *ngIf="loaded" >
+<div *ngIf="loaded" >
   <nz-tabset nzTabPosition="left">
-    <nz-tab nzTitle="推荐人">
-      商户的购买行为可以对推荐人进行返点
+    <div *ngIf="params.type == 1">
 
-      <nz-radio-group [(ngModel)]="recommendValue" [nzButtonStyle]="'solid'">
-        <label *ngFor="let item of recommendList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname']}}</label>
-      </nz-radio-group>
+        <nz-tab nzTitle="上级代理">
 
-    </nz-tab>
-    <nz-tab nzTitle="上级代理">
-      商户的购买行为可以对代理商进行返点
+          <nz-card>
+            <nz-card-tab> 商户的购买行为可以对代理商进行返点</nz-card-tab>
 
-      <nz-radio-group [(ngModel)]="proxyValue" [nzButtonStyle]="'solid'">
-        <label *ngFor="let item of proxyList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname']}}</label>
-      </nz-radio-group>
+          <nz-radio-group [(ngModel)]="proxyValue" [nzButtonStyle]="'solid'">
+            <label *ngFor="let item of proxyList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname']+ '--'+ item['username']}}</label>
+          </nz-radio-group>
 
-    </nz-tab>
+          </nz-card>
+        </nz-tab>
+
+    </div>
+
+    <div *ngIf="params.type == 2">
+      <nz-tab nzTitle="推荐人">
+
+        <nz-card>
+          <nz-card-tab> 商户的购买行为可以对推荐人进行返点</nz-card-tab>
+          <nz-radio-group [(ngModel)]="recommendValue" [nzButtonStyle]="'solid'">
+            <label *ngFor="let item of recommendList" nz-radio-button nzValue="{{item['id']}}">{{item['shopname'] + '--' + item['username']}}</label>
+          </nz-radio-group>
+        </nz-card>
+
+      </nz-tab>
+    </div>
+
+
   </nz-tabset>
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
@@ -29,7 +43,7 @@
             [nzLoading]="http.loading">保存
     </button>
   </div>
-</nz-card>
+</div>
 <!--<sf *ngIf="loaded" #sf mode="edit" [schema]="schema" [ui]="ui" [formData]="i" button="none">-->
 
 <!--</sf>-->

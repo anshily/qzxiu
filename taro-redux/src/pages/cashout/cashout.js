@@ -5,7 +5,7 @@ import './cashout.scss'
 import * as actions from '@actions/cashout';
 import {AtButton, AtForm, AtInput, AtModal, AtModalHeader, AtModalContent, AtModalAction} from "taro-ui";
 import {ClImagePicker, ClModal, ClButton} from 'mp-colorui';
-import {ROOT_URL} from "../../constants/api";
+import {IMG_URL, ROOT_URL} from "../../constants/api";
 
 @connect(state => state.cashout, actions)
 export default class Cashout extends Component {
@@ -68,9 +68,13 @@ export default class Cashout extends Component {
     });
 
     Taro.uploadFile({
-      url: ROOT_URL + 'shop/message/uploadPicture',
+      url: IMG_URL + 'files/uploadPicture',
       filePath: e[0].url,
-      name: 'image'
+      name: 'image',
+      formData: {
+        token: 'anshi',
+        prefix: 'qzx'
+      }
     }).then((res) => {
       // console.log(res['data']);
 
@@ -111,7 +115,7 @@ let flag = !this.testRequire()
             name='value3'
             title='提现金额'
             type='number'
-            placeholder='不能超过200'
+            placeholder='请输入提现金额'
             value={this.state.cash}
             onChange={this.handleCashChange}
           />

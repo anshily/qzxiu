@@ -5,10 +5,10 @@
 /* eslint-disable */
 export const host = HOST
 export const hostM = HOST_M
-export const ROOT_URL = 'http://localhost:8083/';
-// export const ROOT_URL = 'https://sweet.tiantianquan.xyz/qzx/';
+// export const ROOT_URL = 'http://localhost:8083/';
+export const ROOT_URL = 'https://sweet.tiantianquan.xyz/qzx/';
 // export const IMG_URL = 'http://localhost:8083/';
-export const IMG_URL = 'https://sweet.tiantianquan.xyz/qzx/';
+export const IMG_URL = 'https://files.sweet.tiantianquan.xyz/';
 /* eslint-enable */
 
 // pic

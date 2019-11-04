@@ -57,7 +57,7 @@ export default function home(state = INITIAL_STATE, action) {
     case 'HOME_BANNER': {
       console.log(action.payload)
       let list = action.payload.map((item, index) => {
-          item['img'] = ROOT_URL + item['picture_address'],
+          item['img'] = IMG_URL + item['picture_address'],
           item['rank'] = index
         return item;
       })

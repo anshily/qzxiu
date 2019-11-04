@@ -145,11 +145,15 @@ export class TradeShopsEditComponent implements OnInit {
               title: '门面图',
               ui: {
                 widget: 'upload',
-                action: ROOT_URL + 'shop/message/uploadPicture',
+                action: IMG_URL + `files/uploadPicture`,
                 resReName: 'data',
                 urlReName: 'url',
                 fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                name: 'image'
+                name: 'image',
+                data: {
+                  token: 'anshi',
+                  prefix: 'qzx'
+                }
               } as SFUploadWidgetSchema
             },
             custom: {
@@ -216,12 +220,16 @@ export class TradeShopsEditComponent implements OnInit {
                 title: '门面图',
                 ui: {
                   widget: 'upload',
-                  action: ROOT_URL + 'shop/message/uploadPicture',
+                  action: IMG_URL + `files/uploadPicture`,
                   resReName: 'data',
                   urlReName: 'url',
                   fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image'
-                } as SFUploadWidgetSchema,
+                  name: 'image',
+                  data: {
+                    token: 'anshi',
+                    prefix: 'qzx'
+                  }
+                } as SFUploadWidgetSchema
               },
               custom: {
                 type: 'string',
@@ -351,7 +359,7 @@ export class TradeShopsEditComponent implements OnInit {
         this.msgSrv.success('保存成功');
         this.modal.close(true);
       }else {
-        this.msgSrv.success(res['msg']);
+        this.msgSrv.success(res['message']);
       }
     });
   }
@@ -374,7 +382,7 @@ export class TradeShopsEditComponent implements OnInit {
         this.msgSrv.success('修改成功');
         this.modal.close(true);
       }else {
-        this.msgSrv.success(res['msg']);
+        this.msgSrv.success(res['message']);
       }
     });
   }

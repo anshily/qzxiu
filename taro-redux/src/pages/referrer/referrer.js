@@ -11,7 +11,11 @@ export default class Referrer extends Component {
 
   static defaultProps = {
     referrerLevelOne: [],
-    referrerLevelTwo: []
+    referrerLevelTwo: [],
+    referrerShopItem: {
+      cashin: 0,
+      cashout: 0
+    }
   }
 
   constructor(props) {
@@ -29,12 +33,17 @@ export default class Referrer extends Component {
       console.log(res)
       // this.setState({ loaded: true })
     })
+
+    this.props.dispatchCashInfo({id: this.shopId ? this.shopId : Taro.getStorageSync('shopId')}).then((res) => {
+      console.log(res)
+      // this.setState({ loaded: true })
+    })
   }
 
   goDetail(item) {
     console.log(item)
     Taro.navigateTo({
-      url: '/pages/referrer/referrer?shopId=' + item['shopId']
+      url: '/pages/referrer/referrer?shopId=' + item['id']
     })
   }
 
@@ -68,33 +77,46 @@ export default class Referrer extends Component {
       {'title': '步骤三', 'desc': '这里是额外的信息，最多两行'}
     ]
 
-    const {referrerLevelOne, referrerLevelTwo} = this.props
+    const {referrerLevelOne, referrerLevelTwo, referrerShopItem} = this.props
+    console.log(referrerShopItem)
     return (
       <View className='home__wrap'>
 
-        <ClCard type='full'>
-          <View className='at-row'>
-            <View className='at-col at-col-6'>
+        <AtList>
+          <AtListItem title='奖励金额' note={referrerShopItem.cashin + ' 元'}
+                      thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+          <AtListItem title='已提现' note={referrerShopItem.cashout + ' 元'}
+                      thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+          {/*<AtListItem title='已提现' note={referrerShopItem.cashin} />*/}
+        </AtList>
 
-              <View className='at-row'>
-                <View className='at-col at-col-6'>
-                  当前余额 0 元
-                </View>
-              </View>
-              <View className='at-row'>
-                累计推荐 0 人 奖励 0 元
-              </View>
-              <View className='at-row'>
-                提现详情
-              </View>
+        {/*<ClCard type='full'>*/}
+          {/*<View className='at-row'>*/}
+            {/*<View className='at-col at-col-6'>*/}
 
-            </View>
 
-            <View className='at-col at-col-10'>
 
-            </View>
-          </View>
-        </ClCard>
+              {/*/!*<View className='at-row'>*!/*/}
+                {/*/!*<View className='at-col at-col-6'>*!/*/}
+                  {/*/!*当前余额 0 元*!/*/}
+                {/*/!*</View>*!/*/}
+              {/*/!*</View>*!/*/}
+              {/*/!*<View className='at-row'>*!/*/}
+                {/*/!*累计推荐 0 人 奖励 0 元*!/*/}
+              {/*/!*</View>*!/*/}
+              {/*/!*<View className='at-row'>*!/*/}
+                {/*/!*提现详情*!/*/}
+              {/*/!*</View>*!/*/}
+
+            {/*</View>*/}
+
+            {/*<View className='at-col at-col-10'>*/}
+
+            {/*</View>*/}
+          {/*</View>*/}
+        {/*</ClCard>*/}
 
 
         <AtAccordion
@@ -108,7 +130,7 @@ export default class Referrer extends Component {
                 <AtListItem
                   onClick={this.goDetail.bind(this,item)}
                   key={String(item.id)}
-                  title={item.shopname}
+                  title={item.shopname + '--' + item.username}
                   note='描述信息'
                   extraText='详细信息'
                   arrow='right'

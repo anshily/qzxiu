@@ -117,7 +117,7 @@ export class EditorQuillComponent implements OnInit {
   // 上传完成
   uploadComplete(evt) {
     console.log(evt.target.responseText)
-    let img = '<img class="camera" src="'+IMG_URL+ JSON.parse(evt.target.responseText)['data'] +'" alt=""><<br/>';
+    let img = '<img class="camera" src="'+IMG_URL+ JSON.parse(evt.target.responseText)['data'] +'" alt=""><br/>';
 
     // if (this.selectionRange.isMod){
     //   this.data.content = this.insertContent(img);
@@ -185,8 +185,10 @@ export class EditorQuillComponent implements OnInit {
       this.processService.show();
       this.processService.drawFrame(0);
       const formData = new FormData();
-      formData.append('file', this.croppedImage, 'file');
-      formData.append('token',localStorage.getItem('loginToken'));
+      formData.append('image', this.croppedImage, 'image');
+      formData.append('token','anshi');
+      formData.append('prefix','qzx');
+
       const xhr = new XMLHttpRequest();
       xhr.upload.addEventListener('progress', (ev) => {
         this.uploadProgress(ev);
@@ -194,7 +196,7 @@ export class EditorQuillComponent implements OnInit {
       xhr.addEventListener('load', (ev) => (this.uploadComplete(ev)), false);
       xhr.addEventListener('error', this.uploadFailed, false);
       xhr.addEventListener('abort', this.uploadCanceled, false);
-      xhr.open('POST', ROOT_URL + 'anshi/mp/upload');
+      xhr.open('POST', IMG_URL + 'files/uploadPicture');
       xhr.send(formData);
       return true;
     }else {

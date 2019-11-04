@@ -9,3 +9,4 @@ declare var Slider: any;
 
 declare var ROOT_URL: string;
 declare var IMG_URL: string;
+declare var FILE_URL: string;

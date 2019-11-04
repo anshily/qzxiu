@@ -18,10 +18,10 @@ const RECOMMEND_SIZE = 20
 
 function genImgListData() {
   let images = [
-    IMG_URL + '../uploads/assets/index1.jpg',
-    IMG_URL + '../uploads/assets/index2.jpg',
-    IMG_URL + '../uploads/assets/index3.jpg',
-    IMG_URL + '../uploads/assets/index4.jpg'
+    IMG_URL + 'uploads/qzx/assets/index1.jpg',
+    IMG_URL + 'uploads/qzx/assets/index2.jpg',
+    IMG_URL + 'uploads/qzx/assets/index3.jpg',
+    IMG_URL + 'uploads/qzx/assets/index4.jpg'
   ]
   return images.map(item => {
     return {

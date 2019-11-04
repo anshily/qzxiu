@@ -70,12 +70,16 @@ export class TradeGoodsEditComponent implements OnInit {
             title: '封面图',
             ui: {
               widget: 'upload',
-              action: ROOT_URL + 'shop/message/uploadPicture',
+              action: IMG_URL + `files/uploadPicture`,
               resReName: 'data',
               urlReName: 'url',
               fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-              name: 'image'
-            } as SFUploadWidgetSchema,
+              name: 'image',
+              data: {
+                token: 'anshi',
+                prefix: 'qzx'
+              }
+            } as SFUploadWidgetSchema
           },
           custom: {
             type: 'string',
@@ -101,12 +105,16 @@ export class TradeGoodsEditComponent implements OnInit {
             title: '封面图',
             ui: {
               widget: 'upload',
-              action: ROOT_URL + 'shop/message/uploadPicture',
+              action: IMG_URL + `files/uploadPicture`,
               resReName: 'data',
               urlReName: 'url',
               fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-              name: 'image'
-            } as SFUploadWidgetSchema,
+              name: 'image',
+              data: {
+                token: 'anshi',
+                prefix: 'qzx'
+              }
+            } as SFUploadWidgetSchema
           },
           custom: {
             type: 'string',

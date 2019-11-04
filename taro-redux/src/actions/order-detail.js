@@ -8,3 +8,9 @@ export const dispatchOrderDetail = payload => createAction({
   method: 'GET',
   payload
 })
+export const dispatchOrderCancel = payload => createAction({
+  url: ROOT_URL + 'order/cancelOrder',
+  type: 'ORDER_CANCEL',
+  method: 'GET',
+  payload
+})

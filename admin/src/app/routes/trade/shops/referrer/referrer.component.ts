@@ -39,6 +39,8 @@ export class TradeShopsReferrerComponent implements OnInit {
   // userid: 168
 
   ngOnInit(): void {
+
+    console.log(this.params)
     this.http.get(ROOT_URL + 'shop/message/detail', {id: this.params.id}).subscribe(res => {
 
       if (res['code'] == 0 ){

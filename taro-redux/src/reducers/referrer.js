@@ -11,6 +11,11 @@ export default function referrer(state = {}, action) {
       const { referrerItem } = action.payload
       return { ...state, referrerItem: referrerItem }
     }
+    case 'REFERRER_DETAIL': {
+      const item = action.payload;
+      // console.log(action.payload)
+      return { ...state, referrerShopItem: item }
+    }
     case 'REFERRER_CHILD': {
       console.log(action.payload.child)
       let list = action.payload.child;

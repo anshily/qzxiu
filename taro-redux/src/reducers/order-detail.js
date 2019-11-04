@@ -37,6 +37,10 @@ export default function orderDetail(state = {}, action) {
           sumCnt: list.length
         } }
     }
+    case 'ORDER_CANCEL': {
+      console.log(action.payload)
+      return { ...state }
+    }
     default:
       return state
   }

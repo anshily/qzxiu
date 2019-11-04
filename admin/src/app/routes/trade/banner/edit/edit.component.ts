@@ -20,12 +20,16 @@ export class TradeBannerEditComponent implements OnInit {
         title: '封面图',
         ui: {
           widget: 'upload',
-          action: ROOT_URL + 'shop/message/uploadPicture',
+          action: IMG_URL + `files/uploadPicture`,
           resReName: 'data',
           urlReName: 'url',
           fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-          name: 'image'
-        } as SFUploadWidgetSchema,
+          name: 'image',
+          data: {
+            token: 'anshi',
+            prefix: 'qzx'
+          }
+        } as SFUploadWidgetSchema
       },
       note: { type: 'string', title: '备注' },
       activity: { type: 'number', title: '活动编号',enum: [
@@ -79,24 +83,16 @@ export class TradeBannerEditComponent implements OnInit {
                 title: '封面图',
                 ui: {
                   widget: 'upload',
-                  action: ROOT_URL + 'shop/message/uploadPicture',
+                  action: IMG_URL + `files/uploadPicture`,
                   resReName: 'data',
                   urlReName: 'url',
                   fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image'
-                } as SFUploadWidgetSchema,
-                // default: this.itemInfo['picture_address'] || 'index.jpg',
-                // enum: [
-                //   {
-                //     uid: -1,
-                //     name: '轮播图.png',
-                //     status: 'done',
-                //     url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
-                //     response: {
-                //       url: this.itemInfo['picture_address'] || '../uploads/assets/index1.jpg',
-                //     },
-                //   },
-                // ]
+                  name: 'image',
+                  data: {
+                    token: 'anshi',
+                    prefix: 'qzx'
+                  }
+                } as SFUploadWidgetSchema
               },
               note: { type: 'string', title: '备注',
                 default: this.itemInfo['note'] || ''
@@ -130,12 +126,16 @@ export class TradeBannerEditComponent implements OnInit {
                 title: '封面图',
                 ui: {
                   widget: 'upload',
-                  action: ROOT_URL + 'shop/message/uploadPicture',
+                  action: IMG_URL + `files/uploadPicture`,
                   resReName: 'data',
                   urlReName: 'url',
                   fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image'
-                } as SFUploadWidgetSchema,
+                  name: 'image',
+                  data: {
+                    token: 'anshi',
+                    prefix: 'qzx'
+                  }
+                } as SFUploadWidgetSchema
               },
               note: { type: 'string', title: '备注' },
               activity: { type: 'number', title: '活动编号',enum: list,

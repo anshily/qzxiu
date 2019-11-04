@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import { STColumn, STComponent } from '@delon/abc';
-import { SFSchema } from '@delon/form';
+import {STColumn, STComponent, STReq} from '@delon/abc';
+import {SFSchema, SFSelectWidgetSchema} from '@delon/form';
 import {TradeGoodsEditComponent} from "./edit/edit.component";
 import {Router} from "@angular/router";
 import {TradeGoodsViewComponent} from "./view/view.component";
@@ -11,7 +11,12 @@ import {TradeGoodsViewComponent} from "./view/view.component";
   templateUrl: './goods.component.html',
 })
 export class TradeGoodsComponent implements OnInit {
-  url = ROOT_URL + `goods/message/list`;
+  url = ROOT_URL + `goods/message/getGoodsList`;
+  reqObj: STReq = {
+    params: {
+      statu: 1
+    }
+  }
   resObj = {
     reName: {
       total: 'data.total',
@@ -27,9 +32,18 @@ export class TradeGoodsComponent implements OnInit {
   }
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      status: {
         type: 'string',
-        title: '编号'
+        title: '商品状态',
+        enum: [
+          {label: '已上架', value: 2},
+          {label: '未上架', value: 1},
+          {label: '不可用', value: 0},
+        ],
+        default: 1,
+        ui: {
+          widget: 'select',
+        } as SFSelectWidgetSchema,
       }
     }
   };
@@ -76,6 +90,16 @@ export class TradeGoodsComponent implements OnInit {
     this.modal
       .createStatic(TradeGoodsViewComponent, { params: item })
       .subscribe(() => this.st.reload());
+  }
+
+  search(ev){
+    console.log(ev);
+    this.reqObj = {
+      params: {
+        statu: ev.status
+      }
+    }
+    this.st.reload();
   }
 
 }
