@@ -71,7 +71,7 @@
   </insert>
 
   <select id="getShopList" resultType="io.peach.launch.model.ShopMessage">
-    select userid,owner_phone,shoptype_id,shopname,shoppicture,shopaddress,profit,cashout,cashin,createtime,updatetime from qzx_shop_message,typename as shoptype_name
+    select userid,owner_phone,shoptype_id,shopname,shoppicture,shopaddress,profit,cashout,cashin,createtime,updatetime,username from qzx_shop_message,typename as shoptype_name
     from qzx_shop_type where qzx_shop_message.shoptype_id=qzx_shop_type.id and qzx_shop_message.statu=1
     </select>
 
