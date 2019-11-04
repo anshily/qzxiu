@@ -32,7 +32,7 @@
   </select>
 
   <select id="getRecommendAndPosition" resultType="map">
-    select u.username as username,s.shopname as shopname,s.id as id from qzx_shop_message as s, qzx_user as u where u.id=s.userid
+    select username,shopname,id from qzx_shop_message where statu=1
   </select>
 
   <select id="getPoint" resultType="map">
