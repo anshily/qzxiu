@@ -105,6 +105,9 @@ public class GradingController {
         if(Fshopid!=null){
             criteria.andCondition("id!="+Fshopid);
         }
+        if(type.equals("地区推荐")){
+            criteria.andCondition("shoptype_id!=1");
+        }
         List<ShopMessage> list = shopMessageService.findByCondition(condition);
         return ResultGenerator.successResult(list);
     }
