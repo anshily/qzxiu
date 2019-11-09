@@ -2,10 +2,7 @@ package io.peach.launch.controller;
 import io.peach.launch.base.core.*;
 import io.peach.launch.dto.CashOutDTO;
 import io.peach.launch.dto.SubmitAll;
-import io.peach.launch.model.Record;
-import io.peach.launch.model.ShopMessage;
-import io.peach.launch.model.User;
-import io.peach.launch.model.UserRole;
+import io.peach.launch.model.*;
 import io.peach.launch.service.RecordService;
 import io.peach.launch.service.ShopMessageService;
 import com.github.pagehelper.PageHelper;
@@ -66,9 +63,12 @@ public class ShopMessageController {
     }
 
     @GetMapping("/list")
-    public Result list(PageBean<ShopMessage> page) {
-        PageHelper.startPage(page.getPageNum(),page.getSize());
-        List<ShopMessage> list = shopMessageService.findAll();
+    public Result list(@RequestParam Integer pi,@RequestParam Integer ps) {
+        PageBean<ShopMessage> page = new PageBean<ShopMessage>();
+        PageHelper.startPage(pi,ps);
+        Condition condition = new Condition(ShopMessage.class);
+        /*Example.Criteria criteria = condition.createCriteria();*/
+        List<ShopMessage> list = shopMessageService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
     }
