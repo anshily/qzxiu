@@ -153,6 +153,7 @@ export class EditorQuillComponent implements OnInit {
     this.isShowModal = false;
   }
   updateImgFile(event) {
+    console.log(event)
 
     const file = event.target.files[0] || event.dataTransfer.files[0];
     if (file === undefined) {

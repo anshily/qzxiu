@@ -110,6 +110,8 @@ export class TradeOrdersComponent implements OnInit {
         statu: ev.status
       }
     }
-    this.st.reload();
+    setTimeout(() => {
+      this.st.reload();
+    })
   }
 }

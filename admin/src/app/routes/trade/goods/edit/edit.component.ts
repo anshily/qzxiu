@@ -1,32 +1,55 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NzModalRef, NzMessageService } from 'ng-zorro-antd';
-import { _HttpClient } from '@delon/theme';
+import {NzModalRef, NzMessageService, UploadFile} from 'ng-zorro-antd';
+import {_HttpClient, ModalHelper} from '@delon/theme';
 import {SFSchema, SFUISchema, SFUploadWidgetSchema} from '@delon/form';
+import {CropperComponent} from "@shared/cropper/cropper.component";
 
 @Component({
   selector: 'app-trade-goods-edit',
   templateUrl: './edit.component.html',
+  styles: [
+    `
+      i[nz-icon] {
+        font-size: 32px;
+        color: #999;
+      }
+      .ant-upload-text {
+        margin-top: 8px;
+        color: #666;
+      }
+    `
+  ]
 })
 export class TradeGoodsEditComponent implements OnInit {
   record: any = {};
   params: any;
-  receiveContent: 'aaaa';
+  receiveContent: string;
+  receivePicture: string;
   schema: SFSchema = {
     properties: {
       name: { type: 'string', title: '姓名', maxLength: 15 },
       price: { type: 'number', title: '价格' },
-    file: {
-      type: 'string',
-      title: '封面图',
-      ui: {
-        widget: 'upload',
-        action: ROOT_URL + 'shop/message/uploadPicture',
-        resReName: 'data',
-        urlReName: 'url',
-        fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-        name: 'image'
-      } as SFUploadWidgetSchema,
-    },
+      picUploader: {
+        type: 'string',
+        title: '封面图',
+        ui: {
+          widget: 'custom',
+          grid: { span: 24 }
+        },
+        default: 'test',
+      },
+    // file: {
+    //   type: 'string',
+    //   title: '封面图',
+    //   ui: {
+    //     widget: 'upload',
+    //     action: ROOT_URL + 'shop/message/uploadPicture',
+    //     resReName: 'data',
+    //     urlReName: 'url',
+    //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+    //     name: 'image'
+    //   } as SFUploadWidgetSchema,
+    // },
     custom: {
       type: 'string',
       title: '描述',
@@ -37,7 +60,7 @@ export class TradeGoodsEditComponent implements OnInit {
       default: 'test',
     }
     },
-    required: ['name', 'price', 'file'],
+    required: ['name', 'price'],
   };
   ui: SFUISchema = {
     '*': {
@@ -53,34 +76,45 @@ export class TradeGoodsEditComponent implements OnInit {
     private modal: NzModalRef,
     private msgSrv: NzMessageService,
     public http: _HttpClient,
+    private modalHelper: ModalHelper
   ) {}
 
   ngOnInit(): void {
     if (this.params.isEdit){
       let item = this.params.item
       this.receiveContent = item['represent'];
+      this.receivePicture = item['goodspicture'];
       this.schema = {
         properties: {
           name: { type: 'string', title: '商品名称', maxLength: 15, default: item['goodsname'] },
           price: { type: 'number', title: '价格', default: item['goodsprice'] },
           dan: { type: 'number', title: '单店推广利润', default: item['dan'] },
           dai: { type: 'number', title: '代理推广利润', default: item['dai'] },
-          file: {
+          picUploader: {
             type: 'string',
             title: '封面图',
             ui: {
-              widget: 'upload',
-              action: IMG_URL + `files/uploadPicture`,
-              resReName: 'data',
-              urlReName: 'url',
-              fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-              name: 'image',
-              data: {
-                token: 'anshi',
-                prefix: 'qzx'
-              }
-            } as SFUploadWidgetSchema
+              widget: 'custom',
+              grid: { span: 24 }
+            },
+            default: 'test',
           },
+          // file: {
+          //   type: 'string',
+          //   title: '封面图',
+          //   ui: {
+          //     widget: 'upload',
+          //     action: IMG_URL + `files/uploadPicture`,
+          //     resReName: 'data',
+          //     urlReName: 'url',
+          //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+          //     name: 'image',
+          //     data: {
+          //       token: 'anshi',
+          //       prefix: 'qzx'
+          //     }
+          //   } as SFUploadWidgetSchema
+          // },
           custom: {
             type: 'string',
             title: '描述',
@@ -91,7 +125,7 @@ export class TradeGoodsEditComponent implements OnInit {
             default: 'test',
           }
         },
-        required: ['name', 'price', 'file'],
+        required: ['name', 'price'],
       };
     }else {
       this.schema = {
@@ -100,21 +134,30 @@ export class TradeGoodsEditComponent implements OnInit {
           price: { type: 'number', title: '价格' },
           dan: { type: 'number', title: '单店推广利润'},
           dai: { type: 'number', title: '代理推广利润' },
-          file: {
+          // file: {
+          //   type: 'string',
+          //   title: '封面图',
+          //   ui: {
+          //     widget: 'upload',
+          //     action: IMG_URL + `files/uploadPicture`,
+          //     resReName: 'data',
+          //     urlReName: 'url',
+          //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+          //     name: 'image',
+          //     data: {
+          //       token: 'anshi',
+          //       prefix: 'qzx'
+          //     }
+          //   } as SFUploadWidgetSchema
+          // },
+          picUploader: {
             type: 'string',
             title: '封面图',
             ui: {
-              widget: 'upload',
-              action: IMG_URL + `files/uploadPicture`,
-              resReName: 'data',
-              urlReName: 'url',
-              fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-              name: 'image',
-              data: {
-                token: 'anshi',
-                prefix: 'qzx'
-              }
-            } as SFUploadWidgetSchema
+              widget: 'custom',
+              grid: { span: 24 }
+            },
+            default: 'test',
           },
           custom: {
             type: 'string',
@@ -126,7 +169,7 @@ export class TradeGoodsEditComponent implements OnInit {
             default: 'test',
           }
         },
-        required: ['name', 'price', 'file'],
+        required: ['name', 'price'],
       };
     }
     // this.http.get(`/user/${this.record.id}`).subscribe(res => (this.i = res));
@@ -137,12 +180,17 @@ export class TradeGoodsEditComponent implements OnInit {
     this.receiveContent = e;
   }
 
+  updateImg(e){
+    console.log(e)
+    this.receivePicture = e;
+  }
+
   save(value: any) {
     console.log(value)
     let params = {
       goodsname: value.name,
       goodsprice: value.price,
-      goodspicture: value.file,
+      goodspicture: this.receivePicture,
       represent: this.receiveContent,
       token: localStorage.getItem('user_token')
     }
@@ -162,7 +210,7 @@ export class TradeGoodsEditComponent implements OnInit {
       id: this.params.item.id,
       goodsname: value.name,
       goodsprice: value.price,
-      goodspicture: value.file,
+      goodspicture: this.receivePicture,
       represent: this.receiveContent,
       token: localStorage.getItem('user_token')
     }

@@ -25,7 +25,7 @@ export class TradeGoodsComponent implements OnInit {
     process: (res) => {
       console.log(res);
       return res.map(item => {
-        item['goodspicture'] = IMG_URL + item['goodspicture'];
+        item['picture'] = IMG_URL + item['goodspicture'];
         return item;
       });
     }
@@ -52,7 +52,7 @@ export class TradeGoodsComponent implements OnInit {
     { title: '编号', index: 'id' },
     { title: '名称', index: 'goodsname' },
     { title: '价格', type: 'number', index: 'goodsprice' },
-    { title: '图片', type: 'img', width: '50px', index: 'goodspicture' },
+    { title: '图片', type: 'img', width: '50px', index: 'picture' },
     // { title: '描述', index: 'represent' },
     { title: '商品信息更新时间', type: 'date', index: 'updatetime' },
     {
