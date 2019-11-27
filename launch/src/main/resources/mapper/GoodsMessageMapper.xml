@@ -28,7 +28,7 @@
       <if test="type=='down'">
         statu=1,
       </if>
-      where id=#{id}
     </set>
+    where id=#{id}
   </update>
 </mapper>

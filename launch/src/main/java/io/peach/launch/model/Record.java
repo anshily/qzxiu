@@ -19,6 +19,7 @@ public class Record {
      * 消息类型（普通消息或者佣金消息）
      */
     private String type;
+    private String name;
 
     /**
      * 消息来源的店铺id（普通消息默认为0）
@@ -44,6 +45,14 @@ public class Record {
      */
     private String subscribe;
     private String image;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getImage() {
         return image;
