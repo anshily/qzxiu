@@ -56,8 +56,8 @@ export default class Pin extends Component {
                       src={IMG_URL + item.shoppicture}
                     />
                     <View className='home-pin__item-info'>
-                      <Text className='home-pin__item-price'>{`已提现¥${item.profit}`}</Text>
-                      <Text className='home-pin__item-origin'>¥{item.cashin}</Text>
+                      <Text className='home-pin__item-price'>{`已提现 ¥ ${item.cashout}`}</Text>
+                      {/* <Text className='home-pin__item-origin'>¥{item.cashin}</Text> */}
                     </View>
                     {/*<View className='home-pin__item-num'>*/}
                       {/*<Text className='home-pin__item-num-txt'>{item.userNum}人团</Text>*/}

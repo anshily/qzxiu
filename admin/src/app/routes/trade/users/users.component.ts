@@ -8,7 +8,21 @@ import { SFSchema } from '@delon/form';
   templateUrl: './users.component.html',
 })
 export class TradeUsersComponent implements OnInit {
-  url = `/user`;
+  // url = `/user`;
+  url = ROOT_URL + `user/list`;
+  resObj = {
+    reName: {
+      total: 'data.total',
+      list: 'data.list'
+    },
+    process: (res) => {
+      console.log(res);
+      return res.map(item => {
+        item['password'] = '***';
+        return item;
+      });
+    }
+  }
   searchSchema: SFSchema = {
     properties: {
       no: {
@@ -19,10 +33,8 @@ export class TradeUsersComponent implements OnInit {
   };
   @ViewChild('st', { static: false }) st: STComponent;
   columns: STColumn[] = [
-    { title: '编号', index: 'no' },
-    { title: '调用次数', type: 'number', index: 'callNo' },
-    { title: '头像', type: 'img', width: '50px', index: 'avatar' },
-    { title: '时间', type: 'date', index: 'updatedAt' },
+    { title: '用户名', index: 'username' },
+    { title: '密码', index: 'password' },
     {
       title: '',
       buttons: [

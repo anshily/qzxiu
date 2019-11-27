@@ -46,6 +46,9 @@ class Home extends Component {
     }
 
     const payload = {
+      statu: 2,
+      pi: 1,
+      ps: 10,
       lastItemId: this.state.lastItemId,
       size: RECOMMEND_SIZE
     }

@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
-import {STColumn, STComponent, STReq} from '@delon/abc';
-import {SFSchema, SFSelectWidgetSchema} from '@delon/form';
-import {TradeGoodsEditComponent} from "./edit/edit.component";
-import {Router} from "@angular/router";
-import {TradeGoodsViewComponent} from "./view/view.component";
+import { STColumn, STComponent, STReq } from '@delon/abc';
+import { SFSchema, SFSelectWidgetSchema } from '@delon/form';
+import { TradeGoodsEditComponent } from "./edit/edit.component";
+import { Router } from "@angular/router";
+import { TradeGoodsViewComponent } from "./view/view.component";
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-trade-goods',
@@ -36,9 +37,9 @@ export class TradeGoodsComponent implements OnInit {
         type: 'string',
         title: '商品状态',
         enum: [
-          {label: '已上架', value: 2},
-          {label: '未上架', value: 1},
-          {label: '不可用', value: 0},
+          { label: '已上架', value: 2 },
+          { label: '未上架', value: 1 },
+          { label: '不可用', value: 0 },
         ],
         default: 1,
         ui: {
@@ -58,17 +59,35 @@ export class TradeGoodsComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => {
+        {
+          text: '上架', click: (item) => {
+            this.putUp(item.id)
+          }, iif: (item) => {
+            return item.statu == 1
+          }
+        },
+        {
+          text: '下架', click: (item) => {
+            this.putDown(item.id)
+          }, iif: (item) => {
+            return item.statu == 2
+          }
+        },
+        {
+          text: '查看', click: (item: any) => {
             this.show(item)
-          } },
-        { text: '编辑', click: (item: any) => {
-          this.edit(item)
-          } },
+          }
+        },
+        {
+          text: '编辑', click: (item: any) => {
+            this.edit(item)
+          }
+        },
       ]
     }
   ];
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router) { }
+  constructor(private http: _HttpClient, private modal: ModalHelper, private router: Router, private msgSrv: NzMessageService) { }
 
   ngOnInit() {
     let token = localStorage.getItem('user_token');
@@ -76,9 +95,39 @@ export class TradeGoodsComponent implements OnInit {
     !(token && role && role == '总店管理员') && this.router.navigateByUrl('/passport/login').then()
   }
 
+  putUp(id) {
+    this.http.get(ROOT_URL + 'goods/message/goodsUpOrDown', {
+      id: id,
+      token: localStorage.getItem('user_token'),
+      type: 'up'
+    }).subscribe(res => {
+      if (res['code'] == 0) {
+        this.msgSrv.success('上架成功');
+        this.st.reload()
+      } else {
+        this.msgSrv.error('网络错误');
+      }
+    })
+  }
+
+  putDown(id) {
+    this.http.get(ROOT_URL + 'goods/message/goodsUpOrDown', {
+      id: id,
+      token: localStorage.getItem('user_token'),
+      type: 'down'
+    }).subscribe(res => {
+      if (res['code'] == 0) {
+        this.msgSrv.success('下架成功');
+        this.st.reload()
+      } else {
+        this.msgSrv.error('网络错误');
+      }
+    })
+  }
+
   add() {
     this.modal
-      .createStatic(TradeGoodsEditComponent, {  params: { isEdit: false }  })
+      .createStatic(TradeGoodsEditComponent, { params: { isEdit: false } })
       .subscribe(() => this.st.reload());
   }
   edit(item) {
@@ -92,7 +141,7 @@ export class TradeGoodsComponent implements OnInit {
       .subscribe(() => this.st.reload());
   }
 
-  search(ev){
+  search(ev) {
     console.log(ev);
     this.reqObj = {
       params: {
