@@ -1,6 +1,7 @@
 package io.peach.launch.controller;
 import io.peach.launch.base.core.Result;
 import io.peach.launch.base.core.ResultGenerator;
+import io.peach.launch.model.GoodsMessage;
 import io.peach.launch.model.Record;
 import io.peach.launch.service.RecordService;
 import io.peach.launch.base.core.PageBean;
@@ -84,4 +85,14 @@ public class RecordController {
         return ResultGenerator.successResult(page);
     }
 
+    @GetMapping("/getRecordByType")
+    public Result getRecordByType(@RequestParam String type,@RequestParam Integer pi,@RequestParam Integer ps) {
+        PageBean<Record> page = new PageBean<Record>();
+        PageHelper.startPage(pi,ps);
+        Condition condition = new Condition(Record.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("type="+type);
+        List<Record> list = recordService.findByCondition(condition);
+        return ResultGenerator.successResult(page);
+    }
 }

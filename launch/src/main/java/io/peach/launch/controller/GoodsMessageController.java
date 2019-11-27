@@ -81,7 +81,7 @@ public class GoodsMessageController {
         PageBean<GoodsMessage> page = new PageBean<GoodsMessage>();
         PageHelper.startPage(pi,ps);
         /*List<GoodsMessage> l=goodsMessageService.getGoodsList();*/
-        Condition condition = new Condition(Order.class);
+        Condition condition = new Condition(GoodsMessage.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("statu="+statu);
         List<GoodsMessage> list = goodsMessageService.findByCondition(condition);
