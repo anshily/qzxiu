@@ -47,7 +47,7 @@ export class TradeMessageComponent implements OnInit {
   columns: STColumn[] = [
     { title: '编号', index: 'id' },
     { title: '消息类型', index: 'type' },
-    { title: '描述', index: 'subscribe' },
+    // { title: '描述', index: 'subscribe' },
     // { title: '描述', type: 'img', width: '50px', index: 'avatar' },
     { title: '时间', type: 'date', index: 'createtime' },
     {

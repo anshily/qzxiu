@@ -9,7 +9,7 @@ import {ProcessService} from "@shared/process.service";
     CommonModule
   ],
   providers: [ProcessService],
-  exports: [UploadImgComponent],
-  declarations: [UploadImgComponent]
+  // exports: [UploadImgComponent],
+  // declarations: [UploadImgComponent]
 })
 export class ZiUploadImgModule { }
