@@ -91,7 +91,8 @@ public class RecordController {
         PageHelper.startPage(pi,ps);
         Condition condition = new Condition(Record.class);
         Example.Criteria criteria = condition.createCriteria();
-        criteria.andCondition("type="+type);
+        criteria.andEqualTo("type", type);
+//        criteria.andCondition("type= '" + type);
         List<Record> list = recordService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
