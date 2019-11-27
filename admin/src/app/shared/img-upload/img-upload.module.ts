@@ -14,6 +14,6 @@ import {ImageCropperModule} from "ngx-image-cropper";
   ],
   providers: [ProcessService],
   exports: [ImgUploadComponent],
-  declarations: [ImgUploadComponent]
+  // declarations: [ImgUploadComponent]
 })
 export class ZiImgUploadModule { }

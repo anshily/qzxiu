@@ -3,9 +3,10 @@
 </div>
 <!--<nz-spin *ngIf="!i" class="modal-spin"></nz-spin>-->
 <div sv-container *ngIf="info">
+  <sv *ngIf="currentShop" label="当前店铺">{{currentShop['shopname']}}</sv>
+  <sv *ngIf="sourceShop" label="佣金来源">{{sourceShop['shopname']}}</sv>
   <sv *ngIf="info['subscribe']" label="描述">{{ info['subscribe'] }}</sv>
   <sv *ngIf="info['image']" label="记录"><img src="{{IMG_URL + info['image']}}"></sv>
-  <sv *ngIf="info['id']" label="店铺id">{{info['id']}}</sv>
   <sv *ngIf="info['type']" label="消息类型">{{info['type']}}</sv>
   <!--<sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>-->
 </div>

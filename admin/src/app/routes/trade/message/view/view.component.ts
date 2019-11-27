@@ -10,6 +10,8 @@ export class TradeMessageViewComponent implements OnInit {
   record: any = {};
   info: any;
   IMG_URL = IMG_URL;
+  sourceShop: any;
+  currentShop: any;
 
   constructor(
     private modal: NzModalRef,
@@ -18,9 +20,18 @@ export class TradeMessageViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.http.get(`${ROOT_URL}/record/detail`,{id: this.info.id}).subscribe(res => {
-    //   console.log(res)
-    // });
+    this.http.get(`${ROOT_URL}/shop/message/detail`,{id: this.info.shopid}).subscribe(res => {
+      console.log(res)
+      if (res['code'] == 0){
+        this.currentShop = res['data']
+      }
+    });
+    this.http.get(`${ROOT_URL}/shop/message/detail`,{id: this.info.sourceid}).subscribe(res => {
+      console.log(res)
+      if (res['code'] == 0){
+        this.sourceShop = res['data']
+      }
+    });
   }
 
   close() {
