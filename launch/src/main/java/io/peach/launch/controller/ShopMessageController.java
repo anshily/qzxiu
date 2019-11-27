@@ -233,7 +233,7 @@ public class ShopMessageController {
             record.setMoney(cashOutDTO.getMoney());
             record.setShopid(cashOutDTO.getShopid());
             record.setSourceid(1);
-            record.setType("佣金消息");
+            record.setType("提现消息");
             record.setUpdatetime(new Date());
             record.setCreatetime(new Date());
             record.setImage(cashOutDTO.getImage());

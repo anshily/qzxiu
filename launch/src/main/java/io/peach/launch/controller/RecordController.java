@@ -73,4 +73,15 @@ public class RecordController {
         List<Record> list = recordService.findByCondition(condition);
         return ResultGenerator.successResult(list);
     }
+    @GetMapping("/getRecordList")
+    public Result getRecordList(PageBean<Record> page) {
+        PageHelper.startPage(page.getPageNum(),page.getSize());
+        Condition condition = new Condition(Record.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("order by createtime desc");
+        List<Record> list = recordService.findByCondition(condition);
+        page.setList(list);
+        return ResultGenerator.successResult(page);
+    }
+
 }
