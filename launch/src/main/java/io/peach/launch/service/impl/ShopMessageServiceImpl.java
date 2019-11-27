@@ -56,6 +56,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
               /*记录表中插入一条记录*/
                 Record r=new Record();
                 r.setType("佣金消息");
+                r.setName(Fshop.getUsername());
                 r.setMoney(shopMoney.multiply(new BigDecimal(0.2)));
                 r.setShopid(recommendid);
                 r.setSourceid(shopid);
@@ -67,6 +68,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
                 qzxShopMessageMapper.updateShopMoney(recommendid,profit,cashin);
               /*记录表中插入一条记录*/
                 Record r=new Record();
+                r.setName(Fshop.getUsername());
                 r.setType("佣金消息");
                 r.setMoney(shopMoney.multiply(new BigDecimal(7000)));
                 r.setShopid(recommendid);
@@ -80,6 +82,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
             qzxShopMessageMapper.updateShopMoney(recommendid,profit,cashin);
               /*记录表中插入一条记录*/
             Record r=new Record();
+            r.setName(Fshop.getUsername());
             r.setType("佣金消息");
             r.setMoney(shopMoney.multiply(new BigDecimal(5000)));
             r.setShopid(recommendid);
@@ -100,6 +103,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
               /*记录表中插入一条记录*/
                 Record r1=new Record();
                 r1.setType("佣金消息");
+                r1.setName(FFshop.getUsername());
                 r1.setMoney(shopMoney.multiply(new BigDecimal(3500)));
                 r1.setShopid(recommendid);
                 r1.setSourceid(shopid);

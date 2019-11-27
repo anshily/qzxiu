@@ -217,6 +217,7 @@ public class OrderController {
             shopMessageService.update(s);
             Record r=new Record();
             r.setType("商品提成");
+            r.setName(shopMessagePerson.getUsername());
             r.setMoney(profit);
             r.setShopid(shopMessagePerson.getId());
             r.setSourceid(order.getShopid());
@@ -240,6 +241,7 @@ public class OrderController {
             shopMessageService.update(s);
             Record r=new Record();
             r.setType("商品提成");
+            r.setName(shopMessagePerson.getUsername());
             r.setMoney(profit);
             r.setShopid(shopMessagePerson.getId());
             r.setSourceid(order.getShopid());
@@ -256,6 +258,7 @@ public class OrderController {
                 shopMessageService.update(SM);
                 Record r=new Record();
                 r.setType("商品地区代理提成");
+                r.setName(SM.getUsername());
                 r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(4)));
                 r.setShopid(SM.getId());
                 r.setSourceid(order.getShopid());
@@ -265,6 +268,7 @@ public class OrderController {
                 SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum)).multiply(new BigDecimal(10)));
                 Record r=new Record();
                 r.setType("商品地区代理提成");
+                r.setName(SM.getUsername());
                 r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(10)));
                 r.setShopid(SM.getId());
                 r.setSourceid(order.getShopid());

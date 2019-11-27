@@ -93,6 +93,7 @@ public class RecordController {
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("type="+type);
         List<Record> list = recordService.findByCondition(condition);
+        page.setList(list);
         return ResultGenerator.successResult(page);
     }
 }
