@@ -160,10 +160,13 @@ public class UserController {
     /*用戶通過用戶名密碼登錄時將openid與用戶賬號綁定*/
     @PostMapping("/bangding")
     public Result bangding(@RequestBody UserDTO userDTO) {
+        User user2=userService.getUserByPassword(userDTO.getUsername(),userDTO.getPassword());
+        if(null==user2){
+            throw new ServiceException(5009,"用户名或密码错误");
+        }
         String openid= MpSDK.code2Session(userDTO.getCode());
         /*首先根據openid查詢用戶信息*/
         User user1=userService.selectUserByOpenid(openid);
-        User user2=userService.getUserByPassword(userDTO.getUsername(),userDTO.getPassword());
         /*判斷兩個用戶的id是否為同一個id*/
         if(user1.getId()==user2.getId()){
             /*如果相等，不做操作*/
