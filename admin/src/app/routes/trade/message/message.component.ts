@@ -10,10 +10,12 @@ import {Router} from "@angular/router";
   templateUrl: './message.component.html',
 })
 export class TradeMessageComponent implements OnInit {
-  url = ROOT_URL + `record/list`;
+  // url = ROOT_URL + `record/list`;
+  url = ROOT_URL + `record/getRecordByType`;
   reqObj: STReq = {
     params: {
-      statu: 1
+      type: "佣金消息",
+      pi: 1
     }
   }
   resObj = {
@@ -35,11 +37,12 @@ export class TradeMessageComponent implements OnInit {
         type: 'string',
         title: '消息类型',
         enum: [
-          {label: '待审核', value: 1},
-          {label: '已取消', value: 0},
-          {label: '已完成', value: 2},
+          {label: '佣金消息', value: '佣金消息'},
+          {label: '提现消息', value: '提现消息'},
+          {label: '商品提成', value: '商品提成'},
+          {label: '商品地区代理提成', value: '商品地区代理提成'}
         ],
-        default: 1,
+        default: '佣金消息',
         ui: {
           widget: 'select',
         } as SFSelectWidgetSchema,
@@ -99,7 +102,7 @@ export class TradeMessageComponent implements OnInit {
     console.log(ev);
     this.reqObj = {
       params: {
-        statu: ev.status
+        type: ev.status
       }
     }
     setTimeout(() => {
