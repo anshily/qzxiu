@@ -1,6 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
 import { ButtonItem, ItemList, Loading } from '@components'
+import {AtDivider, AtButton} from 'taro-ui'
+import {ClCard} from 'mp-colorui'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/cart'
 import { API_CHECK_LOGIN } from '@constants/api'
@@ -161,6 +163,13 @@ class Index extends Component {
     })
   }
 
+  clearCart = () => {
+    cartUtil.setCart([])
+    this.setState({
+      cartList: cartUtil.getCart()
+    })
+  }
+
   render () {
     const cartList = this.state.cartList;
     const isEmpty = !cartList.length
@@ -210,6 +219,19 @@ class Index extends Component {
             onUpdate={this.updateCart}
             onUpdateCheck={this.updateCart}
           />}
+
+          {!isEmpty && <ClCard type='full'>
+                    <AtDivider/>
+
+                    <View className='at-row at-row__justify--end'>
+                      <View className='at-col'></View>
+                      <View className='at-col at-col-3'>
+                        <AtButton type='secondary' size='small'
+                                  onClick={this.clearCart}>清除</AtButton>
+                      </View>
+                    </View>
+                    </ClCard>
+          }
 
           {/* 相关推荐 */}
           {/*{extList.map((ext, index) => (*/}

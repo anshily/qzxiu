@@ -45,6 +45,11 @@
           "i18n": "商品",
           "link": "/trade/goods",
           "icon": "anticon-appstore"
+        },{
+          "text": "用户",
+          "i18n": "用户",
+          "link": "/trade/users",
+          "icon": "anticon-appstore"
         }
       ]
     }
