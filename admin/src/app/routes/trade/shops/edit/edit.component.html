@@ -1,5 +1,6 @@
 <div class="modal-header">
-  <div class="modal-title">编辑 {{ record.id }} 信息</div>
+  <div *ngIf="!(this.params && this.params.edit)" class="modal-title">新增店铺</div>
+  <div *ngIf="(this.params && this.params.edit)" class="modal-title">编辑店铺信息</div>
 </div>
 
 <nz-spin *ngIf="!loaded" class="modal-spin"></nz-spin>
@@ -7,6 +8,11 @@
   <ng-template sf-template="custom" let-me let-ui="ui" let-schema="schema">
     <app-quill [content]="receiveContent" (updateContent)="updateContent($event)"></app-quill>
   </ng-template>
+
+  <ng-template sf-template="picUploader" let-me let-ui="ui" let-schema="schema">
+    <app-img-upload [toShow]="receivePicture" (remoteSrc)="updateImg($event)"></app-img-upload>
+  </ng-template>
+
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
     <button nz-button type="submit" nzType="primary"

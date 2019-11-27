@@ -7,10 +7,16 @@
   <sv label="价格">{{params['goodsprice']}}</sv>
   <sv label="代理推广利润">{{params['dai']}}</sv>
   <sv label="单店推广利润">{{params['dan']}}</sv>
-  <sv label="缩略图"><img src="{{ params['goodspicture']}}"></sv>
-  <sv label=""></sv>
-  <sv label="详情" innerHTML="{{params['represent']}}"></sv>
+  <sv label="缩略图"><img style="width: 100px;height: 100px; object-fit: cover" src="{{ params['picture']}}"></sv>
+  <!--<sv label=""></sv>-->
+  <!--<sv label="详情" innerHTML="{{params['represent']}}"></sv>-->
 </div>
+
+<nz-card>
+  <nz-card-tab>商品详情</nz-card-tab>
+  <div innerHTML="{{params['represent']}}"></div>
+</nz-card>
+
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>

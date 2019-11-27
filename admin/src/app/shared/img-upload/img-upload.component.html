@@ -1,0 +1,9 @@
+<div *ngIf="!remoteImg" (click)="openUploadFileInput()" style="width: 100px;height: 100px;background-color: #fafafa;display: flex;justify-content: center;align-items: center;flex-direction: column;border-radius: 5px">
+  <i nz-icon nzType="plus"></i>
+  <div class="ant-upload-text">图片上传</div>
+</div>
+
+<div *ngIf="remoteImg" (click)="openUploadFileInput()">
+  <img [src]="remoteImg" style="width: 100px;height: 100px; object-fit: cover">
+</div>
+<input (change)="updateImgFile($event)" id="file_button" type="file" accept="image/png,image/jpg, image/jpeg" class="custom-file-input" style="display: none">

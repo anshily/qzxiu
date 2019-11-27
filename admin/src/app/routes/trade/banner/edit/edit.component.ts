@@ -13,24 +13,34 @@ export class TradeBannerEditComponent implements OnInit {
   loaded = false;
   options = [];
   itemInfo = {};
+  receivePicture: any;
   schema: SFSchema = {
     properties: {
-      picture: {
+      picUploader: {
         type: 'string',
         title: '封面图',
         ui: {
-          widget: 'upload',
-          action: IMG_URL + `files/uploadPicture`,
-          resReName: 'data',
-          urlReName: 'url',
-          fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-          name: 'image',
-          data: {
-            token: 'anshi',
-            prefix: 'qzx'
-          }
-        } as SFUploadWidgetSchema
+          widget: 'custom',
+          grid: { span: 24 }
+        },
+        default: 'test',
       },
+      // picture: {
+      //   type: 'string',
+      //   title: '封面图',
+      //   ui: {
+      //     widget: 'upload',
+      //     action: IMG_URL + `files/uploadPicture`,
+      //     resReName: 'data',
+      //     urlReName: 'url',
+      //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+      //     name: 'image',
+      //     data: {
+      //       token: 'anshi',
+      //       prefix: 'qzx'
+      //     }
+      //   } as SFUploadWidgetSchema
+      // },
       note: { type: 'string', title: '备注' },
       activity: { type: 'number', title: '活动编号',enum: [
           { label: '省代理', value: 1 },
@@ -76,24 +86,34 @@ export class TradeBannerEditComponent implements OnInit {
       // picture_address: "../uploads/assets/index1.jpg"
       this.initForm().then( () => {
         console.log(this.itemInfo);
+        this.receivePicture = this.itemInfo['picture_address']
           this.schema = {
             properties: {
-              picture: {
+              picUploader: {
                 type: 'string',
                 title: '封面图',
                 ui: {
-                  widget: 'upload',
-                  action: IMG_URL + `files/uploadPicture`,
-                  resReName: 'data',
-                  urlReName: 'url',
-                  fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image',
-                  data: {
-                    token: 'anshi',
-                    prefix: 'qzx'
-                  }
-                } as SFUploadWidgetSchema
+                  widget: 'custom',
+                  grid: { span: 24 }
+                },
+                default: 'test',
               },
+              // picture: {
+              //   type: 'string',
+              //   title: '封面图',
+              //   ui: {
+              //     widget: 'upload',
+              //     action: IMG_URL + `files/uploadPicture`,
+              //     resReName: 'data',
+              //     urlReName: 'url',
+              //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+              //     name: 'image',
+              //     data: {
+              //       token: 'anshi',
+              //       prefix: 'qzx'
+              //     }
+              //   } as SFUploadWidgetSchema
+              // },
               note: { type: 'string', title: '备注',
                 default: this.itemInfo['note'] || ''
               },
@@ -121,22 +141,31 @@ export class TradeBannerEditComponent implements OnInit {
           })
           this.schema = {
             properties: {
-              picture: {
+              picUploader: {
                 type: 'string',
                 title: '封面图',
                 ui: {
-                  widget: 'upload',
-                  action: IMG_URL + `files/uploadPicture`,
-                  resReName: 'data',
-                  urlReName: 'url',
-                  fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image',
-                  data: {
-                    token: 'anshi',
-                    prefix: 'qzx'
-                  }
-                } as SFUploadWidgetSchema
+                  widget: 'custom',
+                  grid: { span: 24 }
+                },
+                default: 'test',
               },
+              // picture: {
+              //   type: 'string',
+              //   title: '封面图',
+              //   ui: {
+              //     widget: 'upload',
+              //     action: IMG_URL + `files/uploadPicture`,
+              //     resReName: 'data',
+              //     urlReName: 'url',
+              //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+              //     name: 'image',
+              //     data: {
+              //       token: 'anshi',
+              //       prefix: 'qzx'
+              //     }
+              //   } as SFUploadWidgetSchema
+              // },
               note: { type: 'string', title: '备注' },
               activity: { type: 'number', title: '活动编号',enum: list,
                 default: 1,
@@ -151,6 +180,11 @@ export class TradeBannerEditComponent implements OnInit {
         }
       })
     }
+  }
+
+  updateImg(e){
+    console.log(e)
+    this.receivePicture = e;
   }
 
   async initForm(){
@@ -189,7 +223,7 @@ export class TradeBannerEditComponent implements OnInit {
   save(value: any) {
     let params = {
       activityid: value.activity,
-      picture_address: value.picture,
+      picture_address: this.receivePicture,
       note: value.note
     };
     console.log(params)
@@ -206,7 +240,7 @@ export class TradeBannerEditComponent implements OnInit {
     let params = {
       id: this.itemInfo['id'],
       activityid: value.activity,
-      picture_address: value.picture,
+      picture_address: this.receivePicture,
       note: value.note
     };
     console.log(params)

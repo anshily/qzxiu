@@ -16,6 +16,10 @@
     <!--/>-->
     <app-quill [content]="receiveContent" (updateContent)="updateContent($event)"></app-quill>
   </ng-template>
+
+  <ng-template sf-template="picUploader" let-me let-ui="ui" let-schema="schema">
+    <app-img-upload [toShow]="receivePicture" (remoteSrc)="updateImg($event)"></app-img-upload>
+  </ng-template>
   <div class="modal-footer">
     <button nz-button type="button" (click)="close()">关闭</button>
     <button *ngIf="!params.isEdit" nz-button type="submit" nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid" [nzLoading]="http.loading">保存</button>

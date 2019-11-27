@@ -13,7 +13,8 @@ export class TradeShopsEditComponent implements OnInit {
   params: any;
   loaded = false;
   recommendList = [];
-  receiveContent: 'aaaa';
+  receiveContent: any;
+  receivePicture: any;
   reList = [];
   typeList = [];
   shopInfo = {};
@@ -110,6 +111,7 @@ export class TradeShopsEditComponent implements OnInit {
         console.log(this.typeList)
 
         this.priviewFlie = this.shopInfo['shoppicture'] || '../uploads/assets/index1.jpg';
+        this.receivePicture = this.shopInfo['shoppicture'];
         this.receiveContent = this.shopInfo['description'];
         this.schema = {
           properties: {
@@ -126,35 +128,14 @@ export class TradeShopsEditComponent implements OnInit {
               ui: {
                 widget: 'select',
               } as SFSelectWidgetSchema },
-            // recommendID: { type: 'number', title: '推荐人', enum: [
-            //     ...this.reList
-            //   ],
-            //   default: this.reList[0].value,
-            //   ui: {
-            //     widget: 'select',
-            //   } as SFSelectWidgetSchema },
-            // positionID: { type: 'number', title: '代理人', enum: [
-            //     ...this.reList
-            //   ],
-            //   default: this.reList[0].value,
-            //   ui: {
-            //     widget: 'select',
-            //   } as SFSelectWidgetSchema },
-            file: {
+            picUploader: {
               type: 'string',
-              title: '门面图',
+              title: '封面图',
               ui: {
-                widget: 'upload',
-                action: IMG_URL + `files/uploadPicture`,
-                resReName: 'data',
-                urlReName: 'url',
-                fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                name: 'image',
-                data: {
-                  token: 'anshi',
-                  prefix: 'qzx'
-                }
-              } as SFUploadWidgetSchema
+                widget: 'custom',
+                grid: { span: 24 }
+              },
+              default: 'test',
             },
             custom: {
               type: 'string',
@@ -215,22 +196,31 @@ export class TradeShopsEditComponent implements OnInit {
                 ui: {
                   widget: 'select',
                 } as SFSelectWidgetSchema },
-              file: {
+              picUploader: {
                 type: 'string',
-                title: '门面图',
+                title: '封面图',
                 ui: {
-                  widget: 'upload',
-                  action: IMG_URL + `files/uploadPicture`,
-                  resReName: 'data',
-                  urlReName: 'url',
-                  fileType: 'image/png,image/jpeg,image/gif,image/bmp',
-                  name: 'image',
-                  data: {
-                    token: 'anshi',
-                    prefix: 'qzx'
-                  }
-                } as SFUploadWidgetSchema
+                  widget: 'custom',
+                  grid: { span: 24 }
+                },
+                default: 'test',
               },
+              // file: {
+              //   type: 'string',
+              //   title: '门面图',
+              //   ui: {
+              //     widget: 'upload',
+              //     action: IMG_URL + `files/uploadPicture`,
+              //     resReName: 'data',
+              //     urlReName: 'url',
+              //     fileType: 'image/png,image/jpeg,image/gif,image/bmp',
+              //     name: 'image',
+              //     data: {
+              //       token: 'anshi',
+              //       prefix: 'qzx'
+              //     }
+              //   } as SFUploadWidgetSchema
+              // },
               custom: {
                 type: 'string',
                 title: '描述',
@@ -247,6 +237,12 @@ export class TradeShopsEditComponent implements OnInit {
       });
     }
 
+  }
+
+
+  updateImg(e){
+    console.log(e)
+    this.receivePicture = e;
   }
 
   async formInit(){

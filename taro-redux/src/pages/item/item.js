@@ -150,6 +150,7 @@ class Item extends Component {
     const gallery = [
       itemInfo.listPicUrl,
     ].filter(i => i)
+    console.log(gallery)
     const height = getWindowHeight(false)
     // XXX RN 的 transform 写法不同，这块可以统一放到 @utils/style 的 postcss() 中处理
     const popupStyle = process.env.TARO_ENV === 'rn' ?

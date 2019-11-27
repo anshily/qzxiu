@@ -31,6 +31,8 @@ import { TradeActivityComponent } from './activity/activity.component';
 import { TradeActivityEditComponent } from './activity/edit/edit.component';
 import { TradeActivityViewComponent } from './activity/view/view.component';
 import {TradeShopsCashComponent} from "./shops/cash/cash.component";
+import {ZiUploadImgModule} from "@shared/zi-upload-img/zi-upload-img.module";
+import {ZiImgUploadModule} from "@shared/img-upload/img-upload.module";
 
 const COMPONENTS = [
   TradeCurdComponent,

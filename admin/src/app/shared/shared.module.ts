@@ -18,17 +18,22 @@ import {NgZorroAntdModule, NzButtonModule, NzDividerModule, NzTabsModule} from '
 import { CountdownModule } from 'ngx-countdown';
 import { UEditorModule } from 'ngx-ueditor';
 import { NgxTinymceModule } from 'ngx-tinymce';
+import {UploadImgComponent} from "@shared/zi-upload-img/upload-img.component";
+import {CropperComponent} from "@shared/cropper/cropper.component";
+import {ImageCropperModule} from "ngx-image-cropper";
+import {ImgUploadComponent} from "@shared/img-upload/img-upload.component";
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule, NzCollapseModule,
   NzSelectModule,
   NzButtonModule,
   NzTabsModule,
-  NzDividerModule
+  NzDividerModule,
+  ImageCropperModule
 ];
 // #endregion
 
 // #region your componets & directives
-const COMPONENTS = [];
+const COMPONENTS = [UploadImgComponent, CropperComponent, ImgUploadComponent];
 const DIRECTIVES = [];
 // #endregion
 
@@ -69,5 +74,6 @@ const DIRECTIVES = [];
     ...COMPONENTS,
     ...DIRECTIVES,
   ],
+  entryComponents: [CropperComponent]
 })
 export class SharedModule {}
