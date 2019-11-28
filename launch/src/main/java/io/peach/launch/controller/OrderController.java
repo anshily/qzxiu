@@ -193,12 +193,12 @@ public class OrderController {
         /*订单金额结算*/
         /*查询出上级是代理还是普通联盟店*/
         ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
-        /*如果是总店  直接退出*/
-        if(shopMessagePerson.getId()==1){
-            return ResultGenerator.successResult();
-        }
         int goodsSum=0;
         if(shopMessagePerson.getShoptype_id()!=1){
+            /*如果是总店  直接退出*/
+            if(shopMessagePerson.getId()==1){
+                return ResultGenerator.successResult();
+            }
             /*代理的情况*/
             /*先根据订单号查询出订单内的详细信息*/
             List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
