@@ -245,6 +245,13 @@ public class ShopMessageController {
         return ResultGenerator.successResult();
     }
 
-
+    @GetMapping("/getShopMessageByUserId")
+    public Result getShopMessageByUserId(@RequestParam Integer userid) {
+        Condition condition = new Condition(ShopMessage.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andCondition("userid="+userid);
+        List<ShopMessage> list = shopMessageService.findByCondition(condition);
+        return ResultGenerator.successResult(list);
+    }
 
 }
