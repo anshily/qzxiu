@@ -49,7 +49,7 @@ export const dispatchPin = payload => createAction({
 //   payload
 // })
 export const dispatchRecommend = payload => createAction({
-  url: ROOT_URL + 'goods/message/list',
+  url: ROOT_URL + 'goods/message/getGoodsList',
   type: HOME_RECOMMEND,
   fetchOptions: {
     anshiModify: true
