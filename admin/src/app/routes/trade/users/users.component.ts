@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
+import { TradeUsersViewComponent } from './view/view.component';
 
 @Component({
   selector: 'app-trade-users',
@@ -38,7 +39,11 @@ export class TradeUsersComponent implements OnInit {
     {
       title: '',
       buttons: [
-        // { text: '查看', click: (item: any) => `/form/${item.id}` },
+        {
+          text: '查看', click: (item: any) => {
+            this.detail(item)
+          }
+        },
         // { text: '编辑', type: 'static', component: FormEditComponent, click: 'reload' },
       ]
     }
@@ -48,10 +53,10 @@ export class TradeUsersComponent implements OnInit {
 
   ngOnInit() { }
 
-  add() {
-    // this.modal
-    //   .createStatic(FormEditComponent, { i: { id: 0 } })
-    //   .subscribe(() => this.st.reload());
+  detail(item) {
+    this.modal
+      .createStatic(TradeUsersViewComponent, { user: item })
+      .subscribe(() => this.st.reload());
   }
 
 }

@@ -25,6 +25,7 @@ export default class OrderDetail extends Component {
     }
     // this.orderId = parseInt(this.$router.params.orderId)
     this.orderId = this.$router.params.orderId
+    this.statu = this.$router.params.statu
   }
 
   componentDidMount() {
@@ -107,15 +108,20 @@ export default class OrderDetail extends Component {
 
             </View>
 
-            <AtDivider/>
+            {this.statu == 1 && 
+                       <View>
+                       <AtDivider/>
+           
+                         <View className='at-row at-row__justify--end'>
+                           <View className='at-col'></View>
+                           <View className='at-col at-col-3'>
+                             <AtButton type='secondary' size='small'
+                                       onClick={this.oredrCancel.bind(this, orderDetail)}>取消订单</AtButton>
+                           </View>
+                         </View>
+                       </View>
+            }
 
-            <View className='at-row at-row__justify--end'>
-              <View className='at-col'></View>
-              <View className='at-col at-col-3'>
-                <AtButton type='secondary' size='small'
-                          onClick={this.oredrCancel.bind(this, orderDetail)}>取消订单</AtButton>
-              </View>
-            </View>
           </ClCard>
         </View>
 

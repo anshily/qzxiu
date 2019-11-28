@@ -11,6 +11,8 @@ import shop from './shop'
 import orderDetail from './order-detail'
 import allowance from './allowance'
 import message from './message'
+import messageDetail from './message-detail'
+import activityDetail from './activity-detail'
 import cashout from './cashout'
 
 export default combineReducers({
@@ -26,5 +28,7 @@ export default combineReducers({
   orderDetail,
   message,
   allowance,
-  cashout
+  cashout,
+  messageDetail,
+  activityDetail
 })

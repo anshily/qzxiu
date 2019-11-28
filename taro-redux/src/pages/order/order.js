@@ -26,7 +26,7 @@ export default class Order extends Component {
   handleClick(item) {
     console.log(item)
     Taro.navigateTo({
-      url: `/pages/order-detail/order-detail?orderId=${item.orderid}`
+      url: `/pages/order-detail/order-detail?orderId=${item.orderid}&statu=${item.statu}`
     })
   }
 
@@ -49,9 +49,10 @@ export default class Order extends Component {
     this.setState({
       current
     })
-
+    Taro.showLoading()
     this.props.dispatchOrderSet({shopid: Taro.getStorageSync('shopId'), statu: status}).then((res) => {
       console.log(res)
+      Taro.hideLoading()
       this.setState({loaded: true})
     })
 

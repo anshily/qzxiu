@@ -38,7 +38,9 @@ class App extends Component {
       'pages/order-detail/order-detail',
       'pages/message/message',
       'pages/allowance/allowance',
-      'pages/cashout/cashout'
+      'pages/cashout/cashout',
+      'pages/activity-detail/activity-detail',
+      'pages/message-detail/message-detail'
     ],
     window: {
       backgroundTextStyle: 'light',
