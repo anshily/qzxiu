@@ -21,6 +21,7 @@ public interface ShopMessageService extends Service<ShopMessage> {
     ShopMessage getFShopPerson(int shopid);
     ShopMessage getFShopPosition(int shopid);
     ShopMessage getShopMessageByid(int shopid);
+    List<ShopMessage> getDailiList();
 
     List<ShopMessage> getChildShopMessage(int shopid);
     List<ShopMessage> getGoodShopList();

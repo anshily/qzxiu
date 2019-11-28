@@ -55,9 +55,12 @@ public class OrderServiceImpl extends AbstractService<Order> implements OrderSer
     public List<ShopMessage> getAllDaiLi(int shopid) {
         List<ShopMessage> list=new ArrayList<>();
         /*查询出代理店铺信息*/
-        while(shopid!=1){
+        while(true){
             /*先查询出当前店铺的上级地区代理*/
             ShopMessage shopMessage=shopMessageService.getFShopPosition(shopid);
+            if(shopMessage.getId()==1){
+                break;
+            }
             if(shopMessage.getId()!=1){
                 /*不是总店  添加到list中*/
                 list.add(shopMessage);

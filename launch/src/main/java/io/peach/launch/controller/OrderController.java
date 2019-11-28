@@ -216,6 +216,8 @@ public class OrderController {
                 shopMessageService.update(s);
                 Record r=new Record();
                 r.setType("商品提成");
+                r.setCreatetime(new Date());
+                r.setUpdatetime(new Date());
                 r.setName(shopMessagePerson.getUsername());
                 r.setMoney(profit);
                 r.setShopid(shopMessagePerson.getId());
@@ -240,6 +242,8 @@ public class OrderController {
                 shopMessageService.update(s);
                 Record r=new Record();
                 r.setType("商品提成");
+                r.setCreatetime(new Date());
+                r.setUpdatetime(new Date());
                 r.setName(shopMessagePerson.getUsername());
                 r.setMoney(profit);
                 r.setShopid(shopMessagePerson.getId());
@@ -253,39 +257,38 @@ public class OrderController {
                 goodsSum+=o.getQuantity();
             }
         }
-
          /*同时计算所有上级代理的利润  当前店铺所有的上级代理 除了总店 都有*/
         List<ShopMessage> allDai=orderService.getAllDaiLi(order.getShopid());
         for (ShopMessage SM:allDai) {
             /*先判断当前店铺是总代还是普通代理 3是总代*/
             if(SM.getShoptype_id()==3){
-                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum)).multiply(new BigDecimal(4)));
-                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum)).multiply(new BigDecimal(4)));
+                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum).multiply(new BigDecimal(4))));
+                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum).multiply(new BigDecimal(4))));
                 shopMessageService.update(SM);
                 Record r=new Record();
                 r.setType("商品地区代理提成");
+                r.setCreatetime(new Date());
+                r.setUpdatetime(new Date());
                 r.setName(SM.getUsername());
                 r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(4)));
                 r.setShopid(SM.getId());
                 r.setSourceid(order.getShopid());
                 recordService.save(r);
             }else{
-                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum)).multiply(new BigDecimal(10)));
-                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum)).multiply(new BigDecimal(10)));
+                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum).multiply(new BigDecimal(10))));
+                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum).multiply(new BigDecimal(10))));
+                shopMessageService.update(SM);
                 Record r=new Record();
                 r.setType("商品地区代理提成");
                 r.setName(SM.getUsername());
+                r.setCreatetime(new Date());
+                r.setUpdatetime(new Date());
                 r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(10)));
                 r.setShopid(SM.getId());
                 r.setSourceid(order.getShopid());
                 recordService.save(r);
             }
         }
-
-
-
-        /*ShopMessage shopMessagePosition=shopMessageService.getFShopPosition(order.getShopid());*/
-        /*shopMessageService.balanceMoney(order.getShopid(),shopMessagePerson.getId(),shopMessagePosition.getId());*/
         return ResultGenerator.successResult();
     }
 
