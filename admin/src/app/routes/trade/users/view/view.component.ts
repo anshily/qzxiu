@@ -8,8 +8,8 @@ import { _HttpClient } from '@delon/theme';
 })
 export class TradeUsersViewComponent implements OnInit {
   record: any = {};
-  i: any;
-
+  user: any;
+  relateShop: any;
   constructor(
     private modal: NzModalRef,
     public msgSrv: NzMessageService,
@@ -17,7 +17,12 @@ export class TradeUsersViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`/user/${this.record.id}`).subscribe(res => this.i = res);
+    this.http.get(`${ROOT_URL}/user/${this.record.id}`).subscribe(res => {
+      console.log(res)
+      if (res['code'] == 0) {
+        this.relateShop = res['data']
+      }
+    });
   }
 
   close() {

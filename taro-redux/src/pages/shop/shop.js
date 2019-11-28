@@ -11,7 +11,7 @@ import {IMG_URL} from "@constants/api";
 @connect(state => state.shop, actions)
 export default class Shop extends Component {
   config = {
-    navigationBarTitleText: 'shop'
+    navigationBarTitleText: '商铺详情'
   }
 
   static defaultProps = {

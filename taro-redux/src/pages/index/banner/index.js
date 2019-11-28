@@ -7,8 +7,16 @@ export default class SwiperBanner extends Component {
     list: []
   }
 
+  handleClick = (item) => {
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/activity-detail/activity-detail?activityId=${item.activityid}`
+    })
+  }
+
   render () {
     const { list } = this.props
+    console.log(list)
     return (
       <View className='home-banner'>
         <Swiper
@@ -25,6 +33,7 @@ export default class SwiperBanner extends Component {
             <SwiperItem
               key={item.rank}
               className='home-banner__swiper-item'
+              onClick={this.handleClick.bind(this,item)}
             >
               <Image
                 className='home-banner__swiper-item-img'

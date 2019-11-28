@@ -25,10 +25,11 @@ export default class Message extends Component {
   alterPage(page){
     console.log(page);
   }
+  
   goDetail(item){
     console.log(item)
     Taro.navigateTo({
-      url: `/pages/cashout/cashout?shopId=${item.id}`
+      url: `/pages/message-detail/message-detail?messageId=${item.id}`
     })
   }
 
@@ -39,6 +40,7 @@ export default class Message extends Component {
         <AtList hasBorder={false}>
           {messages && messages.map(item => (
               <AtListItem
+                onClick={this.goDetail.bind(this, item)}
                 key={String(item.id)}
                 title={item.type}
                 note={item['subscribe']}
