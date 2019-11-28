@@ -115,6 +115,17 @@ public class UserController {
         Integer code=userService.nameExist(name);
         return ResultGenerator.successResult(code);
     }
+    @PostMapping("/updatePassword")
+    public Result nameExist(@RequestParam String token,@RequestParam String password) {
+        User user=userService.getUserInfoByToken(token);
+        if (user == null){
+            throw new ServiceException(5008,"用戶未登錄！");
+        }
+        user.setPassword(password);
+        user.setUpdate_time(new Date());
+        userService.update(user);
+        return ResultGenerator.successResult();
+    }
     @Transactional(propagation = Propagation.REQUIRED)
     @GetMapping("/accordingCodeGetToken")
     public Result getToken(@RequestParam String code) {
