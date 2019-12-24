@@ -69,6 +69,10 @@ class Index extends Component {
     // this.loadRecommend()
   }
 
+  componentDidShow(){
+    
+  }
+
   componentWillMount() {
     //初始化图片预加载组件，并指定统一的加载完成回调
     this.imgLoader = new ImgLoader(this, this.imageOnLoad.bind(this))

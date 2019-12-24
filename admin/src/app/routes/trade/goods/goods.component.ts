@@ -15,7 +15,7 @@ export class TradeGoodsComponent implements OnInit {
   url = ROOT_URL + `goods/message/getGoodsList`;
   reqObj: STReq = {
     params: {
-      statu: 1
+      statu: 2
     }
   }
   resObj = {
@@ -41,7 +41,7 @@ export class TradeGoodsComponent implements OnInit {
           { label: '未上架', value: 1 },
           { label: '不可用', value: 0 },
         ],
-        default: 1,
+        default: 2,
         ui: {
           widget: 'select',
         } as SFSelectWidgetSchema,

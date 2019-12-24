@@ -13,7 +13,7 @@ export default class Allowance extends Component {
   }
 
   componentDidShow(){
-    this.props.dispatchAllowance().then(res => {
+    this.props.dispatchAllowance({pi: 1,ps: 10}).then(res => {
       console.log(res)
     })
   }

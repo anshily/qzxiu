@@ -2,13 +2,15 @@
   <div class="modal-title">查看 {{ record.id }} 信息</div>
 </div>
 <nz-spin *ngIf="!relateShop" class="modal-spin"></nz-spin>
-<div sv-container *ngIf="relateShop">
-  <sv label="姓名">{{ i.owner }}</sv>
-  <sv label="会员卡号">32943898021309809423</sv>
-  <sv label="身份证">3321944288191034921</sv>
-  <sv label="联系方式">18112345678</sv>
-  <sv label="联系地址">曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv>
+<div sv-container col="2" *ngIf="relateShop">
+  <!--<sv label="商品编号">{{ info[''] }}</sv>-->
+  <sv *ngIf="user['username']" label="用户名">{{user['username']}}</sv>
+  <sv *ngIf="relateShop['shopname']" label="关联店铺">{{relateShop['shopname']}}</sv>
+  <sv *ngIf="relateShop['username']" label="店铺负责人">{{relateShop['username']}}</sv>
+  <sv *ngIf="relateShop['owner_phone']" label="负责人电话">{{relateShop['owner_phone']}}</sv>
+  <sv *ngIf="relateShop['shopaddress']" label="店铺地址">{{relateShop['shopaddress']}}</sv>
 </div>
+
 <div class="modal-footer">
   <button nz-button type="button" (click)="close()">关闭</button>
 </div>

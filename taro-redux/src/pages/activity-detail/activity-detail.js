@@ -45,9 +45,11 @@ export default class ActivityDetail extends Component {
         {
           activityDetailItem && activityDetailItem.activityname
           && 
-          <AtList>
-          <AtListItem title='活动名称' note={activityDetailItem.activityname} />
-        </AtList>
+          <View className='at-article'>
+            <View className='at-article__h1'>
+            {activityDetailItem.activityname}
+            </View>
+          </View>
         }
 
         {
