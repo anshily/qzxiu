@@ -177,6 +177,11 @@ public class ShopMessageController {
         List<Map<String,String>> list=shopMessageService.getRecommendAndPosition();
         return ResultGenerator.successResult(list);
     }
+    @GetMapping("/getDailiList")
+    public Result getDailiList() {
+        List<ShopMessage> list=shopMessageService.getDailiList();
+        return ResultGenerator.successResult(list);
+    }
 
     @GetMapping("/getShopList")
     public Result getShopList(PageBean<ShopMessage> page) {

@@ -99,4 +99,8 @@
   <select id="getShopMessageById" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message where id=#{shopid}
   </select>
+
+  <select id="getDailiList" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where shoptype_id!=1
+  </select>
 </mapper>
