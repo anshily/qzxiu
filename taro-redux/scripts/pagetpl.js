@@ -7,7 +7,16 @@
 const fs = require('fs')
 const dirName = process.argv[2]
 console.log(dirName)
-const capPirName = dirName.substring(0, 1).toUpperCase() + dirName.substring(1);
+const subNameArr = dirName.split('-')
+console.log(subNameArr)
+let subName = subNameArr ? subNameArr[0] :dirName;
+if (subNameArr.length > 1){
+  for (let i = 1; i < subNameArr.length; i++) {
+    subName = subName + subNameArr[i].substring(0, 1).toUpperCase() + subNameArr[i].substring(1);
+  }
+}
+console.log(subName)
+const capPirName = subName.substring(0, 1).toUpperCase() + subName.substring(1);
 const constName = dirName.toUpperCase();
 
 if (!dirName) {
@@ -25,7 +34,7 @@ import { connect } from '@tarojs/redux'
 import './${dirName}.scss'
 import * as actions from '@actions/${dirName}';
 
-@connect(state => state.${dirName}, actions)
+@connect(state => state.${subName}, actions)
 export default class ${capPirName} extends Component {
   config = {
     navigationBarTitleText: '${dirName}'
@@ -61,7 +70,7 @@ import {createAction} from '@utils/redux';
 import {ROOT_URL} from '@constants/api';
 
 export const dispatch${capPirName} = payload => createAction({
-  url: ROOT_URL + '${dirName}',
+  url: ROOT_URL + '${subName}',
   type: '${constName}_ADD',
   method: 'POST',
   payload
@@ -72,14 +81,14 @@ export const dispatch${capPirName} = payload => createAction({
 
 const reducerTpl =`
 const INITIAL_STATE = {
-  ${dirName}Item: {},
+  ${subName}Item: {},
 }
 
-export default function ${dirName}(state = {}, action) {
+export default function ${subName}(state = {}, action) {
   switch(action.type) {
     case '${constName}_ADD': {
-      const { ${dirName}Item } = action.payload
-      return { ...state, ${dirName}Item: ${dirName}Item }
+      const { ${subName}Item } = action.payload
+      return { ...state, ${subName}Item: ${subName}Item }
     }
     default:
       return state

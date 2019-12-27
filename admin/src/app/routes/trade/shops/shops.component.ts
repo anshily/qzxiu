@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { STColumn, STComponent } from '@delon/abc';
 import { SFSchema } from '@delon/form';
-import {TradeShopsEditComponent} from "./edit/edit.component";
-import {TradeShopsViewComponent} from "./view/view.component";
-import {Router} from "@angular/router";
+import { TradeShopsEditComponent } from "./edit/edit.component";
+import { TradeShopsViewComponent } from "./view/view.component";
+import { TradeShopsTreeComponent } from "./tree/tree.component";
+import { Router } from "@angular/router";
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-trade-shops',
@@ -46,14 +48,23 @@ export class TradeShopsComponent implements OnInit {
     {
       title: '操作',
       buttons: [
-        { text: '查看', click: (item: any) => {
-          this.detail(item['id']);
+        {
+          text: '查看', click: (item: any) => {
+            this.detail(item['id']);
           }, iif: (item) => {
-          return item['id'] != 1
-        } },
-        { text: '编辑', click: (item: any) => {
+            return item['id'] != 1
+          }
+        },
+        {
+          text: '代理关系', click: (item: any) => {
+            this.tree(item['id']);
+          }
+        },
+        {
+          text: '编辑', click: (item: any) => {
             this.edit(item['id']);
-          } },
+          }
+        },
       ]
     }
   ];
@@ -77,6 +88,12 @@ export class TradeShopsComponent implements OnInit {
   edit(id) {
     this.modal
       .createStatic(TradeShopsEditComponent, { params: { id: id, edit: true } })
+      .subscribe(() => this.st.reload());
+  }
+
+  tree(id) {
+    this.modal
+      .createStatic(TradeShopsTreeComponent, { itemId: id })
       .subscribe(() => this.st.reload());
   }
 

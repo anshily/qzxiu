@@ -26,9 +26,13 @@ export default class Referrer extends Component {
       open2: false
     }
     this.shopId = parseInt(this.$router.params.shopId)
+    this.levelType = this.$router.params.levelType
   }
 
   componentDidMount() {
+
+    console.log(this.levelType ? this.levelType  : this.levelType = 1);
+
 
     Taro.showLoading({
       title: '加载中...'
@@ -47,8 +51,9 @@ export default class Referrer extends Component {
 
   goDetail(item) {
     console.log(item)
+    let type = parseInt(this.levelType) + 1
     Taro.navigateTo({
-      url: '/pages/referrer/referrer?shopId=' + item['id']
+      url: '/pages/referrer/referrer?shopId=' + item['id'] + '&levelType=' + type
     })
   }
 
