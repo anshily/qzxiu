@@ -12,10 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -130,6 +127,16 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     }
 
     @Override
+    public Map<String,Object> getRecommendAndPositionByShopid(int shopid) {
+        ShopMessage person=qzxShopMessageMapper.getFShopPerson(shopid);
+        ShopMessage position=qzxShopMessageMapper.getFShopPosition(shopid);
+        Map<String,Object> map=new HashMap<>();
+        map.put("person",person);
+        map.put("position",position);
+        return map;
+    }
+
+    @Override
     public List<ShopMessage> getShopList() {
         List<ShopMessage> list=qzxShopMessageMapper.getShopList();
         return list;
@@ -160,6 +167,18 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     }
 
     @Override
+    public List<ShopMessage> getAllRecommendByShopid(int shopid) {
+        List<ShopMessage> list=qzxShopMessageMapper.getAllRecommendByShopid(shopid);
+        return list;
+    }
+
+    @Override
+    public List<ShopMessage> getAllPositionByShopid(int shopid) {
+        List<ShopMessage> list=qzxShopMessageMapper.getAllPositionByShopid(shopid);
+        return list;
+    }
+
+    @Override
     public List<ShopMessage> getChildShopMessage(int shopid) {
         List<ShopMessage> list=qzxShopMessageMapper.getChildShopMessage(shopid);
         return list;
@@ -169,6 +188,27 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
     public List<ShopMessage> getGoodShopList() {
         List<ShopMessage> list=qzxShopMessageMapper.getGoodShopList();
         return list;
+    }
+
+    @Override
+    public List<ShopMessage> getTwoDegreeShop(int shopid) {
+        List<ShopMessage> list=new ArrayList<>();
+        List<ShopMessage> newList=new ArrayList<>();
+        Set set=new HashSet<>();
+        /*先根据shopid查询出下级的店铺 在便利下级的店铺找出下级店铺的下级店铺*/
+        List<ShopMessage> list1=qzxShopMessageMapper.getChildShopMessage(shopid);
+        if(list1.size()!=0){
+            list.addAll(list1);
+            for (ShopMessage s:list1) {
+                List<ShopMessage> list2=qzxShopMessageMapper.getChildShopMessage(s.getId());
+                if(list2.size()!=0){
+                    list.addAll(list2);
+                }
+            }
+        }
+        set.addAll(list);
+        newList.addAll(set);
+        return newList;
     }
 
     /*@Override

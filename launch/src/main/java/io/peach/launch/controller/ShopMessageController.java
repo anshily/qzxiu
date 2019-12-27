@@ -177,9 +177,32 @@ public class ShopMessageController {
         List<Map<String,String>> list=shopMessageService.getRecommendAndPosition();
         return ResultGenerator.successResult(list);
     }
+    @GetMapping("/getRecommendAndPositionByShopid")
+    public Result getRecommendAndPositionByShopid(@RequestParam int shopid) {
+        if(shopid!=1){
+            Map<String,Object> list=shopMessageService.getRecommendAndPositionByShopid(shopid);
+            return ResultGenerator.successResult(list);
+        }
+        return ResultGenerator.successResult();
+    }
+    @GetMapping("/getAllRecommendByShopid")
+    public Result getAllRecommendByShopid(@RequestParam int shopid) {
+        List<ShopMessage> list=shopMessageService.getAllRecommendByShopid(shopid);
+        return ResultGenerator.successResult(list);
+    }
+    @GetMapping("/getAllPositionByShopid")
+    public Result getAllPositionByShopid(@RequestParam Integer shopid) {
+        List<ShopMessage> list=shopMessageService.getAllPositionByShopid(shopid);
+        return ResultGenerator.successResult(list);
+    }
     @GetMapping("/getDailiList")
     public Result getDailiList() {
         List<ShopMessage> list=shopMessageService.getDailiList();
+        return ResultGenerator.successResult(list);
+    }
+    @GetMapping("/getTwoDegreeShop")
+    public Result getTwoDegreeShop(@RequestParam Integer shopid) {
+        List<ShopMessage> list=shopMessageService.getTwoDegreeShop(shopid);
         return ResultGenerator.successResult(list);
     }
 

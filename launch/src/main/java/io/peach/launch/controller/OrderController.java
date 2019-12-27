@@ -190,103 +190,95 @@ public class OrderController {
         orderService.finishOrder(orderid);
         Order order=orderService.findByCondition(condition).get(0);
 
-        /*订单金额结算*/
-        /*查询出上级是代理还是普通联盟店*/
-        ShopMessage shopMessagePerson=shopMessageService.getFShopPerson(order.getShopid());
+       /*先计算推荐人的商品提成*/
+        /*先根据订单号查询出订单内的详细信息*/
+        List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
+            /*计算佣金是多少*/
+        BigDecimal positionProfit=new BigDecimal(0);
+        BigDecimal personProfit=new BigDecimal(0);
         int goodsSum=0;
-        /*如果是总店  直接退出*/
-        if(shopMessagePerson.getId()!=1){
-            if(shopMessagePerson.getShoptype_id()!=1){
-
-            /*代理的情况*/
-            /*先根据订单号查询出订单内的详细信息*/
-                List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
-            /*计算佣金是多少*/
-                BigDecimal profit=new BigDecimal(0);
             /*BigDecimal cashin=new BigDecimal(0);*/
-                for (OrderMessageDTO o:list) {
-                    profit=profit.add(o.getGoodsMessage().getDai().multiply(new BigDecimal(o.getQuantity())));
-                    goodsSum+=o.getQuantity();
-                }
-            /*根据店铺id查询出店铺的信息*/
-                ShopMessage s=shopMessageService.getShopMessageByid(order.getShopid());
-                s.setCashin(s.getCashin().add(profit));
-                s.setProfit(s.getProfit().add(profit));
-                s.setUpdatetime(new Date());
-                shopMessageService.update(s);
-                Record r=new Record();
-                r.setType("商品提成");
-                r.setCreatetime(new Date());
-                r.setUpdatetime(new Date());
-                r.setName(shopMessagePerson.getUsername());
-                r.setMoney(profit);
-                r.setShopid(shopMessagePerson.getId());
-                r.setSourceid(order.getShopid());
-                recordService.save(r);
-            }else{
-            /*如果是普通店铺*/
-             /*先根据订单号查询出订单内的详细信息*/
-                List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
-            /*计算佣金是多少*/
-                BigDecimal profit=new BigDecimal(0);
-            /*BigDecimal cashin=new BigDecimal(0);*/
-                for (OrderMessageDTO o:list) {
-                    profit=profit.add(o.getGoodsMessage().getDan().multiply(new BigDecimal(o.getQuantity())));
-                    goodsSum+=o.getQuantity();
-                }
-            /*根据店铺id查询出店铺的信息*/
-                ShopMessage s=shopMessageService.getShopMessageByid(order.getShopid());
-                s.setCashin(s.getCashin().add(profit));
-                s.setProfit(s.getProfit().add(profit));
-                s.setUpdatetime(new Date());
-                shopMessageService.update(s);
-                Record r=new Record();
-                r.setType("商品提成");
-                r.setCreatetime(new Date());
-                r.setUpdatetime(new Date());
-                r.setName(shopMessagePerson.getUsername());
-                r.setMoney(profit);
-                r.setShopid(shopMessagePerson.getId());
-                r.setSourceid(order.getShopid());
-                recordService.save(r);
-            }
-        }else{
-             /*先根据订单号查询出订单内的详细信息*/
-            List<OrderMessageDTO> list=orderService.selectOrderMessageByOrderid(orderid);
-            for (OrderMessageDTO o:list) {
-                goodsSum+=o.getQuantity();
-            }
+        for (OrderMessageDTO o:list) {
+            personProfit=personProfit.add(o.getGoodsMessage().getPersonmoney().multiply(new BigDecimal(o.getQuantity())));
+            positionProfit=positionProfit.add(o.getGoodsMessage().getPositionmoney().multiply(new BigDecimal(o.getQuantity())));
+            goodsSum+=o.getQuantity();
         }
-         /*同时计算所有上级代理的利润  当前店铺所有的上级代理 除了总店 都有*/
-        List<ShopMessage> allDai=orderService.getAllDaiLi(order.getShopid());
-        for (ShopMessage SM:allDai) {
-            /*先判断当前店铺是总代还是普通代理 3是总代*/
-            if(SM.getShoptype_id()==3){
-                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum).multiply(new BigDecimal(4))));
-                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum).multiply(new BigDecimal(4))));
-                shopMessageService.update(SM);
-                Record r=new Record();
-                r.setType("商品地区代理提成");
-                r.setCreatetime(new Date());
-                r.setUpdatetime(new Date());
-                r.setName(SM.getUsername());
-                r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(4)));
-                r.setShopid(SM.getId());
-                r.setSourceid(order.getShopid());
-                recordService.save(r);
-            }else{
-                SM.setProfit(SM.getProfit().add(new BigDecimal(goodsSum).multiply(new BigDecimal(10))));
-                SM.setCashin(SM.getCashin().add(new BigDecimal(goodsSum).multiply(new BigDecimal(10))));
-                shopMessageService.update(SM);
-                Record r=new Record();
-                r.setType("商品地区代理提成");
-                r.setName(SM.getUsername());
-                r.setCreatetime(new Date());
-                r.setUpdatetime(new Date());
-                r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(10)));
-                r.setShopid(SM.getId());
-                r.setSourceid(order.getShopid());
-                recordService.save(r);
+        /*查询出当前店铺的推荐人*/
+        ShopMessage FPersonShop=shopMessageService.getFShopPerson(order.getShopid());
+        /*如果推荐人是总店，不用计算提成*/
+        if(FPersonShop.getId()!=1){
+            FPersonShop.setProfit(FPersonShop.getProfit().add(personProfit));
+            FPersonShop.setCashin(FPersonShop.getCashin().add(personProfit));
+            FPersonShop.setUpdatetime(new Date());
+            shopMessageService.update(FPersonShop);
+            /*插入一条记录*/
+            Record r=new Record();
+            r.setType("商品提成");
+            r.setCreatetime(new Date());
+            r.setUpdatetime(new Date());
+            r.setName(FPersonShop.getUsername());
+            r.setMoney(personProfit);
+            r.setShopid(FPersonShop.getId());
+            r.setSourceid(order.getShopid());
+            recordService.save(r);
+        }
+
+        /*再计算当前第一个代理的地区提成*/
+        ShopMessage FPositionShop=shopMessageService.getFShopPosition(order.getShopid());
+        /*如果是总店 不计算*/
+        if(FPositionShop.getId()!=1){
+            FPositionShop.setProfit(FPositionShop.getProfit().add(positionProfit));
+            FPositionShop.setCashin(FPositionShop.getCashin().add(positionProfit));
+            FPositionShop.setUpdatetime(new Date());
+            shopMessageService.update(FPositionShop);
+            /*插入一条记录*/
+            Record r=new Record();
+            r.setType("商品地区代理提成");
+            r.setCreatetime(new Date());
+            r.setUpdatetime(new Date());
+            r.setName(FPositionShop.getUsername());
+            r.setMoney(positionProfit);
+            r.setShopid(FPositionShop.getId());
+            r.setSourceid(order.getShopid());
+            recordService.save(r);
+        }
+
+        /*计算代理和总代的地区提成  第一个地区代理不用计算*/
+        List<ShopMessage> list1=orderService.getAllDaiLi(order.getShopid());
+
+        if(list1.size()!=1){
+            for(int i=1;i<list1.size();i++){
+                ShopMessage shopMessage=list1.get(i);
+                /*如果是总代理 6块钱   如果是普通代理  10块*/
+                if(shopMessage.getShoptype_id()==3){
+                    shopMessage.setCashin(shopMessage.getCashin().add(new BigDecimal(6).multiply(new BigDecimal(goodsSum))));
+                    shopMessage.setProfit(shopMessage.getProfit().add(new BigDecimal(6).multiply(new BigDecimal(goodsSum))));
+                    shopMessage.setUpdatetime(new Date());
+                    shopMessageService.update(shopMessage);
+                    Record r=new Record();
+                    r.setType("商品地区代理提成");
+                    r.setCreatetime(new Date());
+                    r.setUpdatetime(new Date());
+                    r.setName(shopMessage.getUsername());
+                    r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(6)));
+                    r.setShopid(shopMessage.getId());
+                    r.setSourceid(order.getShopid());
+                    recordService.save(r);;
+                }else{
+                    shopMessage.setCashin(shopMessage.getCashin().add(new BigDecimal(10).multiply(new BigDecimal(goodsSum))));
+                    shopMessage.setProfit(shopMessage.getProfit().add(new BigDecimal(10).multiply(new BigDecimal(goodsSum))));
+                    shopMessage.setUpdatetime(new Date());
+                    shopMessageService.update(shopMessage);
+                    Record r=new Record();
+                    r.setType("商品地区代理提成");
+                    r.setCreatetime(new Date());
+                    r.setUpdatetime(new Date());
+                    r.setName(shopMessage.getUsername());
+                    r.setMoney(new BigDecimal(goodsSum).multiply(new BigDecimal(10)));
+                    r.setShopid(shopMessage.getId());
+                    r.setSourceid(order.getShopid());
+                    recordService.save(r);;
+                }
             }
         }
         return ResultGenerator.successResult();

@@ -17,14 +17,17 @@ public interface ShopMessageService extends Service<ShopMessage> {
     void addGrading(int shopid,int recommendid,int positionid);
     void balanceMoney(int shopid, int recommendid, int positionid);
     List<Map<String,String>> getRecommendAndPosition();
+    Map<String,Object> getRecommendAndPositionByShopid(int shopid);
     List<ShopMessage> getShopList();
     ShopMessage getFShopPerson(int shopid);
     ShopMessage getFShopPosition(int shopid);
     ShopMessage getShopMessageByid(int shopid);
     List<ShopMessage> getDailiList();
-
+    List<ShopMessage> getAllRecommendByShopid( int shopid);
+    List<ShopMessage> getAllPositionByShopid( int shopid);
     List<ShopMessage> getChildShopMessage(int shopid);
     List<ShopMessage> getGoodShopList();
+    List<ShopMessage> getTwoDegreeShop(int shopid);
     /*void getCashOut(CashOutDTO cashOutDTO);*/
 
 }

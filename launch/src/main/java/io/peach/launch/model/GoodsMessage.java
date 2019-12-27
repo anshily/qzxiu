@@ -34,23 +34,23 @@ public class GoodsMessage {
 
     private Date updatetime;
 
-    private BigDecimal dan;
-    private BigDecimal dai;
+    private BigDecimal personmoney;
+    private BigDecimal positionmoney;
 
-    public BigDecimal getDan() {
-        return dan;
+    public BigDecimal getPersonmoney() {
+        return personmoney;
     }
 
-    public void setDan(BigDecimal dan) {
-        this.dan = dan;
+    public void setPersonmoney(BigDecimal personmoney) {
+        this.personmoney = personmoney;
     }
 
-    public BigDecimal getDai() {
-        return dai;
+    public BigDecimal getPositionmoney() {
+        return positionmoney;
     }
 
-    public void setDai(BigDecimal dai) {
-        this.dai = dai;
+    public void setPositionmoney(BigDecimal positionmoney) {
+        this.positionmoney = positionmoney;
     }
 
     /**

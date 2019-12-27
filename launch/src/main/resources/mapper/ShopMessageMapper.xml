@@ -103,4 +103,15 @@
   <select id="getDailiList" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message where shoptype_id!=1
   </select>
+
+  <select id="getAllRecommendByShopid" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where id in(
+    select shopid from qzx_grading where f_shopid=#{shopid} and point_type='人员推荐'
+    )
+  </select>
+  <select id="getAllPositionByShopid" resultType="io.peach.launch.model.ShopMessage">
+    select * from qzx_shop_message where id in(
+    select shopid from qzx_grading where f_shopid=#{shopid} and point_type='地区推荐'
+    )
+  </select>
 </mapper>
