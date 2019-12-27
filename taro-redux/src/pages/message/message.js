@@ -2,7 +2,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { connect } from '@tarojs/redux'
-import { AtSteps, AtDivider, AtList, AtListItem } from 'taro-ui'
+import { AtList, AtListItem, AtLoadMore } from 'taro-ui'
 
 import './message.scss'
 import * as actions from '@actions/message';
@@ -11,6 +11,13 @@ import * as actions from '@actions/message';
 export default class Message extends Component {
   static defaultProps = {
     messages: []
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      status: 'noMore'
+    }
   }
 
   config = {
@@ -52,7 +59,9 @@ export default class Message extends Component {
           }
         </AtList>
 
-        {(!messages || messages.length == 0) && <AtDivider content='暂无消息'  />}
+        {(!messages || messages.length == 0) && <AtLoadMore
+          status={this.state.status}
+        />}
       </View>
     )
   }

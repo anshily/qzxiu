@@ -17,10 +17,10 @@ export class TradeUsersViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.http.get(`${ROOT_URL}/user/${this.record.id}`).subscribe(res => {
+    this.http.get(`${ROOT_URL}shop/message/getShopMessageByUserId`, { userid: this.user.id }).subscribe(res => {
       console.log(res)
       if (res['code'] == 0) {
-        this.relateShop = res['data']
+        this.relateShop = res['data'][0]
       }
     });
   }

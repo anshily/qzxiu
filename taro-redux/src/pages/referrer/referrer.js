@@ -29,6 +29,10 @@ export default class Referrer extends Component {
   }
 
   componentDidMount() {
+
+    Taro.showLoading({
+      title: '加载中...'
+    })
     this.props.dispatchChild({shopid: this.shopId ? this.shopId : Taro.getStorageSync('shopId')}).then((res) => {
       console.log(res)
       // this.setState({ loaded: true })
@@ -36,6 +40,7 @@ export default class Referrer extends Component {
 
     this.props.dispatchCashInfo({id: this.shopId ? this.shopId : Taro.getStorageSync('shopId')}).then((res) => {
       console.log(res)
+      Taro.hideLoading()
       // this.setState({ loaded: true })
     })
   }
