@@ -249,7 +249,7 @@ public class ShopMessageController {
         ShopMessage shopMessage=shopMessageService.findById(cashOutDTO.getShopid());
 
         if(cashOutDTO.getMoney().compareTo(shopMessage.getCashin())>0){
-            throw new ServiceException(5007,"超出最大可体现金额！");
+            throw new ServiceException(5007,"超出最大可提现金额！");
         }else{
             /*先更新店铺的佣金信息*/
             shopMessage.setUpdatetime(new Date());

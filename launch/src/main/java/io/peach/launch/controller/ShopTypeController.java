@@ -71,7 +71,6 @@ public class ShopTypeController {
 
     @GetMapping("/getTypeList")
     public Result getTypeList(){
-        Map<String,Object> map=new HashMap<>();
         Condition condition = new Condition(ShopType.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("statu=1");
