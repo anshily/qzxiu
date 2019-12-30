@@ -76,7 +76,7 @@ export default async function fetch(options) {
     const defaultMsg = err.code === CODE_AUTH_EXPIRED ? '登录失效' : '请求异常'
     if (showToast) {
       Taro.showToast({
-        title: err && err.errorMsg || defaultMsg,
+        title: err && err.message || defaultMsg,
         icon: 'none'
       })
     }

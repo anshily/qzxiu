@@ -25,3 +25,13 @@ export const dispatchTypeList = payload => createAction({
   },
   payload
 })
+
+export const dispatchDailiList = payload => createAction({
+  url: ROOT_URL + `shop/message/getDailiList`,
+  type: 'ENTER_DAI_LIST',
+  method: 'GET',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})

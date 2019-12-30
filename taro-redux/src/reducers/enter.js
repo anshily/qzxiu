@@ -21,7 +21,17 @@ export default function enter(state = {}, action) {
       console.log(action.payload)
       return {
         ...state,
-        typeList: action.payload['typeList']
+        typeList: action.payload
+      }
+    }
+    case 'ENTER_DAI_LIST': {
+      console.log(action.payload)
+      return {
+        ...state,
+        dailiList: action.payload.map(item => {
+          item['shopname'] = item['username'] + ' ' + item['shopname'];
+          return item;
+        })
       }
     }
     default:

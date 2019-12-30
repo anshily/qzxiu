@@ -13,7 +13,7 @@ export default class MessageDetail extends Component {
     navigationBarTitleText: '消息详情'
   }
 
-  
+
   static defaultProps = {
     orderDetail: {}
   }
@@ -36,10 +36,11 @@ export default class MessageDetail extends Component {
       Taro.hideLoading()
       console.log(res)
       if(res['sourceid']){
-        this.props.dispatchCurrentShopDetail({id: res['sourceid']})
+        // dispatchSourceShopDetail
+        this.props.dispatchSourceShopDetail({id: res['sourceid']})
       }
       if(res['shopid']){
-        this.props.dispatchSourceShopDetail({id: res['shopid']})
+        this.props.dispatchCurrentShopDetail({id: res['shopid']})
       }
     })
   }
@@ -50,30 +51,30 @@ export default class MessageDetail extends Component {
     console.log(messageDetailItem)
     return(
       <View>
-        {messageDetailItem && 
+        {messageDetailItem &&
           <AtList>
             <AtListItem title='消息类型' note={messageDetailItem.type} />
-            {currentShopDetailItem && 
+            {currentShopDetailItem &&
             <AtListItem title='当前店铺' note={currentShopDetailItem['shopname'] + ' ' + currentShopDetailItem['username'] + ' ' + currentShopDetailItem['owner_phone']} />
             }
             {
-              sourceShopDetailItem && 
+              sourceShopDetailItem &&
               <AtListItem title='佣金来源' note={sourceShopDetailItem['shopname'] + ' ' + sourceShopDetailItem['username'] + ' ' + sourceShopDetailItem['owner_phone']} />
             }
-            
+
             {messageDetailItem.money && <AtListItem title='佣金' note={messageDetailItem.money} />}
-            
+
             {messageDetailItem.subscribe && <AtListItem title='描述' note={messageDetailItem.subscribe} />}
 
-            {messageDetailItem.image && 
+            {messageDetailItem.image &&
             <View>
             <AtListItem title='记录' />
-            <Image 
-              className='at-article__img' 
-              src={IMG_URL + messageDetailItem.image} 
+            <Image
+              className='at-article__img'
+              src={IMG_URL + messageDetailItem.image}
               mode='widthFix' />
             </View>}
-            
+
           </AtList>
         }
       </View>
