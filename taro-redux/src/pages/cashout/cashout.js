@@ -10,7 +10,7 @@ import {IMG_URL, ROOT_URL} from "../../constants/api";
 @connect(state => state.cashout, actions)
 export default class Cashout extends Component {
   config = {
-    navigationBarTitleText: 'cashout'
+    navigationBarTitleText: '提现'
   }
 
   constructor(props) {
@@ -43,6 +43,17 @@ export default class Cashout extends Component {
     }
     this.props.dispatchCashout(params).then(res => {
       console.log(res)
+      Taro.showModal({
+        title: '提示',
+        content: '提现成功',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+            Taro.navigateBack()
+          }
+        }
+      });
+    }).finally( () => {
       this.setState({
         loading: false,
         disabled: false

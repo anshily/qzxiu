@@ -88,8 +88,10 @@ export class TradeGoodsEditComponent implements OnInit {
         properties: {
           name: { type: 'string', title: '商品名称', maxLength: 15, default: item['goodsname'] },
           price: { type: 'number', title: '价格', default: item['goodsprice'] },
-          dan: { type: 'number', title: '单店推广利润', default: item['dan'] },
-          dai: { type: 'number', title: '代理推广利润', default: item['dai'] },
+          personmoney: { type: 'number', title: '推荐人利润', default: item['personmoney'] },
+          positionmoney: { type: 'number', title: '地区代理利润', default: item['positionmoney'] },
+          // personmoney: 60
+          // positionmoney: 70
           picUploader: {
             type: 'string',
             title: '封面图',
@@ -132,8 +134,10 @@ export class TradeGoodsEditComponent implements OnInit {
         properties: {
           name: { type: 'string', title: '商品名称', maxLength: 15 },
           price: { type: 'number', title: '价格' },
-          dan: { type: 'number', title: '单店推广利润'},
-          dai: { type: 'number', title: '代理推广利润' },
+          personmoney: { type: 'number', title: '推荐人利润' },
+          positionmoney: { type: 'number', title: '地区代理利润' },
+          // dan: { type: 'number', title: '单店推广利润'},
+          // dai: { type: 'number', title: '代理推广利润' },
           // file: {
           //   type: 'string',
           //   title: '封面图',
@@ -191,6 +195,8 @@ export class TradeGoodsEditComponent implements OnInit {
       goodsname: value.name,
       goodsprice: value.price,
       goodspicture: this.receivePicture,
+      positionmoney: value.positionmoney,
+      personmoney: value.personmoney,
       represent: this.receiveContent,
       token: localStorage.getItem('user_token')
     }
@@ -211,6 +217,8 @@ export class TradeGoodsEditComponent implements OnInit {
       goodsname: value.name,
       goodsprice: value.price,
       goodspicture: this.receivePicture,
+      positionmoney: value.positionmoney,
+      personmoney: value.personmoney,
       represent: this.receiveContent,
       token: localStorage.getItem('user_token')
     }

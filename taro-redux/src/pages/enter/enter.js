@@ -21,6 +21,7 @@ export default class UserLogin extends Component {
     levelChecked: {},
     manager: [],
     managerChecked: {},
+    dailiChecked: {},
     referrer: [],
     referrerChecked: {},
     imgList: [],
@@ -38,7 +39,7 @@ export default class UserLogin extends Component {
       // console.log(res)
       if (res && res.length > 0){
         this.setState({
-          managerChecked: res[0],
+          // managerChecked: res[0],
           referrerChecked: res[0],
           // referrer: res,
           // manager: res
@@ -54,6 +55,15 @@ export default class UserLogin extends Component {
       if (res && res.length > 0){
         this.setState({
           levelChecked: res[0],
+          // shopLevel: res['typeList']
+        })
+      }
+    })
+
+    this.props.dispatchDailiList().then(res => {
+      if (res && res.length > 0){
+        this.setState({
+          dailiChecked: res[0],
           // shopLevel: res['typeList']
         })
       }
@@ -96,8 +106,8 @@ export default class UserLogin extends Component {
 
   testRequire(){
     return !!this.state.username && !!this.state.password && !!this.state.phone && !!this.state.levelChecked
-    && !!this.state.levelChecked.id && !!this.state.shopName && !!this.state.image && !!this.state.address
-    && !!this.state.referrerChecked.id && !!this.state.managerChecked.id
+    && !!this.state.levelChecked.id && !!this.state.shopName && !!this.state.shopOwner && !!this.state.image && !!this.state.address
+    && !!this.state.referrerChecked.id && !!this.state.dailiChecked.id
   }
 
   onSubmit = e => {
@@ -124,14 +134,15 @@ export default class UserLogin extends Component {
               password: this.state.password
             },
             shopMessage: {
+              username: this.state.shopOwner,
               owner_phone: this.state.phone,
-              shoptype_id: this.state.levelChecked.key,
+              shoptype_id: this.state.levelChecked.id,
               shopname: this.state.shopName,
               shoppicture: this.state.image,
               shopaddress: this.state.address
             },
             recommendID: this.state.referrerChecked.id,
-            positionID: this.state.managerChecked.id,
+            positionID: this.state.dailiChecked.id,
             token: Taro.getStorageSync('user_token')
           }).then( () => {
             console.log('test');
@@ -192,6 +203,14 @@ export default class UserLogin extends Component {
     })
   }
 
+  handleShopOwnerChange = e => {
+    // console.log(e)
+    this.setState({
+      shopOwner: e,
+      disabled: !this.testRequire()
+    })
+  }
+
   handleAddressChange = e => {
     // console.log(e)
     this.setState({
@@ -203,17 +222,18 @@ export default class UserLogin extends Component {
   onLevelChange = e => {
     console.log(e);
     const { typeList } = this.props
+    console.log(typeList[e.detail.value])
     this.setState({
       levelChecked: typeList[e.detail.value],
       disabled: !this.testRequire()
     })
   }
 
-  onManagerChange = managerChecked => {
+  onManagerChange = dailiChecked => {
     // console.log(managerChecked)
-    const { recommendList } = this.props
+    const { dailiList } = this.props
     this.setState({
-      managerChecked: recommendList[managerChecked.detail.value],
+      dailiChecked: dailiList[dailiChecked.detail.value],
       disabled: !this.testRequire()
     })
   }
@@ -234,7 +254,7 @@ export default class UserLogin extends Component {
   }
 
   render () {
-    const { recommendList, typeList } = this.props;
+    const { recommendList, typeList, dailiList } = this.props;
     const { loading, disabled } = this.state;
     let acl = disabled && !this.testRequire();
     return (
@@ -283,6 +303,15 @@ export default class UserLogin extends Component {
 
           <AtInput
             name='value'
+            title='店主姓名'
+            type='text'
+            placeholder='用户标识店铺所有人'
+            value={this.state.shopOwner}
+            onChange={this.handleShopOwnerChange}
+          />
+
+          <AtInput
+            name='value'
             title='地址'
             type='text'
             placeholder='输入地址'
@@ -305,12 +334,12 @@ export default class UserLogin extends Component {
 
           <View className='at-row sw-input'>
             <View className='at-col at-col-3 sw-title'>
-              <Text>上级代理</Text>
+              <Text>地区代理</Text>
             </View>
             <View className='at-col at-col-8'>
-              <Picker mode='selector' range={recommendList} rangeKey='shopname' onChange={this.onManagerChange}>
+              <Picker mode='selector' range={dailiList} rangeKey='shopname' onChange={this.onManagerChange}>
                 <View className='picker sw-picker'>
-                  当前选择：{this.state.managerChecked.shopname}
+                  当前选择：{this.state.dailiChecked.shopname}
                 </View>
               </Picker>
             </View>

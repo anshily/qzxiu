@@ -376,7 +376,7 @@ export class TradeShopsEditComponent implements OnInit {
         owner_phone: value.phone,
         shoptype_id: value.shopType,
         shopname: value.shopName,
-        shoppicture: value.file,
+        shoppicture: this.receivePicture,
         shopaddress: value.shopAddress,
         description: this.receiveContent
       },
@@ -401,7 +401,7 @@ export class TradeShopsEditComponent implements OnInit {
       owner_phone: value.phone,
       shoptype_id: value.shopType,
       shopname: value.shopName,
-      shoppicture: value.file || this.priviewFlie,
+      shoppicture: this.receivePicture,
       shopaddress: value.shopAddress,
       description: this.receiveContent
 
