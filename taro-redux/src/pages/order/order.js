@@ -17,14 +17,16 @@ export default class Order extends Component {
       orderListFinish: [],
       orderListCurrent: []
     }
+    this.shopId = this.$router.params.shopId
   }
 
   componentDidMount() {
-    console.log(this.props);
+    this.shopId = this.shopId ? this.shopId  :  Taro.getStorageSync('shopId');
+    console.log(this.shopId,this.props);
     Taro.showLoading({
       title: '加载中...'
     })
-    this.props.dispatchOrderSet({shopid: Taro.getStorageSync('shopId'), statu: 1}).then((res) => {
+    this.props.dispatchOrderSet({shopid: this.shopId, statu: 1}).then((res) => {
       this.setState({
         orderListCurrent: res
       })
@@ -51,7 +53,7 @@ export default class Order extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-    this.props.dispatchOrderSet({shopid: Taro.getStorageSync('shopId'), statu: status}).then((res) => {
+    this.props.dispatchOrderSet({shopid: this.shopId, statu: status}).then((res) => {
       console.log(res)
       this.setState({
         orderListCurrent: res
@@ -64,7 +66,7 @@ export default class Order extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-    this.props.dispatchOrderSet({shopid: Taro.getStorageSync('shopId'), statu: status}).then((res) => {
+    this.props.dispatchOrderSet({shopid: this.shopId, statu: status}).then((res) => {
       console.log(res)
       this.setState({
         orderListFinish: res
@@ -77,7 +79,7 @@ export default class Order extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-    this.props.dispatchOrderSet({shopid: Taro.getStorageSync('shopId'), statu: status}).then((res) => {
+    this.props.dispatchOrderSet({shopid: this.shopId, statu: status}).then((res) => {
       console.log(res)
       this.setState({
         orderListCancel: res

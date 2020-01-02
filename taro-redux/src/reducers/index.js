@@ -14,6 +14,8 @@ import message from './message'
 import messageDetail from './message-detail'
 import activityDetail from './activity-detail'
 import cashout from './cashout'
+import referrerLevelOne from './referrer-level-one'
+import referrerLevelTwo from './referrer-level-two'
 
 export default combineReducers({
   home,
@@ -30,5 +32,7 @@ export default combineReducers({
   allowance,
   cashout,
   messageDetail,
-  activityDetail
+  activityDetail,
+  referrerLevelOne,
+  referrerLevelTwo
 })

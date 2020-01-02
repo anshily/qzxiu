@@ -22,8 +22,8 @@ export default class Referrer extends Component {
     super(props)
     this.state = {
       current: 0,
-      open1: false,
-      open2: false
+      open1: true,
+      open2: true
     }
     this.shopId = parseInt(this.$router.params.shopId)
     this.levelType = this.$router.params.levelType
@@ -132,7 +132,7 @@ export default class Referrer extends Component {
         <AtAccordion
           open={this.state.open1}
           onClick={this.handleClick1.bind(this)}
-          title='地区推荐'
+          title='我管理的'
         >
           <AtList hasBorder={false}>
             {
@@ -153,7 +153,7 @@ export default class Referrer extends Component {
         </AtAccordion><AtAccordion
           open={this.state.open2}
           onClick={this.handleClick2.bind(this)}
-          title='人员推荐'
+          title='我推荐的'
         >
           <AtList hasBorder={false}>
             {

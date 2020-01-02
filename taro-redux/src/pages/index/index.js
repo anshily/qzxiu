@@ -18,10 +18,11 @@ const RECOMMEND_SIZE = 20
 
 function genImgListData() {
   let images = [
-    IMG_URL + 'uploads/qzx/assets/index1.jpg',
-    IMG_URL + 'uploads/qzx/assets/index2.jpg',
-    IMG_URL + 'uploads/qzx/assets/index3.jpg',
-    IMG_URL + 'uploads/qzx/assets/index4.jpg'
+    // IMG_URL + 'uploads/qzx/assets/index1.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index2.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index3.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index4.jpg'
+    IMG_URL + 'uploads/qzx/assets/index10.jpg'
   ]
   return images.map(item => {
     return {
@@ -70,7 +71,7 @@ class Index extends Component {
   }
 
   componentDidShow(){
-    
+
   }
 
   componentWillMount() {
@@ -176,31 +177,49 @@ class Index extends Component {
             {/* <Category data={homeInfo.hotCategory} /> */}
           </View>
 
-          <View className='img_list'>
-            {imgList.map((item, index) => {
-              return (
-                <View className='img_wrap' key={index}>
-                  {item.loaded && <Image src={item.url} className='fade_in' />}
+          <View className='at-article'>
+            <View className='at-article__h1'>
+              公司简介
+            </View>
+            {/*</View>*/}
+            <View className='at-article__content'>
+              <View className='at-article__section'>
+                <View className='at-article__p'>
+                  纤尊秀养生瘦身是通过外敷法并配合按摩手法达到瘦身目的，安全健康有效。外敷通过肚脐渗透吸收，调节人体脂肪代谢系统，促进脂肪消耗，将积于体内的淤积废物排出体外，调整内分泌平衡，帮客户减掉肥根，适合各种人群。
                 </View>
-              )
-            })}
+                <Image
+                  className='at-article__img'
+                  src={IMG_URL + 'uploads/qzx/assets/index10.jpg'}
+                  mode='widthFix' />
+              </View>
+            </View>
           </View>
+
+          {/*<View className='img_list'>*/}
+            {/*{imgList.map((item, index) => {*/}
+              {/*return (*/}
+                {/*<View className='img_wrap' key={index}>*/}
+                  {/*{item.loaded && <Image src={item.url} className='fade_in' />}*/}
+                {/*</View>*/}
+              {/*)*/}
+            {/*})}*/}
+          {/*</View>*/}
           {/*<Button onClick={this.loadImages}>Click To Load Images</Button>*/}
           {/*  引入图片预加载组件  */}
-          <Block>
-            {imgLoadList.map((item, index) => {
-              return (
-                <Image
-                  key={index}
-                  src={item}
-                  data-src={item}
-                  onLoad={this.imgLoader._imgOnLoad.bind(this.imgLoader)}
-                  onError={this.imgLoader._imgOnLoadError.bind(this.imgLoader)}
-                  style='width:0;height:0;opacity:0'
-                />
-              )
-            })}
-          </Block>
+          {/*<Block>*/}
+            {/*{imgLoadList.map((item, index) => {*/}
+              {/*return (*/}
+                {/*<Image*/}
+                  {/*key={index}*/}
+                  {/*src={item}*/}
+                  {/*data-src={item}*/}
+                  {/*onLoad={this.imgLoader._imgOnLoad.bind(this.imgLoader)}*/}
+                  {/*onError={this.imgLoader._imgOnLoadError.bind(this.imgLoader)}*/}
+                  {/*style='width:0;height:0;opacity:0'*/}
+                {/*/>*/}
+              {/*)*/}
+            {/*})}*/}
+          {/*</Block>*/}
 
           {/* 为你推荐 */}
           {/*<Recommend list={recommend} />*/}
@@ -215,6 +234,8 @@ class Index extends Component {
             <Text className='home__loading-txt'>更多内容，敬请期待</Text>
           </View>
           }
+
+
 
           <View className='fab-fixed'>
             <AtFab>

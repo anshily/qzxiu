@@ -144,7 +144,7 @@ export default class Menu extends Component {
       })
     } else if (menu.key === 'referrer') {
       Taro.navigateTo({
-        url: '/pages/referrer/referrer'
+        url: '/pages/referrer-level-one/referrer-level-one'
       })
     }else if (menu.key === 'order') {
       Taro.navigateTo({
