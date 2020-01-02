@@ -187,7 +187,6 @@ public class OrderController {
         Condition condition = new Condition(Order.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("orderid="+orderid);
-        orderService.finishOrder(orderid);
         Order order=orderService.findByCondition(condition).get(0);
 
        /*先计算推荐人的商品提成*/
@@ -245,8 +244,8 @@ public class OrderController {
 
         /*计算代理和总代的地区提成  第一个地区代理不用计算*/
         List<ShopMessage> list1=orderService.getAllDaiLi(order.getShopid());
-
-        if(list1.size()!=1){
+        /*list中去掉了总店，但是必须得保证店铺数量大于1才可以*/
+        if(list1.size()>1){
             for(int i=1;i<list1.size();i++){
                 ShopMessage shopMessage=list1.get(i);
                 /*如果是总代理 6块钱   如果是普通代理  10块*/
@@ -281,6 +280,8 @@ public class OrderController {
                 }
             }
         }
+        /*完成订单*/
+        orderService.finishOrder(orderid);
         return ResultGenerator.successResult();
     }
 
