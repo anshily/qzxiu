@@ -29,7 +29,7 @@ public class FormController {
     }
 
     @GetMapping("/readOrDelete")
-    public Result delete(@RequestParam Integer id,@RequestParam String type) {
+    public Result delete(@RequestParam  Integer id,@RequestParam String type) {
         Form form = formService.findById(id);
         if("del".equals(type)){
             form.setStatu(0);
@@ -58,6 +58,7 @@ public class FormController {
         Condition condition = new Condition(Form.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andCondition("statu="+statu);
+        criteria.andCondition("order by id desc");
         List<Form> list = formService.findByCondition(condition);
         page.setList(list);
         return ResultGenerator.successResult(page);
