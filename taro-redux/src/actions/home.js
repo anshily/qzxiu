@@ -66,3 +66,13 @@ export const dispatchBanner = payload => createAction({
   },
   payload
 })
+
+export const dispatchContact = payload => createAction({
+  url: ROOT_URL + 'form/add',
+  type: 'HOME_CONTACT',
+  fetchOptions: {
+    anshiModify: true,
+    method: 'POST'
+  },
+  payload
+})

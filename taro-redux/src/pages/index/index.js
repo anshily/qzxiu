@@ -48,7 +48,8 @@ class Index extends Component {
     imgList: genImgListData(),
     imgLoadList: [],
     username: '',
-    password: ''
+    userPhone: '',
+    userAddress: ''
   }
 
   onButtonClick() {
@@ -110,6 +111,37 @@ class Index extends Component {
     })
   }
 
+  callPhone = () => {
+    const phoneList = ['15890993809 李勤','15837132435  蒋好']
+    Taro.showActionSheet({
+      itemList: phoneList,
+      success: function (res) {
+        console.log(res) //当点击400-900-2250就相当于点击了
+        Taro.makePhoneCall({
+          phoneNumber: phoneList[res.tapIndex], //此号码并非真实电话号码，仅用于测试
+          success: function () {
+            console.log("拨打电话成功！")
+          },
+          fail: function () {
+            console.log("拨打电话失败！")
+          }
+        })
+        if (!res.cancel) {
+          console.log(res.tapIndex)//console出了下标
+        }
+      }
+    });
+    // Taro.makePhoneCall({
+    //   phoneNumber: '15239933620', //此号码并非真实电话号码，仅用于测试
+    //   success: function () {
+    //     console.log("拨打电话成功！")
+    //   },
+    //   fail: function () {
+    //     console.log("拨打电话失败！")
+    //   }
+    // })
+  }
+
   imageOnLoad = (err, data) => {
     console.log('图片加载完成', err, data.src)
 
@@ -129,19 +161,23 @@ class Index extends Component {
     })
     console.log('submit')
     let params = {
-      shopid: this.shopId,
-      money: this.state.cash,
-      image: this.state.image
+      name: this.state.username,
+      phone: this.state.userPhone,
+      address: this.state.userAddress
     }
     this.props.dispatchContact(params).then(res => {
       console.log(res)
       Taro.showModal({
         title: '提示',
-        content: '提现成功',
+        content: '提交成功',
         showCancel: false,
-        success: function(res) {
+        success: (res) => {
           if (res.confirm) {
-            Taro.navigateBack()
+            // Taro.navigateBack()
+
+            this.setState({
+              isCurtainOpened: false
+            })
           }
         }
       });
@@ -155,9 +191,9 @@ class Index extends Component {
 
   render () {
 
-    const { imgList, imgLoadList } = this.state
+    // const { imgList, imgLoadList } = this.state
 
-    const { username, userPhone, loading } = this.state
+    const { username, userPhone, userAddress, loading } = this.state
     const isBtnDisabled = !username || !userPhone
 
     if (!this.state.loaded) {
@@ -287,9 +323,19 @@ class Index extends Component {
                 value={username}
                 onChange={this.handleInput.bind(this, 'username')}
               />
+
               <AtInput
                 name='value3'
-                title='联系电话'
+                title='地址'
+                type='string'
+                placeholder='请输入所在地址'
+                value={userAddress}
+                onChange={this.handleInput.bind(this, 'userAddress')}
+              />
+
+              <AtInput
+                name='value3'
+                title='电话'
                 type='number'
                 placeholder='联系电话用于后期反馈'
                 value={userPhone}
@@ -302,10 +348,10 @@ class Index extends Component {
           </AtCurtain>
 
           <AtActionSheet cancelText='我再看看吧' title='对我们感兴趣？' isOpened={this.state.isOpen}>
-            <AtActionSheetItem onClick={this.contactUs}>
+            <AtActionSheetItem onClick={this.callPhone}>
               咨询
             </AtActionSheetItem>
-            <AtActionSheetItem>
+            <AtActionSheetItem onClick={this.contactUs}>
               加盟
             </AtActionSheetItem>
           </AtActionSheet>

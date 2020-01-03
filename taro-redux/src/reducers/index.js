@@ -14,6 +14,7 @@ import message from './message'
 import messageDetail from './message-detail'
 import activityDetail from './activity-detail'
 import cashout from './cashout'
+import contact from './contact'
 import referrerLevelOne from './referrer-level-one'
 import referrerLevelTwo from './referrer-level-two'
 
@@ -34,5 +35,6 @@ export default combineReducers({
   messageDetail,
   activityDetail,
   referrerLevelOne,
-  referrerLevelTwo
+  referrerLevelTwo,
+  contact
 })
