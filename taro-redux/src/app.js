@@ -43,6 +43,7 @@ class App extends Component {
       'pages/allowance/allowance',
       'pages/cashout/cashout',
       'pages/activity-detail/activity-detail',
+      'pages/contact/contact',
       'pages/message-detail/message-detail'
     ],
     window: {

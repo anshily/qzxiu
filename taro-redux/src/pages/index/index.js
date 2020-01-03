@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import { Loading } from '@components'
+import { Loading, ButtonItem, InputItem } from '@components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/home'
 import { dispatchCartNum } from '@actions/cart'
@@ -8,7 +8,7 @@ import { getWindowHeight } from '@utils/style'
 import Banner from './banner'
 import Pin from './pin'
 import './index.scss'
-import { AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import {AtButton, AtForm, AtInput, AtCurtain, AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import {IMG_URL} from "@constants/api";
 
 //引入图片预加载组件
@@ -44,8 +44,11 @@ class Index extends Component {
     lastItemId: 0,
     hasMore: true,
     isOpen: false,
+    isCurtainOpened: false,
     imgList: genImgListData(),
-    imgLoadList: []
+    imgLoadList: [],
+    username: '',
+    password: ''
   }
 
   onButtonClick() {
@@ -86,6 +89,27 @@ class Index extends Component {
     })
   }
 
+  contactUs = () => {
+    // Taro.navigateTo({
+    //   url: '/pages/contact/contact'
+    // })
+
+    this.setState({
+      isCurtainOpened: true,
+      isOpen: false
+    })
+  }
+
+  handleInput = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
+  onClose () {
+    this.setState({
+      isCurtainOpened: false
+    })
+  }
+
   imageOnLoad = (err, data) => {
     console.log('图片加载完成', err, data.src)
 
@@ -98,40 +122,43 @@ class Index extends Component {
     })
   }
 
-  // loadRecommend = () => {
-  //   if (!this.state.hasMore || this.state.loading) {
-  //     return
-  //   }
-  //
-  //   const payload = {
-  //     lastItemId: this.state.lastItemId,
-  //     size: RECOMMEND_SIZE
-  //   }
-  //   this.setState({ loading: true })
-  //   this.props.dispatchRecommend(payload).then((res) => {
-  //     const lastItem = res.rcmdItemList[res.rcmdItemList.length - 1]
-  //     this.setState({
-  //       loading: false,
-  //       hasMore: res.hasMore,
-  //       lastItemId: lastItem && lastItem.id
-  //     })
-  //   }).catch(() => {
-  //     this.setState({ loading: false })
-  //   })
-  // }
-
-  handlePrevent = () => {
-    // XXX 时间关系，首页只实现底部推荐商品的点击
-    Taro.showToast({
-      title: '目前只可点击底部推荐商品',
-      icon: 'none'
+  onSubmit = () => {
+    this.setState({
+      loading: true,
+      disabled: true
+    })
+    console.log('submit')
+    let params = {
+      shopid: this.shopId,
+      money: this.state.cash,
+      image: this.state.image
+    }
+    this.props.dispatchContact(params).then(res => {
+      console.log(res)
+      Taro.showModal({
+        title: '提示',
+        content: '提现成功',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+            Taro.navigateBack()
+          }
+        }
+      });
+    }).finally( () => {
+      this.setState({
+        loading: false,
+        disabled: false
+      })
     })
   }
-
 
   render () {
 
     const { imgList, imgLoadList } = this.state
+
+    const { username, userPhone, loading } = this.state
+    const isBtnDisabled = !username || !userPhone
 
     if (!this.state.loaded) {
       return <Loading />
@@ -244,8 +271,38 @@ class Index extends Component {
 
           </View>
 
+          <AtCurtain
+            isOpened={this.state.isCurtainOpened}
+            onClose={this.onClose.bind(this)}
+            closeBtnPosition = 'top-right'
+          >
+            <AtForm
+              onSubmit={this.onSubmit}
+            >
+              <AtInput
+                name='value3'
+                title='姓名'
+                type='string'
+                placeholder='请输入姓名'
+                value={username}
+                onChange={this.handleInput.bind(this, 'username')}
+              />
+              <AtInput
+                name='value3'
+                title='联系电话'
+                type='number'
+                placeholder='联系电话用于后期反馈'
+                value={userPhone}
+                onChange={this.handleInput.bind(this, 'userPhone')}
+              />
+
+              <AtButton formType='submit' disabled={isBtnDisabled} loading={loading} type='primary'>提交</AtButton>
+
+            </AtForm>
+          </AtCurtain>
+
           <AtActionSheet cancelText='我再看看吧' title='对我们感兴趣？' isOpened={this.state.isOpen}>
-            <AtActionSheetItem>
+            <AtActionSheetItem onClick={this.contactUs}>
               咨询
             </AtActionSheetItem>
             <AtActionSheetItem>
