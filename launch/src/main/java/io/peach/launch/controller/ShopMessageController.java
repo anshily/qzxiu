@@ -266,7 +266,12 @@ public class ShopMessageController {
             record.setUpdatetime(new Date());
             record.setCreatetime(new Date());
             record.setImage(cashOutDTO.getImage());
-            record.setSubscribe("您有一笔佣金已到账！请注意查收");
+            if(cashOutDTO.getNote().equals("")||cashOutDTO.getNote()==null){
+                record.setSubscribe("您有一笔佣金已到账！请注意查收");
+            }else{
+                record.setSubscribe(cashOutDTO.getNote());
+            }
+
             recordService.save(record);
 
         }

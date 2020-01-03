@@ -67,7 +67,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
                 Record r=new Record();
                 r.setName(Fshop.getUsername());
                 r.setType("佣金消息");
-                r.setMoney(shopMoney.add(new BigDecimal(7000)));
+                r.setMoney(new BigDecimal(7000));
                 r.setShopid(recommendid);
                 r.setSourceid(shopid);
                 qzxShopMessageMapper.insertRecord(r);
@@ -81,7 +81,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
             Record r=new Record();
             r.setName(Fshop.getUsername());
             r.setType("佣金消息");
-            r.setMoney(shopMoney.add(new BigDecimal(5000)));
+            r.setMoney(new BigDecimal(5000));
             r.setShopid(recommendid);
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -101,7 +101,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
                 Record r1=new Record();
                 r1.setType("佣金消息");
                 r1.setName(FFshop.getUsername());
-                r1.setMoney(shopMoney.add(new BigDecimal(3500)));
+                r1.setMoney(new BigDecimal(3500));
                 r1.setShopid(recommendid);
                 r1.setSourceid(shopid);
                 qzxShopMessageMapper.insertRecord(r);
