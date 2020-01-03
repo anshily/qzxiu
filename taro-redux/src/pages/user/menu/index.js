@@ -117,8 +117,11 @@ export default class Menu extends Component {
           }, {
             key: 'message',
             text: '消息中心',
-            url: 'http://m.you.163.com/help',
             img: require('./assets/help.png')
+          }, {
+              key: 'feedback',
+              text: '报名信息',
+              img: require('./assets/feedback.png')
           }]
         })
       } else if (userRole == '开发'){
@@ -157,6 +160,10 @@ export default class Menu extends Component {
     } else if (menu.key === 'message') {
       Taro.navigateTo({
         url: '/pages/message/message'
+      })
+    }else if (menu.key === 'feedback') {
+      Taro.navigateTo({
+        url: '/pages/contact/contact'
       })
     } else {
       Taro.showToast({
