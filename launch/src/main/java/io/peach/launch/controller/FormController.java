@@ -28,8 +28,8 @@ public class FormController {
         return ResultGenerator.successResult();
     }
 
-    @PostMapping("/readOrDelete")
-    public Result delete(@RequestBody Integer id,@RequestBody String type) {
+    @GetMapping("/readOrDelete")
+    public Result delete(@RequestParam Integer id,@RequestParam String type) {
         Form form = formService.findById(id);
         if("del".equals(type)){
             form.setStatu(0);
