@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, ScrollView } from '@tarojs/components'
-import { Loading } from '@components'
+import { Loading, ButtonItem, InputItem } from '@components'
 import { connect } from '@tarojs/redux'
 import * as actions from '@actions/home'
 import { dispatchCartNum } from '@actions/cart'
@@ -8,7 +8,7 @@ import { getWindowHeight } from '@utils/style'
 import Banner from './banner'
 import Pin from './pin'
 import './index.scss'
-import { AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import {AtButton, AtForm, AtInput, AtCurtain, AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import {IMG_URL} from "@constants/api";
 
 //引入图片预加载组件
@@ -18,10 +18,11 @@ const RECOMMEND_SIZE = 20
 
 function genImgListData() {
   let images = [
-    IMG_URL + 'uploads/qzx/assets/index1.jpg',
-    IMG_URL + 'uploads/qzx/assets/index2.jpg',
-    IMG_URL + 'uploads/qzx/assets/index3.jpg',
-    IMG_URL + 'uploads/qzx/assets/index4.jpg'
+    // IMG_URL + 'uploads/qzx/assets/index1.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index2.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index3.jpg',
+    // IMG_URL + 'uploads/qzx/assets/index4.jpg'
+    IMG_URL + 'uploads/qzx/assets/index10.jpg'
   ]
   return images.map(item => {
     return {
@@ -43,8 +44,11 @@ class Index extends Component {
     lastItemId: 0,
     hasMore: true,
     isOpen: false,
+    isCurtainOpened: false,
     imgList: genImgListData(),
-    imgLoadList: []
+    imgLoadList: [],
+    username: '',
+    password: ''
   }
 
   onButtonClick() {
@@ -70,7 +74,7 @@ class Index extends Component {
   }
 
   componentDidShow(){
-    
+
   }
 
   componentWillMount() {
@@ -82,6 +86,27 @@ class Index extends Component {
     //同时发起全部图片的加载
     this.state.imgList.forEach(item => {
       this.imgLoader.load(item.url)
+    })
+  }
+
+  contactUs = () => {
+    // Taro.navigateTo({
+    //   url: '/pages/contact/contact'
+    // })
+
+    this.setState({
+      isCurtainOpened: true,
+      isOpen: false
+    })
+  }
+
+  handleInput = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
+  onClose () {
+    this.setState({
+      isCurtainOpened: false
     })
   }
 
@@ -97,40 +122,43 @@ class Index extends Component {
     })
   }
 
-  // loadRecommend = () => {
-  //   if (!this.state.hasMore || this.state.loading) {
-  //     return
-  //   }
-  //
-  //   const payload = {
-  //     lastItemId: this.state.lastItemId,
-  //     size: RECOMMEND_SIZE
-  //   }
-  //   this.setState({ loading: true })
-  //   this.props.dispatchRecommend(payload).then((res) => {
-  //     const lastItem = res.rcmdItemList[res.rcmdItemList.length - 1]
-  //     this.setState({
-  //       loading: false,
-  //       hasMore: res.hasMore,
-  //       lastItemId: lastItem && lastItem.id
-  //     })
-  //   }).catch(() => {
-  //     this.setState({ loading: false })
-  //   })
-  // }
-
-  handlePrevent = () => {
-    // XXX 时间关系，首页只实现底部推荐商品的点击
-    Taro.showToast({
-      title: '目前只可点击底部推荐商品',
-      icon: 'none'
+  onSubmit = () => {
+    this.setState({
+      loading: true,
+      disabled: true
+    })
+    console.log('submit')
+    let params = {
+      shopid: this.shopId,
+      money: this.state.cash,
+      image: this.state.image
+    }
+    this.props.dispatchContact(params).then(res => {
+      console.log(res)
+      Taro.showModal({
+        title: '提示',
+        content: '提现成功',
+        showCancel: false,
+        success: function(res) {
+          if (res.confirm) {
+            Taro.navigateBack()
+          }
+        }
+      });
+    }).finally( () => {
+      this.setState({
+        loading: false,
+        disabled: false
+      })
     })
   }
-
 
   render () {
 
     const { imgList, imgLoadList } = this.state
+
+    const { username, userPhone, loading } = this.state
+    const isBtnDisabled = !username || !userPhone
 
     if (!this.state.loaded) {
       return <Loading />
@@ -176,31 +204,49 @@ class Index extends Component {
             {/* <Category data={homeInfo.hotCategory} /> */}
           </View>
 
-          <View className='img_list'>
-            {imgList.map((item, index) => {
-              return (
-                <View className='img_wrap' key={index}>
-                  {item.loaded && <Image src={item.url} className='fade_in' />}
+          <View className='at-article'>
+            <View className='at-article__h1'>
+              公司简介
+            </View>
+            {/*</View>*/}
+            <View className='at-article__content'>
+              <View className='at-article__section'>
+                <View className='at-article__p'>
+                  纤尊秀养生瘦身是通过外敷法并配合按摩手法达到瘦身目的，安全健康有效。外敷通过肚脐渗透吸收，调节人体脂肪代谢系统，促进脂肪消耗，将积于体内的淤积废物排出体外，调整内分泌平衡，帮客户减掉肥根，适合各种人群。
                 </View>
-              )
-            })}
+                <Image
+                  className='at-article__img'
+                  src={IMG_URL + 'uploads/qzx/assets/index10.jpg'}
+                  mode='widthFix' />
+              </View>
+            </View>
           </View>
+
+          {/*<View className='img_list'>*/}
+            {/*{imgList.map((item, index) => {*/}
+              {/*return (*/}
+                {/*<View className='img_wrap' key={index}>*/}
+                  {/*{item.loaded && <Image src={item.url} className='fade_in' />}*/}
+                {/*</View>*/}
+              {/*)*/}
+            {/*})}*/}
+          {/*</View>*/}
           {/*<Button onClick={this.loadImages}>Click To Load Images</Button>*/}
           {/*  引入图片预加载组件  */}
-          <Block>
-            {imgLoadList.map((item, index) => {
-              return (
-                <Image
-                  key={index}
-                  src={item}
-                  data-src={item}
-                  onLoad={this.imgLoader._imgOnLoad.bind(this.imgLoader)}
-                  onError={this.imgLoader._imgOnLoadError.bind(this.imgLoader)}
-                  style='width:0;height:0;opacity:0'
-                />
-              )
-            })}
-          </Block>
+          {/*<Block>*/}
+            {/*{imgLoadList.map((item, index) => {*/}
+              {/*return (*/}
+                {/*<Image*/}
+                  {/*key={index}*/}
+                  {/*src={item}*/}
+                  {/*data-src={item}*/}
+                  {/*onLoad={this.imgLoader._imgOnLoad.bind(this.imgLoader)}*/}
+                  {/*onError={this.imgLoader._imgOnLoadError.bind(this.imgLoader)}*/}
+                  {/*style='width:0;height:0;opacity:0'*/}
+                {/*/>*/}
+              {/*)*/}
+            {/*})}*/}
+          {/*</Block>*/}
 
           {/* 为你推荐 */}
           {/*<Recommend list={recommend} />*/}
@@ -216,6 +262,8 @@ class Index extends Component {
           </View>
           }
 
+
+
           <View className='fab-fixed'>
             <AtFab>
               <Text onClick={this.onButtonClick} className='at-fab__icon at-icon at-icon-add'></Text>
@@ -223,8 +271,38 @@ class Index extends Component {
 
           </View>
 
+          <AtCurtain
+            isOpened={this.state.isCurtainOpened}
+            onClose={this.onClose.bind(this)}
+            closeBtnPosition = 'top-right'
+          >
+            <AtForm
+              onSubmit={this.onSubmit}
+            >
+              <AtInput
+                name='value3'
+                title='姓名'
+                type='string'
+                placeholder='请输入姓名'
+                value={username}
+                onChange={this.handleInput.bind(this, 'username')}
+              />
+              <AtInput
+                name='value3'
+                title='联系电话'
+                type='number'
+                placeholder='联系电话用于后期反馈'
+                value={userPhone}
+                onChange={this.handleInput.bind(this, 'userPhone')}
+              />
+
+              <AtButton formType='submit' disabled={isBtnDisabled} loading={loading} type='primary'>提交</AtButton>
+
+            </AtForm>
+          </AtCurtain>
+
           <AtActionSheet cancelText='我再看看吧' title='对我们感兴趣？' isOpened={this.state.isOpen}>
-            <AtActionSheetItem>
+            <AtActionSheetItem onClick={this.contactUs}>
               咨询
             </AtActionSheetItem>
             <AtActionSheetItem>

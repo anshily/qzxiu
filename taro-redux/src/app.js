@@ -25,6 +25,9 @@ class App extends Component {
       'pages/home/home',
       'pages/enter/enter',
       'pages/referrer/referrer',
+      'pages/referrer-level-one/referrer-level-one',
+      'pages/referrer-level-two/referrer-level-two',
+      'pages/referrer-level-upper/referrer-level-upper',
       'pages/cate/cate',
       'pages/cate-sub/cate-sub',
       'pages/cart/cart',
@@ -40,6 +43,7 @@ class App extends Component {
       'pages/allowance/allowance',
       'pages/cashout/cashout',
       'pages/activity-detail/activity-detail',
+      'pages/contact/contact',
       'pages/message-detail/message-detail'
     ],
     window: {
