@@ -14,7 +14,7 @@ export const dispatchMessageList = payload => createAction({
   method: 'GET',
   payload
 })
-export const propsdispatchRead = payload => createAction({
+export const dispatchRead = payload => createAction({
   url: ROOT_URL + 'form/readOrDelete',
   type: 'CONTACT_READ',
   method: 'POST',

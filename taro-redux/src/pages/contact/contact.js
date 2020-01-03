@@ -52,7 +52,7 @@ export default class Contact extends Component {
             }
           })
         }else if (res.tapIndex == 1) {
-          this.props.dispatchRead(item['id']).then(r => {
+          this.props.dispatchRead({id: item['id'], type: 'read'}).then(r => {
             console.log(r)
           })
         }
