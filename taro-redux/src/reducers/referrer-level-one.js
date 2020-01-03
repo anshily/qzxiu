@@ -1,8 +1,8 @@
 
 const INITIAL_STATE = {
   referrerItem: {},
-  referrerLevelOne: [],
-  referrerLevelTwo: []
+  referrerOne: [],
+  referrerTwo: []
 }
 
 export default function referrerLevelOne(state = {}, action) {
