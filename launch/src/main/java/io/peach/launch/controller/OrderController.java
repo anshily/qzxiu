@@ -212,7 +212,7 @@ public class OrderController {
             shopMessageService.update(FPersonShop);
             /*插入一条记录*/
             Record r=new Record();
-            r.setType("商品提成");
+            r.setType("推荐人的商品提成");
             r.setCreatetime(new Date());
             r.setUpdatetime(new Date());
             r.setName(FPersonShop.getUsername());

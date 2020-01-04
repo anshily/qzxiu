@@ -54,6 +54,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
                 Record r=new Record();
                 r.setType("佣金消息");
                 r.setName(Fshop.getUsername());
+                r.setSubscribe("您有一笔店铺店铺佣金到账");
                 r.setMoney(shopMoney.multiply(new BigDecimal(0.2)));
                 r.setShopid(recommendid);
                 r.setSourceid(shopid);
@@ -68,6 +69,7 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
                 r.setName(Fshop.getUsername());
                 r.setType("佣金消息");
                 r.setMoney(new BigDecimal(7000));
+                r.setSubscribe("您有一笔店铺店铺佣金到账");
                 r.setShopid(recommendid);
                 r.setSourceid(shopid);
                 qzxShopMessageMapper.insertRecord(r);
@@ -82,6 +84,8 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
             r.setName(Fshop.getUsername());
             r.setType("佣金消息");
             r.setMoney(new BigDecimal(5000));
+            r.setSubscribe("您有一笔店铺店铺佣金到账");
+            r.setCreatetime(new Date());
             r.setShopid(recommendid);
             r.setSourceid(shopid);
             qzxShopMessageMapper.insertRecord(r);
@@ -96,15 +100,17 @@ public class ShopMessageServiceImpl extends AbstractService<ShopMessage> impleme
             if(FFshop.getShoptype_id()!=1){
                 profit=FFshop.getProfit().add(new BigDecimal(3500));
                 cashin=FFshop.getCashin().add(new BigDecimal(3500));
-                qzxShopMessageMapper.updateShopMoney(recommendid,profit,cashin);
+                qzxShopMessageMapper.updateShopMoney(FFshop.getId(),profit,cashin);
               /*记录表中插入一条记录*/
                 Record r1=new Record();
                 r1.setType("佣金消息");
+                r1.setCreatetime(new Date());
                 r1.setName(FFshop.getUsername());
                 r1.setMoney(new BigDecimal(3500));
-                r1.setShopid(recommendid);
+                r1.setSubscribe("您有一笔店铺店铺佣金到账");
+                r1.setShopid(FFshop.getId());
                 r1.setSourceid(shopid);
-                qzxShopMessageMapper.insertRecord(r);
+                qzxShopMessageMapper.insertRecord(r1);
             }
         }
     }

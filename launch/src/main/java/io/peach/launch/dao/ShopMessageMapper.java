@@ -30,4 +30,5 @@ public interface ShopMessageMapper extends Mapper<ShopMessage> {
     List<ShopMessage> getDailiList();
     List<ShopMessage> getAllRecommendByShopid(int shopid);
     List<ShopMessage> getAllPositionByShopid( int shopid);
+    Integer getRoleById(int id);
 }
