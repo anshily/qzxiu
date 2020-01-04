@@ -3,12 +3,12 @@
 </div>
 <nz-spin *ngIf="!data" class="modal-spin"></nz-spin>
 <div *ngIf="data">
-    <nz-card *ngIf="recommend" nzTitle="推荐店铺">
+    <nz-card *ngIf="recommend" nzTitle="以下全为当前店铺推荐的店铺">
         <nz-tree [nzData]="recommend" nzAsyncData (nzClick)="nzEvent($event)" (nzExpandChange)="nzEvent($event)">
         </nz-tree>
     </nz-card>
 
-    <nz-card *ngIf="area" nzTitle="代理店铺">
+    <nz-card *ngIf="area" nzTitle="以下全为当前店铺代理的店铺">
         <nz-tree [nzData]="area" nzAsyncData (nzClick)="areaEvent($event)" (nzExpandChange)="areaEvent($event)">
         </nz-tree>
     </nz-card>

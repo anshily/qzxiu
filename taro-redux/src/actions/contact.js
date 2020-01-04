@@ -9,14 +9,14 @@ export const dispatchContact = payload => createAction({
   payload
 })
 export const dispatchMessageList = payload => createAction({
-  url: ROOT_URL + 'form/list',
+  url: ROOT_URL + 'form/selectByStatu',
   type: 'CONTACT_MESSAGES',
   method: 'GET',
   payload
 })
-export const propsdispatchRead = payload => createAction({
+export const dispatchRead = payload => createAction({
   url: ROOT_URL + 'form/readOrDelete',
   type: 'CONTACT_READ',
-  method: 'POST',
+  method: 'GET',
   payload
 })
