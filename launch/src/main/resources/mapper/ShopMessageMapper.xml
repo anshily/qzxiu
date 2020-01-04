@@ -67,7 +67,7 @@
   </select>
 
   <insert id="insertRecord">
-    insert into qzx_record(shopid,type,sourceid,money,updatetime,createtime) values(#{record.shopid},#{record.type},#{record.sourceid},#{record.money},now(),now())
+    insert into qzx_record(shopid,name,type,sourceid,money,updatetime,createtime) values(#{record.shopid},#{record.name},#{record.type},#{record.sourceid},#{record.money},now(),now())
   </insert>
 
   <select id="getShopList" resultType="io.peach.launch.model.ShopMessage">
@@ -113,5 +113,9 @@
     select * from qzx_shop_message where id in(
     select shopid from qzx_grading where f_shopid=#{shopid} and point_type='地区推荐'
     )
+  </select>
+
+  <select id="getRoleById" resultType="Integer">
+    select rid from qzx_user_role where uid=#{id}
   </select>
 </mapper>

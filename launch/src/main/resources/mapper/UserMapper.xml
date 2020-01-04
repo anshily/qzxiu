@@ -47,4 +47,5 @@
     select id from qzx_user where token=#{token}
     )
   </select>
+
 </mapper>
