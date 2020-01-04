@@ -32,7 +32,7 @@ export default class Message extends Component {
   alterPage(page){
     console.log(page);
   }
-  
+
   goDetail(item){
     console.log(item)
     Taro.navigateTo({
@@ -58,6 +58,13 @@ export default class Message extends Component {
             ))
           }
         </AtList>
+        {/*{messages && <AtPagination*/}
+          {/*total={allowanceItem.total}*/}
+          {/*pageSize={allowanceItem.pageSize}*/}
+          {/*current={allowanceItem.pageNum}*/}
+          {/*onPageChange={this.alterPage}*/}
+        {/*>*/}
+        {/*</AtPagination>}*/}
 
         {(!messages || messages.length == 0) && <AtLoadMore
           status={this.state.status}

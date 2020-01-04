@@ -33,7 +33,7 @@ export default class Contact extends Component {
         title: '加载中...'
       })
 
-      this.props.dispatchMessageList({statu: 1, pi: 1, ps: 20}).then(res => {
+      this.props.dispatchMessageList({statu: 1, pi: 1, ps: 100}).then(res => {
         console.log(res)
         this.setState({
           contactList: res['list'],
@@ -46,7 +46,7 @@ export default class Contact extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-      this.props.dispatchMessageList({statu: 2, pi: 1, ps: 20}).then(res => {
+      this.props.dispatchMessageList({statu: 2, pi: 1, ps: 100}).then(res => {
         console.log(res)
         this.setState({
           contactListRead: res['list'],
@@ -64,14 +64,14 @@ export default class Contact extends Component {
     this.alterPage(1)
   }
 
-  alterPage(statu = 1, pi = 1, ps = 20) {
+  alterPage(statu = 1, pi = 1, ps = 100) {
     const  current = this.state.current
     if (current == 0) {
       Taro.showLoading({
         title: '加载中...'
       })
 
-      this.props.dispatchMessageList({statu: 1, pi: 1, ps: 20}).then(res => {
+      this.props.dispatchMessageList({statu: 1, pi: 1, ps: 100}).then(res => {
         console.log(res)
         this.setState({
           contactList: res['list'],
@@ -83,7 +83,7 @@ export default class Contact extends Component {
       Taro.showLoading({
         title: '加载中...'
       })
-      this.props.dispatchMessageList({statu: 2, pi: 1, ps: 20}).then(res => {
+      this.props.dispatchMessageList({statu: 2, pi: 1, ps: 100}).then(res => {
         console.log(res)
         this.setState({
           contactListRead: res['list'],

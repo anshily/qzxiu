@@ -12,13 +12,32 @@ export default class Allowance extends Component {
     navigationBarTitleText: '提现管理'
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      allowanceItem: {},
+      allowanceList: []
+    }
+  }
+
   componentDidShow(){
     this.props.dispatchAllowance({pi: 1,ps: 10}).then(res => {
       console.log(res)
+      this.setState({
+        allowanceItem: res,
+        allowanceList: res['list']
+      })
     })
   }
-  alterPage(page){
+  alterPage = (page) => {
     console.log(page);
+    this.props.dispatchAllowance({pi: page.current,ps: 10}).then(res => {
+      console.log(res)
+      this.setState({
+        allowanceItem: res,
+        allowanceList: res['list']
+      })
+    })
   }
   goCashPage(item){
     console.log(item)
@@ -27,15 +46,15 @@ export default class Allowance extends Component {
     })
   }
   render() {
-    let {allowanceItem} = this.props
+    let {allowanceItem, allowanceList} = this.state
+    console.log(allowanceList)
     return(
       <View>
         <AtList hasBorder={false}>
-          {allowanceItem && allowanceItem.list &&
-            allowanceItem.list.map(item => (
+          {allowanceList &&
+          allowanceList.map(item => (
               <AtListItem
                 onClick={this.goCashPage.bind(this, item)}
-                key={String(item.id)}
                 title={item.shopname + '--' + item.username}
                 note={'可提现金额 ' + item['cashin'] + '元'}
                 extraText='提现'
@@ -47,13 +66,20 @@ export default class Allowance extends Component {
 
         </AtList>
 
-        <AtPagination
-          total={50}
-          pageSize={10}
-          current={1}
-          onPageChange={this.alterPage}
-        >
-        </AtPagination>
+        {/*pageNum: 1*/}
+        {/*pageSize: 10*/}
+        {/*pages: 3*/}
+        {/*size: 10*/}
+        {/*total: 21*/}
+        {
+          allowanceItem &&  <AtPagination
+            total={allowanceItem.total}
+            pageSize={allowanceItem.pageSize}
+            current={allowanceItem.pageNum}
+            onPageChange={this.alterPage}
+          >
+          </AtPagination>
+        }
       </View>
     )
   }

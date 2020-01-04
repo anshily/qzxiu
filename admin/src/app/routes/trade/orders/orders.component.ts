@@ -100,7 +100,10 @@ export class TradeOrdersComponent implements OnInit {
   show(item) {
     this.modal
       .createStatic(TradeOrdersViewComponent, {info: item})
-      .subscribe(() => this.st.reload());
+      .subscribe((r) => {
+        console.log('finish!',r)
+        this.st.reload()
+      });
   }
 
   search(ev){
