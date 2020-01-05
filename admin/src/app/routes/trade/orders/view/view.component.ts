@@ -43,12 +43,13 @@ export class TradeOrdersViewComponent implements OnInit {
       token: localStorage.getItem('user_token')
     }).subscribe(res => {
       if (res['code'] == 0){
+        this.msgSrv.success('订单已确认');
         this.close()
       }
     });
   }
 
   close() {
-    this.modal.destroy();
+    this.modal.close('aaaaaaa');
   }
 }
