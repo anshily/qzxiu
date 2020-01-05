@@ -384,6 +384,7 @@ export class TradeShopsEditComponent implements OnInit {
       positionID: value.positionID,
       token: localStorage.getItem('user_token')
     }
+    // this.http.get(ROOT_URL + 'user/nameExist')
     this.http.post(ROOT_URL + `shop/message/saveUserAndShopMessageAndGrading`, params).subscribe(res => {
       if (res['code'] == 0) {
         this.msgSrv.success('保存成功');

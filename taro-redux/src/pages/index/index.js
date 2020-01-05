@@ -112,7 +112,7 @@ class Index extends Component {
   }
 
   callPhone = () => {
-    const phoneList = ['15890993809 李勤','15837132435  蒋好']
+    const phoneList = ['15890993809 李勤','18898120362  蒋好']
     Taro.showActionSheet({
       itemList: phoneList,
       success: function (res) {
