@@ -55,11 +55,7 @@ public class FormController {
     public Result selectByStatu(@RequestParam Integer statu,@RequestParam Integer pi,@RequestParam Integer ps) {
         PageBean<Form> page = new PageBean<Form>();
         PageHelper.startPage(pi,ps);
-        Condition condition = new Condition(Form.class);
-        Example.Criteria criteria = condition.createCriteria();
-        criteria.andCondition("statu="+statu);
-        criteria.andCondition("order by id desc");
-        List<Form> list = formService.findByCondition(condition);
+        List<Form> list= formService.getFormByStatu(statu);
         page.setList(list);
         return ResultGenerator.successResult(page);
     }

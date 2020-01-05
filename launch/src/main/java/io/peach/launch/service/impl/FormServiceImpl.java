@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,4 +20,9 @@ public class FormServiceImpl extends AbstractService<Form> implements FormServic
     @Resource
     private FormMapper qzxFormMapper;
 
+    @Override
+    public List<Form> getFormByStatu(int statu) {
+        List<Form> list=qzxFormMapper.getFormByStatu(statu);
+        return list;
+    }
 }

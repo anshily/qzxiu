@@ -151,6 +151,11 @@ public class ShopMessageController {
         if(!userService.getRoleNameByUserid(user.getId()).equals("总店管理员")){
             throw new ServiceException(5008,"无权限操作！");
         }
+        /*先判断用户名是否存在*/
+        int tmp=userService.nameExist(submitAll.getUser().getUsername());
+        if(tmp==1){
+            throw new ServiceException(5010,"用户名已存在！");
+        }
         /*先存储用户信息  返回用户id*/
         userService.save(submitAll.getUser());
         /*将返回的用户绑定一个普通店铺的身份*/
@@ -266,7 +271,7 @@ public class ShopMessageController {
             record.setUpdatetime(new Date());
             record.setCreatetime(new Date());
             record.setImage(cashOutDTO.getImage());
-            if(cashOutDTO.getNote().equals("")||cashOutDTO.getNote()==null){
+            if(null==cashOutDTO.getNote()||cashOutDTO.getNote().equals("")){
                 record.setSubscribe("您有一笔佣金已到账！请注意查收");
             }else{
                 record.setSubscribe(cashOutDTO.getNote());

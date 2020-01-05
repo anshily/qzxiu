@@ -11,4 +11,8 @@
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="statu" jdbcType="INTEGER" property="statu" />
   </resultMap>
+
+  <select id="getFormByStatu" resultType="io.peach.launch.model.Form">
+    select * from qzx_form where statu=#{statu}
+  </select>
 </mapper>
