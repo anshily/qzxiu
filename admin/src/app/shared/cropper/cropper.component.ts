@@ -15,6 +15,7 @@ import {ProcessService} from "@shared/process.service";
           [imageChangedEvent]="imageChangedEvent"
           [maintainAspectRatio]="false"
           [resizeToWidth]="500"
+          [imageQuality]="38"
           format="png"
           (imageCropped)="imageCropped($event)"
           (imageLoaded)="imageLoaded()"

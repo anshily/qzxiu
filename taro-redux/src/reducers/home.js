@@ -8,7 +8,8 @@ const INITIAL_STATE = {
   searchCount: 0,
   banner: [],
   pin: [],
-  recommend: []
+  recommend: [],
+  goodShops: []
 }
 
 export default function home(state = INITIAL_STATE, action) {
@@ -65,6 +66,12 @@ export default function home(state = INITIAL_STATE, action) {
         ...state,
         banner: list
       }
+    }
+    case 'HOME_GSHOP': {
+      console.log(action.payload.goodShopList)
+      return {
+        ...state,
+        goodShops: action.payload.goodShopList}
     }
     default:
       return state

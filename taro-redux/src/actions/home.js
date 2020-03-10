@@ -39,6 +39,15 @@ export const dispatchPin = payload => createAction({
   payload
 })
 
+export const dispatchGoodShops = payload => createAction({
+  url: ROOT_URL + 'shop/message/getGoodShopMessage',
+  type: 'HOME_GSHOP',
+  fetchOptions: {
+    anshiModify: true
+  },
+  payload
+})
+
 /**
  * 推荐商品
  * @param {*} payload

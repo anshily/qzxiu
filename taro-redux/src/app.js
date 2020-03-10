@@ -48,10 +48,16 @@ class App extends Component {
     ],
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '网易严选',
-      navigationBarTextStyle: 'black'
+      navigationBarBackgroundColor: '#8dc63f',
+      navigationBarTitleText: '纤尊秀健康管理',
+      navigationBarTextStyle: 'white'
     },
+    // window: {
+    //   backgroundTextStyle: 'light',
+    //   navigationBarBackgroundColor: '#fff',
+    //   navigationBarTitleText: '纤尊秀健康管理',
+    //   navigationBarTextStyle: 'black'
+    // },
     tabBar: {
       color: "#666",
       selectedColor: "#b4282d",

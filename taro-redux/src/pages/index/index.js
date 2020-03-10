@@ -8,7 +8,9 @@ import { getWindowHeight } from '@utils/style'
 import Banner from './banner'
 import Pin from './pin'
 import './index.scss'
+import loginBanner from '@assets/login-banner.jpg'
 import {AtButton, AtForm, AtInput, AtCurtain, AtFab, AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import { ClCard, ClText, ClTitleBar } from "mp-colorui";
 import {IMG_URL} from "@constants/api";
 
 //引入图片预加载组件
@@ -35,7 +37,7 @@ function genImgListData() {
 @connect(state => state.home, { ...actions, dispatchCartNum })
 class Index extends Component {
   config = {
-    navigationBarTitleText: '纤尊秀'
+    navigationBarTitleText: '纤尊秀健康管理',
   }
 
   state = {
@@ -70,6 +72,9 @@ class Index extends Component {
     // this.props.dispatchCartNum()
     // this.props.dispatchSearchCount()
     this.props.dispatchPin({ orderType: 4, size: 12 })
+    this.props.dispatchGoodShops().then(res => {
+      console.log(res)
+    })
     this.loadImages();
     // this.loadRecommend()
   }
@@ -189,6 +194,13 @@ class Index extends Component {
     })
   }
 
+  handleGoodShopClick = (item) => {
+    console.log(item)
+    Taro.navigateTo({
+      url: `/pages/shop/shop?shopId=${item.id}`
+    })
+  }
+
   render () {
 
     // const { imgList, imgLoadList } = this.state
@@ -200,7 +212,7 @@ class Index extends Component {
       return <Loading />
     }
 
-    const { homeInfo, pin, banner } = this.props
+    const { homeInfo, pin, banner, goodShops } = this.props
     return (
       <View className='home'>
         <ScrollView
@@ -212,11 +224,37 @@ class Index extends Component {
             <Banner list={banner} />
             {/*<Policy list={homeInfo.policyDesc} />*/}
 
+            <ClTitleBar title='优秀店铺' subTitle='recommendItems' type='sub-title' textColor='gradualPink' subTitleColor='red' />
+
+            <View className='good-shops'>
+              {goodShops.map(item => (
+                <View key={item.id} className='img-border' onClick={this.handleGoodShopClick.bind(this, item)}>
+                  <Image
+                    className='img-border-inner'
+                    mode='aspectFill'
+                    src={IMG_URL + item.shoppicture}
+                  />
+
+                  <View className='home-good-shops-info'>
+                    <View className='price-blur-box'>
+                      <Text className='home-good-shops-price'>{`已提现 ¥ ${item.cashout}`}</Text>
+                    </View>
+                  </View>
+                </View>
+              ))}
+            </View>
             {/* 优秀店铺 */}
-            <Pin
-              banner={homeInfo.newUserExclusive}
-              list={pin}
-            />
+            {/*<Pin*/}
+              {/*banner={homeInfo.newUserExclusive}*/}
+              {/*list={pin}*/}
+            {/*/>*/}
+
+            <View>
+              <Image
+                className='at-article__img'
+                src={loginBanner}
+                mode='widthFix' />
+            </View>
 
             {/* 不知道叫啥 */}
             {/* <Operation
