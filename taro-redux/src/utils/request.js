@@ -22,7 +22,6 @@ function updateStorage(data = {}) {
  * @param {*} options
  */
 export default async function fetch(options) {
-  console.log(options)
   const { url, payload, method = 'GET', showToast = true, autoLogin = true, anshiModify = true } = options
   const token = await getStorage('token')
   const header = token ? { 'WX-PIN-SESSION': token, 'X-WX-3RD-Session': token } : {}
@@ -37,9 +36,7 @@ export default async function fetch(options) {
     header
   }).then(async (res) => {
     const { code, data } = res.data
-    console.log(res);
     // console.log(code);
-    // console.log(data);
     // console.log(anshiModify);
 
     if (anshiModify) {
@@ -72,7 +69,6 @@ export default async function fetch(options) {
 
     return data
   }).catch((err) => {
-    console.log(err)
     const defaultMsg = err.code === CODE_AUTH_EXPIRED ? '登录失效' : '请求异常'
     if (showToast) {
       Taro.showToast({

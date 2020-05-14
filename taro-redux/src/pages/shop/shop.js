@@ -22,9 +22,16 @@ export default class Shop extends Component {
     super(props)
     this.state = {
       loaded: false,
-      selected: {}
+      selected: {},
+      role: Taro.getStorageSync('user_role')
     }
     this.shopId = parseInt(this.$router.params.shopId)
+  }
+
+  componentDidShow() {
+    this.setState({
+      role: Taro.getStorageSync('user_role')
+    })
   }
 
   componentDidMount() {
@@ -34,10 +41,12 @@ export default class Shop extends Component {
   }
   render() {
     const { shopItem } = this.props;
-    console.log(shopItem)
-    return(
-      <View>
-        <Image src={ IMG_URL + shopItem.shoppicture } mode='aspectFill' className='pic-info' />
+    const {role} = this.state;
+    let show;
+    if (role == "总店管理员") {
+
+      show = (<View>
+
 
         <AtList>
           <AtListItem title='店铺名' note={shopItem.shopname} />
@@ -47,27 +56,19 @@ export default class Shop extends Component {
           <AtListItem title='佣金' note={shopItem.cashin} />
         </AtList>
 
-        {/*店铺名	纤尊秀瘦身 养生会所店主姓名	刘静店铺地址	尉氏县文化路与光明路交叉口向北30米佣金	0联系方式	18738988540*/}
-        {/*cashin: 0*/}
-        {/*cashout: 0*/}
-        {/*createtime: "2019-11-04T09:06:45.000+0000"*/}
-        {/*description: "<p>null<img src="https://files.sweet.tiantianquan.xyz/uploads/qzx/20191104/747a63ee-9365-4ea7-9732-01711b349de2.jpg"></p>"*/}
-        {/*id: 5*/}
-        {/*owner_phone: "18898123393"*/}
-        {/*profit: 0*/}
-        {/*recommmend_type: null*/}
-        {/*shopaddress: "通许县幸福路与人民路交叉口，向东200米路北。"*/}
-        {/*shopname: "纤尊秀瘦身"*/}
-        {/*shoppicture: "uploads/qzx/20191104/bac40255-8e4d-4ee4-83f0-de753064fe29.jpg"*/}
-        {/*shoptype_id: 1*/}
-        {/*shoptype_name: null*/}
-        {/*statu: 1*/}
-        {/*updatetime: "2019-11-04T09:06:45.000+0000"*/}
-        {/*userid: 202*/}
-        {/*username: "张小巧"*/}
-
         <ParserRichText html={shopItem.description} selectable></ParserRichText>
-      </View>
-    )
+      </View>)
+    }else {
+      show = (
+        <View>
+          <Image src={ IMG_URL + shopItem.shoppicture } mode='aspectFill' className='pic-info' />
+          <AtList>
+            <AtListItem title='店铺名' note={shopItem.shopname} />
+          </AtList>
+        </View>
+      )
+    }
+
+    return show;
   }
 }

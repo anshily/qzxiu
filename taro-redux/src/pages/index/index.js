@@ -235,11 +235,11 @@ class Index extends Component {
                     src={IMG_URL + item.shoppicture}
                   />
 
-                  <View className='home-good-shops-info'>
-                    <View className='price-blur-box'>
-                      <Text className='home-good-shops-price'>{`已提现 ¥ ${item.cashout}`}</Text>
-                    </View>
-                  </View>
+                  {/*<View className='home-good-shops-info'>*/}
+                    {/*<View className='price-blur-box'>*/}
+                      {/*<Text className='home-good-shops-price'>{`${item.shopname}`}</Text>*/}
+                    {/*</View>*/}
+                  {/*</View>*/}
                 </View>
               ))}
             </View>

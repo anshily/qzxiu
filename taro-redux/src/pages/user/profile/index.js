@@ -53,8 +53,8 @@ export default class Profile extends Component {
   render () {
     const { userInfo } = this.props;
     console.log(userInfo)
-
     const {role} = this.state;
+    console.log(role)
 
     if (role){
       const shopInfo = Taro.getStorageSync('shopInfo');

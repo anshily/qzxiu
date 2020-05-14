@@ -29,7 +29,6 @@ export default function home(state = INITIAL_STATE, action) {
     case HOME_PIN: {
       // 每3个分成一组
       const pin = []
-      console.log(action.payload.goodShopList)
       action.payload.goodShopList.forEach((item, index) => {
         const groupIndex = parseInt(index / 3)
         if (!pin[groupIndex]) {
@@ -40,7 +39,6 @@ export default function home(state = INITIAL_STATE, action) {
       return { ...state, pin }
     }
     case HOME_RECOMMEND: {
-      console.log(action.payload);
       let list = action.payload.list.map(item => {
         item['type'] = 1;
         item['categoryItem'] = {
@@ -56,7 +54,6 @@ export default function home(state = INITIAL_STATE, action) {
       }
     }
     case 'HOME_BANNER': {
-      console.log(action.payload)
       let list = action.payload.map((item, index) => {
           item['img'] = IMG_URL + item['picture_address'],
           item['rank'] = index
@@ -68,7 +65,6 @@ export default function home(state = INITIAL_STATE, action) {
       }
     }
     case 'HOME_GSHOP': {
-      console.log(action.payload.goodShopList)
       return {
         ...state,
         goodShops: action.payload.goodShopList}

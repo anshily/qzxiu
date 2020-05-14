@@ -18,7 +18,8 @@ export default class Pin extends Component {
   }
 
   render () {
-    const { banner: { picUrls = [] }, list } = this.props
+    const { banner: { picUrls = [] }, list } = this.props;
+    console.log(list)
     return (
       <View className='home-pin'>
         {/*<View className='home-pin__banner'>*/}
