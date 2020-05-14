@@ -77,12 +77,12 @@
 
   <select id="getFShopPerson" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message where id=(
-    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='人员推荐'
+    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='人员推荐' and statu != 0
     )
   </select>
   <select id="getFShopPosition" resultType="io.peach.launch.model.ShopMessage">
     select * from qzx_shop_message where id=(
-    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='地区推荐'
+    select f_shopid from qzx_grading where shopid=#{shopid} and f_shopid!=0 and point_type='地区推荐' and statu != 0
     ) and shoptype_id!=1
   </select>
 

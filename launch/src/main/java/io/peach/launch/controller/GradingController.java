@@ -72,7 +72,7 @@ public class GradingController {
         return ResultGenerator.successResult(page);
     }
     @Transactional(propagation = Propagation.REQUIRED)
-    @GetMapping("/changeGrading")
+    @RequestMapping("/changeGrading")
     public Result changeGrading(@RequestBody ChangeGradingDTO changeGradingDTO) {
         gradingService.changeGrading(changeGradingDTO);
         return ResultGenerator.successResult();

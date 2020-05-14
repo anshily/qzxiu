@@ -54,25 +54,32 @@ export class TradeShopsViewComponent implements OnInit {
       console.log(res)
       if (res['code'] == 0 ){
         // this.record = res['data']
-        this.record['person'] = res['data']['person']['shopname'];
-        this.record['position'] = res['data']['position']['shopname'];
+        this.record['person'] = res['data']['person']['shopname'] + '--' + res['data']['person']['username'];
+        this.record['position'] = res['data']['position']['shopname']+ '--' + res['data']['position']['username'];
       }
       // this.record
     });
   }
 
   edit(itemType) {
-  this.modalHelper.createStatic(TradeShopsReferrerComponent, { params: { id: this.record['id'], type: itemType} })
+  let cur = this.modalHelper.createStatic(TradeShopsReferrerComponent, { params: { id: this.record['id'], type: itemType} })
       .subscribe(() => {
-
+          console.log('dismiss')
       });
+  cur.add((res) =>{
+    console.log('dismiss  11111',res)
+    this.close();
+  })
   }
 
   cash() {
     this.modalHelper.createStatic(TradeShopsCashComponent, { shopInfo: { id: this.record['id'], total: this.record['cashin']} })
       .subscribe(() => {
           this.close()
-      });
+      }).add((res) =>{
+      console.log('dismiss  11111',res)
+      this.close();
+    });
   }
 
   close() {

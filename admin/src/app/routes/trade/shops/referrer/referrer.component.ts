@@ -62,7 +62,7 @@ export class TradeShopsReferrerComponent implements OnInit {
         .subscribe(res => {
           if (res['code'] == 0){
             this.proxyList = res['data'];
-            resolve()
+            resolve(res['data'])
           } else {
             reject()
           }
@@ -74,7 +74,7 @@ export class TradeShopsReferrerComponent implements OnInit {
         .subscribe(res => {
           if (res['code'] == 0){
             this.recommendList = res['data'];
-            resolve()
+            resolve(res['data'])
           } else {
             reject()
           }
@@ -85,7 +85,7 @@ export class TradeShopsReferrerComponent implements OnInit {
   async send(){
     await new Promise((resolve, reject) => {
       if (this.proxyValue){
-        this.http.get(ROOT_URL + 'grading/changeGrading',{
+        this.http.post(ROOT_URL + 'grading/changeGrading',{
           waitShopid: this.params.id,
           targetShopid: this.proxyValue,
           changeType: '地区推荐'
@@ -93,7 +93,7 @@ export class TradeShopsReferrerComponent implements OnInit {
           .subscribe(res => {
             if (res['code'] == 0){
               // this.recommendList = res['data'];
-              resolve()
+              resolve(res['data'])
             } else {
               reject()
             }
@@ -105,7 +105,7 @@ export class TradeShopsReferrerComponent implements OnInit {
 
     await new Promise((resolve, reject) => {
       if (this.recommendValue){
-        this.http.get(ROOT_URL + 'grading/changeGrading',{
+        this.http.post(ROOT_URL + 'grading/changeGrading',{
           waitShopid: this.params.id,
           targetShopid: this.recommendValue,
           changeType: '人员推荐'
@@ -113,7 +113,7 @@ export class TradeShopsReferrerComponent implements OnInit {
           .subscribe(res => {
             if (res['code'] == 0){
               // this.recommendList = res['data'];
-              resolve()
+              resolve(res['data'])
             } else {
               reject()
             }
@@ -128,6 +128,7 @@ export class TradeShopsReferrerComponent implements OnInit {
     // this.http.post(ROOT_URL + 'grading/changeGrading',{})
     this.send().then(res => {
       console.log(res);
+      this.close();
     })
   }
 

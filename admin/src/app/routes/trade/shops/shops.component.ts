@@ -82,25 +82,25 @@ export class TradeShopsComponent implements OnInit {
   add() {
     this.modal
       .createStatic(TradeShopsEditComponent, { i: { id: 0 } })
-      .subscribe(() => this.st.reload());
+      .subscribe(() => this.st.reload()).add(() => this.st.reload());
   }
 
   edit(id) {
     this.modal
       .createStatic(TradeShopsEditComponent, { params: { id: id, edit: true } })
-      .subscribe(() => this.st.reload());
+      .subscribe(() => this.st.reload()).add(() => this.st.reload());
   }
 
   tree(id) {
     this.modal
       .createStatic(TradeShopsTreeComponent, { itemId: id })
-      .subscribe(() => this.st.reload());
+      .subscribe(() => this.st.reload()).add(() => this.st.reload());
   }
 
   detail(id) {
     this.modal
       .createStatic(TradeShopsViewComponent, { itemId: id })
-      .subscribe(() => this.st.reload());
+      .subscribe(() => this.st.reload()).add(() => this.st.reload());
   }
 
 }
