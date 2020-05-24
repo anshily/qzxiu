@@ -34,7 +34,7 @@ public class GradingServiceImpl extends AbstractService<Grading> implements Grad
         /*4：将目标id的原父级店铺取消  add by anshi 2020/5/14 */
         qzxGradingMapper.cancelOriginFShopIdByTypeAndShopid(changeGradingDTO.getWaitShopid(),changeGradingDTO.getChangeType());
 
-        /*4：将目标id的指定类别下添加一个子类*/
+        /*5：将目标id的指定类别下添加一个子类*/
         qzxGradingMapper.insertCodeSameType(changeGradingDTO.getWaitShopid(),changeGradingDTO.getChangeType(),changeGradingDTO.getTargetShopid());
     }
 
